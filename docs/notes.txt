@@ -1,0 +1,41 @@
+
+
+Last Name
+First Name
+Age
+Height
+Marital Status
+Primary Activity
+Occupation
+
+Sex
+
+Special Needs
+
+Hashkafa
+Religious Background
+Ethnic Details
+Convert
+Cohen
+
+Residence City
+Residence Country
+
+
+Build 
+Physical Description
+Personality Requirements
+Past Education
+
+Contact Name
+Contact Relationship
+Contact Primary Phone
+Contact Secondary Phone
+Contact Email
+
+Date Entered
+
+Entry Source Name
+Entry Source Email 
+Entry Source Phone
+

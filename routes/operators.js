@@ -26,14 +26,15 @@ if (error) return res.status(400).send(error.details[0].message);
 let operator = await Operator.findOne({ email: req.body.email });
 if (operator) return res.status(400).send('Operator already registered.');
 
-operator = new Operator(_.pick(req.body, ['name', 'type', 'email', 'password']));
-
+operator = new Operator(_.pick(req.body, ['name', 'type', 'username', 'password', 'email',
+                                            'phone', 'street', 'city', 'country']));
 const salt = await bcrypt.genSalt(10);
 operator.password = await bcrypt.hash(operator.password, salt);
 await operator.save();
 
 const token = operator.generateAuthToken();
-res.header('x-auth-token', token).send(_.pick(operator, ['_id', 'name', 'type', 'email']));
+res.header('x-auth-token', token).send(_.pick(operator, ['_id',
+    'name', 'type', 'username', 'email', 'phone', 'street', 'city', 'country']));
 });
 
 router.delete('/:id', [auth, validateObjectId], async (req, res) => {
