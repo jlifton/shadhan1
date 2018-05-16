@@ -2,93 +2,189 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const Single = mongoose.model('Single', new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
-    },
-    lastName: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 64
-    },
-    age: {
-        type: Number,
-        required: true,
-        min: 16,
-        max: 255
-    },
-    height: {
-        type: Number,
-        required: true,
-        min: 1.0,
-        max: 3.0
-    },
-    maritalStatus: {
-        type: String,
-        enum : ['Single','Divorced', 'Widowed'],
-        required: true
-    },
-    primaryActivity: {
-        type: String,
-        enum : ['Working', 'Learning', 'Koveah Itim'],
-        required: true
+    identity: {
+        firstName: {
+            type: String,
+            required: true,
+            minlength: 5,
+            maxlength: 50
+        },
+        lastName: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 64
+        },
+        sex: {
+            type: String,
+            enum : ['Male', 'Female'],
+            required: true
+        },
+        age: {
+            type: Number,
+            required: true,
+            min: 16,
+            max: 255
+        },
+        maritalStatus: {
+            type: String,
+            enum : ['Single','Divorced', 'Widowed'],
+            required: true
+        }
     },
     occupation: {
         type: String,
         max: 255,
         required: false
     },
-    sex: {
-        type: String,
-        enum : ['Male', 'Female'],
-        required: true
-    },
     specialNeeds: {
         type: String,
         max: 255,
         required: false
     },
-    hashkafa: {
+    religioEthnic: {
+        hashkafa: {
+            type: String,
+            enum : ['Haredi', 'Dati Leumi', 'Hardal', 'Hiloni'],
+            required: true
+        },
+        ethnicity: {
+            type: String,
+            enum : ['Ashkenazi', 'Hasidish', 'Sefardi', 'Mixed'],
+            required: true
+        },
+        ethnicityAdditional: {
+            type: String,
+            max: 255,
+            required: false
+        },
+        convert: {
+            type: Boolean,
+            required: true
+        },
+        cohen: {
+            type: Boolean,
+            required: true
+        },
+        primaryActivity: {
+            type: String,
+            enum : ['Working', 'Learning', 'Koveah Itim'],
+            required: true
+        }
+    },
+    residence: {
+        city: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 128
+        },
+        country: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 128
+        }
+    },
+    physical: {
+        height: {
+            type: Number,
+            required: true,
+            min: 1.0,
+            max: 3.0
+        },
+        build: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 128
+        },
+        description: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 255
+        }
+    },
+    personalityRequirements: {
         type: String,
-        enum : ['Haredi', 'Dati Leumi', 'Hardal', 'Hiloni'],
-        required: true
+        required: false,
+        minlength: 3,
+        maxlength: 255
     },
-    ethnicity: {
+    pastEducation: {
         type: String,
-        enum : ['Ashkenazi', 'Hasidish', 'Sefardi', 'Mixed'],
-        required: true
+        required: false,
+        minlength: 3,
+        maxlength: 255
     },
-    ethnicityAdditional: {
-        type: String,
-        max: 255,
-        required: false
+    contact: {
+        name: {
+            type: String,
+            required: true,
+            minlength: 3,
+            maxlength: 128
+        },
+        relationship: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 128
+        },
+        primaryPhone: {
+            type: String,
+            required: true,
+            minlength: 3,
+            maxlength: 64
+        },
+        secondaryPhone: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 64
+        },
+        email: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 128
+        }
     },
-    convert: {
-        type: Boolean,
-        required: true
-    },
-    cohen: {
-        type: Boolean,
-        required: true
-    },
-    residenceCity: {
-        type: String,
-        required: true,
-        minlength: 2,
+    dateEntered: {
+        type: Date,
+        required: false,
+        minlength: 3,
         maxlength: 128
     },
-    residenceCountry: {
-        type: String,
+    source: {
+        sourceName: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 128
+        },
+        sourceEmail: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 128
+        },
+        sourcePhone: {
+            type: String,
+            required: false,
+            minlength: 3,
+            maxlength: 128
+        }
+    },
+    visible: {
+        type: Boolean,
         required: true,
-        minlength: 2,
-        maxlength: 128
+        default: true
     }
 }));
 
 function validateSingle(single) {
+    /**
     const schema = {
         firstName: Joi.string().min(5).max(50).required(),
         lastName: Joi.string().min(2).max(64).required()
@@ -96,6 +192,8 @@ function validateSingle(single) {
     };
 
     return Joi.validate(single, schema);
+     **/
+    return true;
 }
 
 exports.Single = Single;
