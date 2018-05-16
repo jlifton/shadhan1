@@ -53,5 +53,27 @@ router.get('/:id', [auth, validateObjectId], async (req, res) => {
     res.send(operator);
 });
 
+router.put('/:id', [auth, validateObjectId], async (req, res) => {
+    const { error } = validate(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    const operator = await Operator.findByIdAndUpdate(req.params.id,
+                            { name: req.body.name ,
+                             type: req.body.type ,
+                             email: req.body.email ,
+                             password: req.body.password ,
+                             phone: req.body.phone ,
+                             street: req.body.street ,
+                             city: req.body.city ,
+                             country: req.body.country ,
+                             username: req.body.username },
+        function(err, result){
+            const x = '';
+        });
+
+    if (!operator) return res.status(404).send('The Operator with the given ID was not found.');
+
+    res.send(operator);
+});
 
 module.exports = router;
