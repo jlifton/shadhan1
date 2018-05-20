@@ -104,6 +104,11 @@ const Single = mongoose.model('Single', new mongoose.Schema({
             required: false,
             minlength: 3,
             maxlength: 255
+        },
+        smoker: {
+            type: Boolean,
+            required: true,
+            default: false
         }
     },
     personalityRequirements: {
@@ -157,19 +162,19 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         maxlength: 128
     },
     source: {
-        sourceName: {
+        name: {
             type: String,
             required: false,
             minlength: 3,
             maxlength: 128
         },
-        sourceEmail: {
+        email: {
             type: String,
             required: false,
             minlength: 3,
             maxlength: 128
         },
-        sourcePhone: {
+        phone: {
             type: String,
             required: false,
             minlength: 3,

@@ -8,6 +8,7 @@ const auth = require('../routes/auth');
 const returns = require('../routes/returns');
 const operators = require('../routes/operators');
 const singles = require('../routes/singles');
+const logitems = require('../routes/logitems');
 const error = require('../middleware/error');
 
 module.exports = function(app) {
@@ -21,5 +22,6 @@ module.exports = function(app) {
   app.use('/api/returns', returns);
   app.use('/api/operators', operators);
   app.use('/api/singles', singles);
+  app.use('/api/logitems', logitems);
   app.use(error);
-}
+};
