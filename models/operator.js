@@ -80,5 +80,16 @@ function validateOperator(operator) {
     return Joi.validate(operator, schema);
 }
 
+function validateLogin(operator) {
+    const schema = {
+        username: Joi.string().min(6).max(64).required(),
+        password: Joi.string().min(6).max(64).required()
+    };
+
+    return Joi.validate(operator, schema);
+}
+
+
 exports.Operator = Operator;
 exports.validate = validateOperator;
+exports.validateLogin = validateLogin;
