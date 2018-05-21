@@ -9,6 +9,7 @@ const returns = require('../routes/returns');
 const operators = require('../routes/operators');
 const singles = require('../routes/singles');
 const logitems = require('../routes/logitems');
+const systems= require('../routes/systems');
 const error = require('../middleware/error');
 
 module.exports = function(app) {
@@ -23,5 +24,6 @@ module.exports = function(app) {
   app.use('/api/operators', operators);
   app.use('/api/singles', singles);
   app.use('/api/logitems', logitems);
+  app.use('/api/systems', systems);
   app.use(error);
 };
