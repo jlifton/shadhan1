@@ -3,3 +3,5 @@ node_modules/
 /logfile.log
 /package-lock.json
 /uncaughtExceptions.log
+public/dist/
+public/node_modules/

@@ -27,8 +27,11 @@ router.post('/login', async (req, res) => {
     let operator = await Operator.findOne({ username: req.body.username });
     if (operator) {
         const validPassword = await bcrypt.compare(req.body.password, operator.password);
-        if (validPassword)
-            return res.send(operator);
+        if (validPassword) {
+            const token = operator.generateAuthToken();
+            operator.password = '';
+            return res.header('x-auth-token', token).send(operator);
+        }
         return  res.status(400).send('No Operator for this user name and password.');
     }
     else
