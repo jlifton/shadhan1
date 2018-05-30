@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { fadeOutAnimation } from '../../core/common/route.animation';
 import {LoginService} from "./login.service";
 import {AuthGuardService} from "../auth/auth.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'fury-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
               private fb: FormBuilder,
               private cd: ChangeDetectorRef,
               private loginService: LoginService,
-              private authGuardService: AuthGuardService
+              private authGuardService: AuthGuardService,
+              private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -80,7 +82,12 @@ export class LoginComponent implements OnInit {
               // Get saved data from sessionStorage
               var data = sessionStorage.getItem('x-auth-token');
               console.log('Retrieved session JWT token: '+ data);
-              alert('Shalom '+ userName);
+              this.snackbar.open('Shalom '+ userName, null, {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'end'
+              });
+
               this.authGuardService.setAuthenticated(token, resp.body);
               this.router.navigate(['/']);
             },
@@ -88,14 +95,27 @@ export class LoginComponent implements OnInit {
             this.clearCachedFields();
               console.error(err);
               if (err.error !== null){
-                alert("Unable to login: "+ err.error);
+                //alert("Unable to login: "+ err.error);
+                 this.snackbar.open("Unable to login: "+ err.error, 'OK', {
+                  duration: 10000,
+                  verticalPosition: 'top',
+                  horizontalPosition: 'center'
+                 });
+                //let snackBarRef = this.snackbar.open("Unable to login: "+ err.error, 'OK');
+
                 return;
               }
               if (err.status === 404){
-                alert("Unable to login with user name and password given. Please try again.");
+                //alert("Unable to login with user name and password given. Please try again.");
+                  this.snackbar.open("Unable to login with user name and password given. Please try again.", 'OK', {
+                  duration: 10000
+                });
                 return;
               }
-              alert("Unable to login");
+              //alert("Unable to login");
+              this.snackbar.open("Unable to login", 'OK', {
+                duration: 10000
+                });
               },
             () => console.log('done logging in')
         );
