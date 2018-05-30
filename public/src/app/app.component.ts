@@ -59,6 +59,13 @@ export class AppComponent {
     });
 
     menu.push({
+      name: 'Matchmakers',
+      routeOrFunction: '/tables/all-in-one-table',
+      icon: 'assignment',
+      position: 32
+    });
+
+    menu.push({
       name: 'USER INTERFACE',
       type: 'subheading',
       position: 35
