@@ -11,9 +11,11 @@ const singles = require('../routes/singles');
 const logitems = require('../routes/logitems');
 const systems= require('../routes/systems');
 const error = require('../middleware/error');
+const cors = require('cors');
 
 module.exports = function(app) {
   app.use(express.json());
+  app.use(cors());
   app.use('/api/genres', genres);
   app.use('/api/customers', customers);
   app.use('/api/movies', movies);
