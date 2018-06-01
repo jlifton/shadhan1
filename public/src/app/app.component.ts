@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SidenavItem } from './core/sidenav/sidenav-item/sidenav-item.interface';
 import { SidenavService } from './core/sidenav/sidenav.service';
+import {AuthGuardService} from "./shadhan/auth/auth.service";
 
 @Component({
   selector: 'fury-root',
@@ -59,8 +60,8 @@ export class AppComponent {
     });
 
     menu.push({
-      name: 'Matchmakers',
-      routeOrFunction: '/tables/all-in-one-table',
+      name: 'Operators',
+      routeOrFunction: 'operators/operators-table',
       icon: 'assignment',
       position: 32
     });
