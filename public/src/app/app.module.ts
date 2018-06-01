@@ -10,7 +10,6 @@ import { RoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import {FormsModule} from "@angular/forms";
-import {AuthGuardService} from "./shadhan/auth/auth.service";
 
 @NgModule({
   declarations: [AppComponent],
