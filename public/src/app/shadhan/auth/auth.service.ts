@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {LoginResponse} from "../login/login-response.interface";
+import {MatSnackBar} from "@angular/material";
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,25 @@ export class AuthGuardService implements CanActivate{
   private token:string = '';
   private loggedInUser:LoginResponse ;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private snackbar: MatSnackBar) { }
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot){
-    if (this.authenticated)
-      return true;
-    this.router.navigate(['/login']);
-    return false;
+    if (this.authenticated === false) {
+      this.router.navigate(['/login']);
+      return false;
+    }
+    if (state.url === '/operators/operators-table'){
+      if (this.loggedInUser.type !== 'ADMIN') {
+        this.snackbar.open("Selected page is accessible to Administrator operators only", null, {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
+        return false;
+      }
+    }
+    return true;
   }
 
   isAuthenticated(): boolean {
@@ -44,5 +56,9 @@ export class AuthGuardService implements CanActivate{
     if (!(this.isAuthenticated()))
       return '';
     return this.loggedInUser.name;
+  }
+
+  getType() {
+    return this.loggedInUser.type;
   }
 }
