@@ -1,6 +1,12 @@
 <div class="simple-table" furyPage furyPagePadding furyScrollbar>
   <fury-breadcrumbs current="Operators" [crumbs]="['Tables']"></fury-breadcrumbs>
+
   <div class="list-table">
+    <div class="actions">
+      <button class="create" (click)="createOperator()" type="button"  style="float:right" mat-mini-fab color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
     <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="24px">
 
       <table  [class.table-hover]="true" [class.table-striped]="true"
@@ -30,9 +36,31 @@
           <td mat-cell *matCellDef="let row"> {{row.email}}</td>
         </ng-container>
 
+        <!-- actions Column -->
+        <ng-container matColumnDef="actions">
+          <!--<mat-header-cell class="actions-cell" *matHeaderCellDef></mat-header-cell> -->
+          <th mat-header-cell class="actions-cell"  *matHeaderCellDef style="width:5%"> ACTIONS</th>
+          <td mat-cell class="actions-cell" *matCellDef="let row">
+            <span class="fury-mobile-label"></span>
+            <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+
+            <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+              <button (click)="updateOperator(row)" mat-menu-item>
+                <span>Modify</span>
+              </button>
+              <button (click)="deleteOperator(row)" mat-menu-item>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+
+          </td>
+        </ng-container>
+
         <!-- Header and Row Declarations -->
-        <tr mat-header-row *matHeaderRowDef="['name', 'type', 'phone', 'email']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'phone', 'email']"></tr>
+        <tr mat-header-row *matHeaderRowDef="['name', 'type', 'phone', 'email', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'phone', 'email', 'actions']"></tr>
       </table>
     </div>
   </div>

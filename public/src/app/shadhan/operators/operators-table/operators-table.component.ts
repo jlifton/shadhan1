@@ -24,6 +24,10 @@ export class OperatorsTableComponent implements OnInit {
 
   }
 
+  createOperator() {
+    alert('create operator');
+  }
+
   ngOnInit() {
     //this.dataSource = new MatTableDataSource();
     this.getOperators();
@@ -41,6 +45,15 @@ export class OperatorsTableComponent implements OnInit {
       }
     );
   };
+
+  updateOperator(row) {
+    alert('updateOperator: '+ row.name);
+  }
+
+  deleteOperator(row) {
+    alert('deleteOperator'+ row.name);
+  }
+
 }
 
 
