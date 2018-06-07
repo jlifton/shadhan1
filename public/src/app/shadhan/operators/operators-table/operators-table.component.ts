@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from "@angular/material";
+import {MatDialog, MatSnackBar, MatTableDataSource} from "@angular/material";
 import {Customer} from "../../../demo/tables/all-in-one-table/customer-create-update/customer.model";
 import {DataSource} from "@angular/cdk/collections";
 import {BehaviorSubject} from "rxjs";
@@ -20,7 +20,9 @@ export class OperatorsTableComponent implements OnInit {
   //dataSource = new ExampleDataSource();
   dataSource = new OperatorsDataSource();
 
-  constructor(private operatorsService: OperatorsService) {
+  constructor(private operatorsService: OperatorsService,
+              private snackbar: MatSnackBar,
+              public dialog: MatDialog) {
 
   }
 
@@ -51,7 +53,26 @@ export class OperatorsTableComponent implements OnInit {
   }
 
   deleteOperator(row) {
-    alert('deleteOperator'+ row.name);
+    if(confirm("Delete Operator "+row.name + ' ?')) {
+      this.operatorsService.deleteOperator(row._id).subscribe(
+        data => {
+          this.snackbar.open('Operator ' + row.name + ' deleted', null, {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'end'
+          });
+          this.getOperators();
+        },
+        error => {
+          console.error("Error deleting Operator");
+          this.snackbar.open('Problem deleting Operator', 'Ok', {
+            verticalPosition: 'top',
+            horizontalPosition: 'end'
+          });
+          return Observable.throw(error);
+        }
+      );
+    }
   }
 
 }
