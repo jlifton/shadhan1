@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <div class="result" fxLayout="column">
+    <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
+      <mat-form-field fxFlex>
+        <input matInput formControlName="name" placeholder="Operator Name"  type="text">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <!-- <input matInput formControlName="type" placeholder="Type" type="text"> -->
+
+        <mat-select formControlName="type"  [(value)]="type" placeholder="Type" >
+          <mat-option>None</mat-option>
+          <mat-option value="ADMIN">Administrator</mat-option>
+          <mat-option value="SHADHAN">Shadhan</mat-option>
+          <mat-option value="DATAENTRY">Data Entry</mat-option>
+        </mat-select>
+
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input matInput formControlName="phone" placeholder="Phone" type="text">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="email" placeholder="Email" type="text">
+    </mat-form-field>
+    <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
+      <mat-form-field fxFlex>
+        <input matInput formControlName="street" placeholder="Street"  type="text">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput formControlName="city" placeholder="City" type="text">
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input matInput formControlName="country" placeholder="Country" type="text">
+    </mat-form-field>
+
+    <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
+      <mat-form-field fxFlex>
+        <input matInput formControlName="username" placeholder="User Name"  type="text">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput formControlName="password" placeholder="Password" type="text">
+      </mat-form-field>
+    </div>
+
+  </div>
+
+</mat-dialog-content>
+<div fxLayout="row" fxLayoutAlign="end">
+  <mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+  </mat-dialog-actions>
+</div>

@@ -1,4 +1,5 @@
 export class OperatorDTO {
+  content: any;
   name: string;
   type: string;
   phone: string;
@@ -22,10 +23,11 @@ export class OperatorDTO {
     this.password = '';
     this._id = '';
 
-    if (content !== undefined) {
+    if ((content !== undefined) &&
+        (content !== null)) {
       this.name = content.name;
       this.type = content.type;
-      this.phone = content, this.phone;
+      this.phone = content.phone;
       this.email = content.email;
       this.street = content.street;
       this.city = content.city;
@@ -47,5 +49,10 @@ export class OperatorDTO {
       '\n username = ' + this.username +
       '\n password = ' + this.password +
       '\n _id = ' + this._id;
+  }
+
+  cloned(): OperatorDTO {
+    const clonedOperatorDTO = new  OperatorDTO(this.content);
+    return clonedOperatorDTO;
   }
 }

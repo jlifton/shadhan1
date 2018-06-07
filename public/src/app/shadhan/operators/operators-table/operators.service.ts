@@ -27,5 +27,8 @@ export class OperatorsService {
     return this.http.delete<OperatorDTO>(deleteOperatorUrl, httpOptions);
   }
 
+  createOperator(newOperator: OperatorDTO): Observable<OperatorDTO> {
+      return this.http.post<OperatorDTO>('http://127.0.0.1:3000/api/operators', newOperator, httpOptions);
+  }
 }
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatSnackBar, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatSnackBar, MatTableDataSource} from "@angular/material";
 import {Customer} from "../../../demo/tables/all-in-one-table/customer-create-update/customer.model";
 import {DataSource} from "@angular/cdk/collections";
 import {BehaviorSubject} from "rxjs";
@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import {LoginService} from "../../login/login.service";
 import {OperatorsService} from "./operators.service";
 import {OperatorDTO} from "./operator.data";
+import {OperatorDialogComponent} from "./operator-dialog/operator-dialog.component";
 
 @Component({
   selector: 'fury-operators-table',
@@ -27,7 +28,38 @@ export class OperatorsTableComponent implements OnInit {
   }
 
   createOperator() {
-    alert('create operator');
+    const dialogConfig = new MatDialogConfig();
+    let newOperatorDTO = new OperatorDTO(null);
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = newOperatorDTO;
+    dialogConfig.minWidth = 500;
+    dialogConfig.minHeight = 150;
+    const dialogRef = this.dialog.open(OperatorDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      newOperator => {
+        delete newOperator.title;
+        console.log("Dialog output:", newOperator);
+
+        this.operatorsService.createOperator(newOperator).subscribe(
+          data => {
+            console.log("Create operator succeeded", data);
+            this.snackbar.open('Operator ' + data.name + ' successfully added', null, {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            this.getOperators();
+          },
+          error => {
+            console.error("Error creating Operator");
+            this.snackbar.open('Problem creating Operator', 'Ok', {
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            return Observable.throw(error);
+         });
+      });
   }
 
   ngOnInit() {
@@ -47,10 +79,6 @@ export class OperatorsTableComponent implements OnInit {
       }
     );
   };
-
-  updateOperator(row) {
-    alert('updateOperator: '+ row.name);
-  }
 
   deleteOperator(row) {
     if(confirm("Delete Operator "+row.name + ' ?')) {
@@ -75,6 +103,16 @@ export class OperatorsTableComponent implements OnInit {
     }
   }
 
+  editOperator(row: OperatorDTO) {
+    const dialogConfig = new MatDialogConfig();
+    let clonedOperatorDTO = new OperatorDTO(row);
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = clonedOperatorDTO;
+    dialogConfig.minWidth = 500;
+    dialogConfig.minHeight = 150;
+    this.dialog.open(OperatorDialogComponent, dialogConfig);
+  }
 }
 
 

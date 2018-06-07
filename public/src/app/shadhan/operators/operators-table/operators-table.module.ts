@@ -7,6 +7,8 @@ import {OperatorsTableRoutingModule} from "./operators-table-routing.module";
 import {OperatorsService} from "./operators.service";
 import {BreadcrumbsModule} from "../../../core/breadcrumbs/breadcrumbs.module";
 import {PageModule} from "../../../core/common/page/page.module";
+import {MatDialogModule} from "@angular/material";
+import { OperatorDialogComponent } from './operator-dialog/operator-dialog.component';
 
 @NgModule({
   imports: [
@@ -14,12 +16,14 @@ import {PageModule} from "../../../core/common/page/page.module";
   FormsModule,
   OperatorsTableRoutingModule,
   MaterialModule,
+  MatDialogModule,
   ReactiveFormsModule,
   PageModule,
   BreadcrumbsModule
   ],
-  declarations: [OperatorsTableComponent],
+  declarations: [OperatorsTableComponent, OperatorDialogComponent],
   providers: [ OperatorsService ],
-  exports: [OperatorsTableComponent]
+  exports: [OperatorsTableComponent],
+  entryComponents: [OperatorDialogComponent]
 })
 export class OperatorsTableModule { }

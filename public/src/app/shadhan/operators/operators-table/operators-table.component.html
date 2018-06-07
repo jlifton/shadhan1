@@ -47,7 +47,7 @@
             </button>
 
             <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
-              <button (click)="updateOperator(row)" mat-menu-item>
+              <button (click)="editOperator(row)" mat-menu-item>
                 <span>Modify</span>
               </button>
               <button (click)="deleteOperator(row)" mat-menu-item>
@@ -60,7 +60,7 @@
 
         <!-- Header and Row Declarations -->
         <tr mat-header-row *matHeaderRowDef="['name', 'type', 'phone', 'email', 'actions']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'phone', 'email', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'phone', 'email', 'actions']" (click)="editOperator(row)" class="clickable"></tr>
       </table>
     </div>
   </div>
