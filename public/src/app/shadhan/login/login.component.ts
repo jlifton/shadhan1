@@ -82,7 +82,8 @@ export class LoginComponent implements OnInit {
               // Get saved data from sessionStorage
               var data = sessionStorage.getItem('x-auth-token');
               console.log('Retrieved session JWT token: '+ data);
-              this.snackbar.open('Shalom '+ userName, null, {
+              const operator = resp.body.name;
+              this.snackbar.open('Shalom '+ operator, null, {
                 duration: 5000,
                 verticalPosition: 'top',
                 horizontalPosition: 'end'
