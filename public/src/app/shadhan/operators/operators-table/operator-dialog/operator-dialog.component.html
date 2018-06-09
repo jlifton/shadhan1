@@ -14,6 +14,7 @@
           <mat-option value="ADMIN">Administrator</mat-option>
           <mat-option value="SHADHAN">Shadhan</mat-option>
           <mat-option value="DATAENTRY">Data Entry</mat-option>
+          <mat-option value="GUEST">Guest</mat-option>
         </mat-select>
 
       </mat-form-field>
@@ -40,10 +41,14 @@
       <mat-form-field fxFlex>
         <input matInput formControlName="username" placeholder="User Name"  type="text">
       </mat-form-field>
-      <mat-form-field fxFlex>
-        <input matInput formControlName="password" placeholder="Password" type="text">
-      </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <input matInput formControlName="password" placeholder="Password" type="text">
+        </mat-form-field>
     </div>
+    <mat-form-field>
+      <textarea matInput formControlName="notes" placeholder="Notes"></textarea>
+    </mat-form-field>
 
   </div>
 
