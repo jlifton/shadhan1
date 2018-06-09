@@ -30,5 +30,11 @@ export class OperatorsService {
   createOperator(newOperator: OperatorDTO): Observable<OperatorDTO> {
       return this.http.post<OperatorDTO>('http://127.0.0.1:3000/api/operators', newOperator, httpOptions);
   }
+
+  updateOperator(_id, updateOperator: OperatorDTO): Observable<OperatorDTO> {
+    const updateOperatorUrl = 'http://localhost:3000/api/operators/' + _id;
+    const updateOperatorStringified = JSON.stringify(updateOperator);
+    return this.http.put<OperatorDTO>(updateOperatorUrl, updateOperatorStringified, httpOptions);
+  }
 }
 
