@@ -9,6 +9,7 @@ export class OperatorDTO {
   country: string;
   username: string;
   password: string;
+  notes: string;
   _id: string;
 
   constructor(content: any) {
@@ -18,7 +19,8 @@ export class OperatorDTO {
     this.email = '';
     this.street = '';
     this.city = '';
-    this.country = '';
+    this.country = 'Israel';
+    this.notes = '';
     this.username = '';
     this.password = '';
     this._id = '';
@@ -34,6 +36,7 @@ export class OperatorDTO {
       this.country = content.country;
       this.username = content.username;
       this.password = content.password;
+      this.notes = content.notes;
       this._id = content._id;
     }
   }
@@ -48,6 +51,7 @@ export class OperatorDTO {
       '\n country = ' + this.country +
       '\n username = ' + this.username +
       '\n password = ' + this.password +
+      '\n notes = ' + this.notes +
       '\n _id = ' + this._id;
   }
 
