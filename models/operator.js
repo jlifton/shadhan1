@@ -12,7 +12,7 @@ const operatorSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum : ['ADMIN','SHADHAN', 'DATAENTRY'],
+        enum : ['ADMIN','SHADHAN', 'DATAENTRY', 'GUEST'],
         default: 'SHADHAN'
     },
     phone:{
@@ -54,6 +54,11 @@ const operatorSchema = new mongoose.Schema({
         required: true,
         minlength: 6,
         maxlength: 64
+    },
+    notes:{
+        type: String,
+        required: false,
+        maxlength: 512
     }
 });
 
@@ -64,17 +69,35 @@ operatorSchema.methods.generateAuthToken = function() {
 
 const Operator = mongoose.model('Operator', operatorSchema);
 
-function validateOperator(operator) {
+function validateNewOperator(operator) {
     const schema = {
         name: Joi.string().min(5).max(50).required(),
-        type: Joi.string().valid(['ADMIN','SHADHAN', 'DATAENTRY']).required(),
+        type: Joi.string().valid(['ADMIN','SHADHAN', 'DATAENTRY', 'GUEST']).required(),
         email: Joi.string().min(5).max(255).email(),
         password: Joi.string().min(6).max(64).required(),
         phone: Joi.string().max(64).required(),
         street: Joi.string().max(255).allow(''),
         city: Joi.string().max(255).allow(''),
         country: Joi.string().max(255).allow(''),
-        username: Joi.string().min(6).max(64).required()
+        username: Joi.string().min(6).max(64).required(),
+        notes: Joi.string().max(512).allow('')
+    };
+
+    return Joi.validate(operator, schema);
+}
+
+function validateUpdateOperator(operator) {
+    const schema = {
+        name: Joi.string().min(5).max(50).required(),
+        type: Joi.string().valid(['ADMIN','SHADHAN', 'DATAENTRY', 'GUEST']).required(),
+        email: Joi.string().min(5).max(255).email(),
+        //password: Joi.string().min(6).max(64).required(),
+        phone: Joi.string().max(64).required(),
+        street: Joi.string().max(255).allow(''),
+        city: Joi.string().max(255).allow(''),
+        country: Joi.string().max(255).allow(''),
+        username: Joi.string().min(6).max(64).required(),
+        notes: Joi.string().max(512).allow('')
     };
 
     return Joi.validate(operator, schema);
@@ -91,5 +114,6 @@ function validateLogin(operator) {
 
 
 exports.Operator = Operator;
-exports.validate = validateOperator;
+exports.validateNewOperator = validateNewOperator;
+exports.validateUpdateOperator = validateUpdateOperator;
 exports.validateLogin = validateLogin;
