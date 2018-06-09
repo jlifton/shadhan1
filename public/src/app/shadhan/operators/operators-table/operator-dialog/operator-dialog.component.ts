@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {OperatorDTO} from "../operator.data";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'fury-operator-dialog',
@@ -13,16 +13,19 @@ export class OperatorDialogComponent implements OnInit {
   operatorDTO: OperatorDTO;
   title: string;
   types: {};
+  isNew = true;
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<OperatorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) operatorDTO) {
     this.operatorDTO = operatorDTO;
+    if (this.operatorDTO.name !== '')
+      this.isNew = false;
   }
 
   ngOnInit() {
-    this.title = this.operatorDTO.name === '' ? 'New Operator': 'Modify Operator';
+    this.title = this.isNew ? 'New Operator': 'Modify Operator';
     this.form = this.fb.group({
       title: [this.title, []],
       name: [this.operatorDTO.name, []],
@@ -33,10 +36,15 @@ export class OperatorDialogComponent implements OnInit {
       city: [this.operatorDTO.city, []],
       country: [this.operatorDTO.country, []],
       username: [this.operatorDTO.username, []],
-      password: [this.operatorDTO.password, []]
+      //password: [this.operatorDTO.password, []],
+      password: new FormControl({ value: this.operatorDTO.password, disabled: !this.isNew }),
+      notes: [this.operatorDTO.notes, []],
     });
   }
+
   save() {
+    if (!this.isNew)
+      this.form.value._id = this.operatorDTO._id;
     this.dialogRef.close(this.form.value);
   }
   close() {
