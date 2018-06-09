@@ -34,7 +34,7 @@ export class OperatorsTableComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = newOperatorDTO;
     dialogConfig.minWidth = 500;
-    dialogConfig.minHeight = 150;
+    dialogConfig.minHeight = 600;
     const dialogRef = this.dialog.open(OperatorDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       newOperator => {
@@ -110,48 +110,36 @@ export class OperatorsTableComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = clonedOperatorDTO;
     dialogConfig.minWidth = 500;
-    dialogConfig.minHeight = 150;
-    this.dialog.open(OperatorDialogComponent, dialogConfig);
-  }
-}
+    dialogConfig.minHeight =600;
+    const dialogRef = this.dialog.open(OperatorDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      updateOperator => {
+        delete updateOperator.title;
+        delete updateOperator.password;
+        const _id = updateOperator._id;
+        delete updateOperator._id;
+        console.log("Dialog output:", updateOperator);
 
+        this.operatorsService.updateOperator(_id, updateOperator).subscribe(
+          data => {
+            console.log("Update operator succeeded", data);
+            this.snackbar.open('Operator ' + data.name + ' successfully updated', null, {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            this.getOperators();
+          },
+          error => {
+            console.error("Error updating Operator");
+            this.snackbar.open('Problem updating Operator', 'Ok', {
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            return Observable.throw(error);
+          });
+      });
 
-export interface SampleElement {
-  username: string;
-  age: string
-  title: string;
-}
-
-const SAMPLE_DATA: SampleElement[] = [
-
-  {
-    'username': 'jonny',
-    'age': '60',
-    'title': 'CEO'
-  },
-  {
-    'username': 'shlomo',
-    'age': '55',
-    'title': 'deputy CEO'
-  },
-  {
-    'username': 'george',
-    'age': '50',
-    'title': 'RandD Head'
-  }
-];
-
-
-export class ExampleDataSource extends DataSource<SampleElement> {
-  /** Stream of data that is provided to the table. */
-  data: BehaviorSubject<SampleElement[]> = new BehaviorSubject<SampleElement[]>(SAMPLE_DATA);
-
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<SampleElement[]> {
-    return this.data;
-  }
-
-  disconnect() {
   }
 }
 
