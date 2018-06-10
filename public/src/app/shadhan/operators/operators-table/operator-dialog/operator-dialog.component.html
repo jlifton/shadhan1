@@ -4,12 +4,12 @@
   <div class="result" fxLayout="column">
     <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
       <mat-form-field fxFlex>
-        <input matInput formControlName="name" placeholder="Operator Name"  type="text">
+        <input matInput required formControlName="name" placeholder="Operator Name"  type="text">
       </mat-form-field>
       <mat-form-field fxFlex>
         <!-- <input matInput formControlName="type" placeholder="Type" type="text"> -->
 
-        <mat-select formControlName="type"  [(value)]="type" placeholder="Type" >
+        <mat-select required formControlName="type"  [(value)]="type" placeholder="Type" >
           <mat-option>None</mat-option>
           <mat-option value="ADMIN">Administrator</mat-option>
           <mat-option value="SHADHAN">Shadhan</mat-option>
@@ -20,10 +20,10 @@
       </mat-form-field>
     </div>
     <mat-form-field>
-      <input matInput formControlName="phone" placeholder="Phone" type="text">
+      <input matInput required formControlName="phone" placeholder="Phone" type="text">
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="email" placeholder="Email" type="text">
+      <input matInput required formControlName="email" placeholder="Email" type="text">
     </mat-form-field>
     <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
       <mat-form-field fxFlex>
@@ -39,7 +39,7 @@
 
     <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
       <mat-form-field fxFlex>
-        <input matInput formControlName="username" placeholder="User Name"  type="text">
+        <input matInput required formControlName="username" placeholder="User Name"  type="text">
       </mat-form-field>
 
         <mat-form-field fxFlex>
@@ -56,6 +56,7 @@
 <div fxLayout="row" fxLayoutAlign="end">
   <mat-dialog-actions>
     <button class="mat-raised-button"(click)="close()">Close</button>
-    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+    <button class="mat-raised-button mat-primary"(click)="save()" [disabled]="form.invalid">Save</button>
+
   </mat-dialog-actions>
 </div>
