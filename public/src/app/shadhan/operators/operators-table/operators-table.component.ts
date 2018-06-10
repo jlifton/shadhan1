@@ -1,10 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatDialogConfig, MatSnackBar, MatTableDataSource} from "@angular/material";
-import {Customer} from "../../../demo/tables/all-in-one-table/customer-create-update/customer.model";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatDialogConfig, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
 import {DataSource} from "@angular/cdk/collections";
 import {BehaviorSubject} from "rxjs";
 import {Observable} from "rxjs";
-import {LoginService} from "../../login/login.service";
 import {OperatorsService} from "./operators.service";
 import {OperatorDTO} from "./operator.data";
 import {OperatorDialogComponent} from "./operator-dialog/operator-dialog.component";
@@ -17,8 +15,6 @@ import {OperatorDialogComponent} from "./operator-dialog/operator-dialog.compone
 export class OperatorsTableComponent implements OnInit {
   rows: any[];
   operators: OperatorDTO[] = new Array<OperatorDTO>();
-
-  //dataSource = new ExampleDataSource();
   dataSource = new OperatorsDataSource();
 
   constructor(private operatorsService: OperatorsService,
@@ -34,7 +30,7 @@ export class OperatorsTableComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = newOperatorDTO;
     dialogConfig.minWidth = 500;
-    dialogConfig.minHeight = 600;
+    dialogConfig.minHeight = 650;
     const dialogRef = this.dialog.open(OperatorDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       newOperator => {
@@ -63,7 +59,6 @@ export class OperatorsTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.dataSource = new MatTableDataSource();
     this.getOperators();
   }
 
@@ -110,7 +105,7 @@ export class OperatorsTableComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = clonedOperatorDTO;
     dialogConfig.minWidth = 500;
-    dialogConfig.minHeight =600;
+    dialogConfig.minHeight =650;
     const dialogRef = this.dialog.open(OperatorDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       updateOperator => {
