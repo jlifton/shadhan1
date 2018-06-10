@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {OperatorDTO} from "../operator.data";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'fury-operator-dialog',
@@ -14,6 +14,7 @@ export class OperatorDialogComponent implements OnInit {
   title: string;
   types: {};
   isNew = true;
+  emailPattern: string = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
 
   constructor(
     private fb: FormBuilder,
@@ -25,20 +26,19 @@ export class OperatorDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title = this.isNew ? 'New Operator': 'Modify Operator';
+    this.title = this.isNew ? 'New Operator' : 'Modify Operator';
     this.form = this.fb.group({
       title: [this.title, []],
-      name: [this.operatorDTO.name, []],
-      type: [this.operatorDTO.type, []],
-      phone: [this.operatorDTO.phone, []],
-      email: [this.operatorDTO.email, []],
-      street: [this.operatorDTO.street, []],
-      city: [this.operatorDTO.city, []],
-      country: [this.operatorDTO.country, []],
-      username: [this.operatorDTO.username, []],
-      //password: [this.operatorDTO.password, []],
-      password: new FormControl({ value: this.operatorDTO.password, disabled: !this.isNew }),
-      notes: [this.operatorDTO.notes, []],
+      name: [this.operatorDTO.name, [Validators.required, Validators.minLength(5),  Validators.maxLength(50)]],
+      type: [this.operatorDTO.type, [Validators.required]],
+      phone: [this.operatorDTO.phone, [Validators.required,  Validators.maxLength(64)]],
+      email: [this.operatorDTO.email, [Validators.required, Validators.email,  Validators.maxLength(255)]],
+      street: [this.operatorDTO.street, [ Validators.maxLength(255)]],
+      city: [this.operatorDTO.city, [ Validators.maxLength(255)]],
+      country: [this.operatorDTO.country, [ Validators.maxLength(255)]],
+      username: [this.operatorDTO.username, [Validators.required, Validators.minLength(6)]],
+      password: new FormControl({value: this.operatorDTO.password, disabled: !this.isNew}, [Validators.required, Validators.minLength(6), Validators.maxLength(64)]),
+      notes: [this.operatorDTO.notes, [Validators.maxLength(512)]],
     });
   }
 
