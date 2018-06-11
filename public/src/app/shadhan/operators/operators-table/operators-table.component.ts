@@ -1,7 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
-import {DataSource} from "@angular/cdk/collections";
-import {BehaviorSubject} from "rxjs";
 import {Observable} from "rxjs";
 import {OperatorsService} from "./operators.service";
 import {OperatorDTO} from "./operator.data";
@@ -15,13 +13,12 @@ import {OperatorDialogComponent} from "./operator-dialog/operator-dialog.compone
 export class OperatorsTableComponent implements OnInit {
   rows: any[];
   operators: OperatorDTO[] = new Array<OperatorDTO>();
-  dataSource = new OperatorsDataSource();
+  dataSource: MatTableDataSource < OperatorDTO > = null;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private operatorsService: OperatorsService,
               private snackbar: MatSnackBar,
-              public dialog: MatDialog) {
-
-  }
+              public dialog: MatDialog) {}
 
   createOperator() {
     const dialogConfig = new MatDialogConfig();
@@ -64,9 +61,11 @@ export class OperatorsTableComponent implements OnInit {
 
   getOperators() {
     this.operatorsService.getOperators().subscribe(
-      data => {
+      (data: OperatorDTO[] )=> {
        this.operators = data;
-       this.dataSource.data.next(this.operators);
+       this.dataSource = new MatTableDataSource(< OperatorDTO[] > this.operators);
+       this.sort.active = 'name';
+       this.dataSource.sort = this.sort;
       },
       error => {
         console.error("Error getting Operators");
@@ -137,17 +136,3 @@ export class OperatorsTableComponent implements OnInit {
 
   }
 }
-
-export class OperatorsDataSource implements DataSource<OperatorDTO> {
-  /** Stream of data that is provided to the table. */
-  data: BehaviorSubject<OperatorDTO[]> = new BehaviorSubject<OperatorDTO[]>([]);
-
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<OperatorDTO[]> {
-    return this.data.asObservable();
-  }
-
-  disconnect() {
-  }
-}
-
