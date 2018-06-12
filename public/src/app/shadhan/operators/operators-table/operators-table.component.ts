@@ -72,7 +72,7 @@ export class OperatorsTableComponent implements OnInit {
         return Observable.throw(error);
       }
     );
-  };
+  };  
 
   deleteOperator(row) {
     if(confirm("Delete Operator "+row.name + ' ?')) {
