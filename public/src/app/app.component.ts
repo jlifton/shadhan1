@@ -58,7 +58,12 @@ export class AppComponent {
       icon: 'assignment',
       position: 30
     });
-
+    menu.push({
+      name: 'Singles',
+      routeOrFunction: 'singles/singles-table',
+      icon: 'assignment',
+      position: 32
+    });
     menu.push({
       name: 'Operators',
       routeOrFunction: 'operators/operators-table',
