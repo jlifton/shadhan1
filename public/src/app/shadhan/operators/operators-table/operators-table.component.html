@@ -63,5 +63,6 @@
         <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'phone', 'email', 'actions']" (click)="editOperator(row)" class="clickable"></tr>
       </table>
     </div>
+    <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
   </div>
 </div>

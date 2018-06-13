@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatDialogConfig, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
 import {Observable} from "rxjs";
 import {OperatorsService} from "./operators.service";
 import {OperatorDTO} from "./operator.data";
@@ -14,6 +14,9 @@ export class OperatorsTableComponent implements OnInit {
   rows: any[];
   operators: OperatorDTO[] = new Array<OperatorDTO>();
   dataSource: MatTableDataSource < OperatorDTO > = null;
+  pageSize = 10;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private operatorsService: OperatorsService,
@@ -66,13 +69,14 @@ export class OperatorsTableComponent implements OnInit {
        this.dataSource = new MatTableDataSource(< OperatorDTO[] > this.operators);
        this.sort.active = 'name';
        this.dataSource.sort = this.sort;
+       this.dataSource.paginator = this.paginator
       },
       error => {
         console.error("Error getting Operators");
         return Observable.throw(error);
       }
     );
-  };  
+  };
 
   deleteOperator(row) {
     if(confirm("Delete Operator "+row.name + ' ?')) {
