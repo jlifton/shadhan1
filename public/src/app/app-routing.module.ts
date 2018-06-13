@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
 import {AuthGuardService} from "./shadhan/auth/auth.service";
-import {OperatorsTableModule} from "./shadhan/operators/operators-table/operators-table.module";
 
 const routes: Routes = [
   {
@@ -81,6 +80,11 @@ const routes: Routes = [
         path: 'operators/operators-table',
         canActivate: [AuthGuardService],
         loadChildren: 'app/shadhan/operators/operators-table/operators-table.module#OperatorsTableModule',
+      },
+      {
+        path: 'singles/singles-table',
+        //canActivate: [AuthGuardService],
+        loadChildren: 'app/shadhan/singles/singles-table/singles-table.module#SinglesTableModule',
       },
       {
         path: 'drag-and-drop',
