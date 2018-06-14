@@ -7,6 +7,7 @@ import {SinglesTableComponent} from "./singles-table.component";
 import {PageModule} from "../../../core/common/page/page.module";
 import {MaterialModule} from "../../../core/common/material-components.module";
 import {BreadcrumbsModule} from "../../../core/breadcrumbs/breadcrumbs.module";
+import {SinglesService} from "./singles.service";
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import {BreadcrumbsModule} from "../../../core/breadcrumbs/breadcrumbs.module";
     BreadcrumbsModule
   ],
   declarations: [SinglesTableComponent],
-  providers: [],//[SinglesService],
+  providers: [SinglesService],
   exports: [SinglesTableComponent]//,
   //entryComponents: [OperatorDialogComponent]
 })

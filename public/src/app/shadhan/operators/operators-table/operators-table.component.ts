@@ -69,7 +69,8 @@ export class OperatorsTableComponent implements OnInit {
        this.dataSource = new MatTableDataSource(< OperatorDTO[] > this.operators);
        this.sort.active = 'name';
        this.dataSource.sort = this.sort;
-       this.dataSource.paginator = this.paginator
+       this.dataSource.paginator = this.paginator;
+       this.dataSource.filter ='Jonny';
       },
       error => {
         console.error("Error getting Operators");
