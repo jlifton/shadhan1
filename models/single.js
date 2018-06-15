@@ -68,7 +68,7 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         },
         primaryActivity: {
             type: String,
-            enum : ['Working', 'Learning', 'Koveah Itim'],
+            enum : ['Working', 'Learning', 'Koveah Itim', 'Other'],
             required: true
         }
     },
@@ -185,6 +185,11 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         type: Boolean,
         required: true,
         default: true
+    },
+    comments: {
+        type: String,
+        required: false,
+        maxlength: 512
     }
 }));
 
