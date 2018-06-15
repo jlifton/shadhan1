@@ -22,4 +22,19 @@ export class SinglesService {
   getSingles(): Observable<SingleDTO[]> {
     return this.http.get<SingleDTO[]>('http://localhost:3000/api/singles', httpOptions);
   };
+
+  deleteSingle(_id): Observable<SingleDTO> {
+    const deleteSingleUrl = 'http://localhost:3000/api/singles/' + _id;
+    return this.http.delete<SingleDTO>(deleteSingleUrl, httpOptions);
+  }
+
+  createSingle(newSingle: SingleDTO): Observable<SingleDTO> {
+    return this.http.post<SingleDTO>('http://127.0.0.1:3000/api/singles', newSingle, httpOptions);
+  }
+
+  updateSingle(_id, updateSingle: SingleDTO): Observable<SingleDTO> {
+    const updateSingleUrl = 'http://localhost:3000/api/single/' + _id;
+    const updateSingleStringified = JSON.stringify(updateSingle);
+    return this.http.put<SingleDTO>(updateSingleUrl, updateSingleStringified, httpOptions);
+  }
 }
