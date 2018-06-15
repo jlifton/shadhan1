@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatDialogModule, MatSortModule} from "@angular/material";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";;
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SinglesTableRoutingModule} from "./singles-table-routing.module";
 import {SinglesTableComponent} from "./singles-table.component";
 import {PageModule} from "../../../core/common/page/page.module";
