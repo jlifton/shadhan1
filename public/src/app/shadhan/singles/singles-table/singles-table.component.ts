@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatSnackBar, MatTableDataSource} from "@angular/material";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
 import {SinglesService} from "./singles.service";
 import {Observable} from "rxjs/index";
 import {SingleDTO} from "./single.data";
@@ -11,6 +11,13 @@ import {OperatorDTO} from "../../operators/operators-table/operator.data";
   styleUrls: ['./singles-table.component.scss']
 })
 export class SinglesTableComponent implements OnInit {
+  rows: SingleDTO[];
+  singles: SingleDTO[] = new Array<SingleDTO>();
+  dataSource: MatTableDataSource < SingleDTO > = null;
+  pageSize = 10;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private singlesService: SinglesService,
               private snackbar: MatSnackBar,
@@ -23,15 +30,14 @@ export class SinglesTableComponent implements OnInit {
   getSingles() {
     this.singlesService.getSingles().subscribe(
       (data: SingleDTO[] )=> {
-        const x = 0;
-        /**
-        this.operators = data;
-        this.dataSource = new MatTableDataSource(< OperatorDTO[] > this.operators);
-        this.sort.active = 'name';
+        this.singles = data;
+        this.dataSource = new MatTableDataSource(< SingleDTO[] > this.singles);
+        this.sort.active = 'identity.lastName';
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.dataSource.filter ='Jonny';
-        **/
+        //this.dataSource.filter ='Jonny';
+
+
       },
       error => {
         console.error("Error getting Singles");
@@ -40,4 +46,16 @@ export class SinglesTableComponent implements OnInit {
     );
   };
 
+  createSingle() {
+    alert('Create Single');
+  }
+
+  deleteSingle(row) {
+    alert('Delete Single');
+
+  }
+
+  editSingle(row: SingleDTO) {
+    alert('Edit Single');
+  }
 }
