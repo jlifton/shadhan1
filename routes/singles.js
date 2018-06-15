@@ -75,7 +75,8 @@ router.post('/', async(req, res) => {
             email: req.body.source.email,
             phone: req.body.source.phone
         },
-        visible: req.body.visible
+        visible: req.body.visible,
+        comments: req.body.comments
     });
 
     await single.save();
@@ -146,7 +147,8 @@ router.put('/:id', async(req, res) => {
                 email: req.body.source.email,
                 phone: req.body.source.phone
             },
-            visible: req.body.visible
+            visible: req.body.visible,
+            comments: req.body.comments
         },
         function (err, result) {
             const x = '';
