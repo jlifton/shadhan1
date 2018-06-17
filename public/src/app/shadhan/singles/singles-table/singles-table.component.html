@@ -2,6 +2,7 @@
   <fury-breadcrumbs current="Singles" [crumbs]="['Tables']"></fury-breadcrumbs>
 
   <div class="list-table">
+    <fury-list name="Singles" (filterChange)="onFilterChange($event)">
     <div class="actions">
       <button class="create" (click)="createSingle()" type="button"  style="float:right" mat-mini-fab color="primary">
         <mat-icon>add</mat-icon>
@@ -109,6 +110,8 @@
         <tr mat-row *matRowDef="let row; columns: ['identity.lastName', 'identity.firstName', 'religioEthnic.hashkafa', 'religioEthnic.ethnicity', 'identity.age', 'identity.maritalStatus', 'contact.primaryPhone', 'religioEthnic.primaryActivity','occupation', 'physical.smoker', 'comments', 'actions']" (click)="editSingle(row)" class="clickable"></tr>
       </table>
     </div>
+
     <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+    </fury-list>
   </div>
 </div>
