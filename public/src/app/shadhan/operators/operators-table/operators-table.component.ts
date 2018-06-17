@@ -14,7 +14,7 @@ export class OperatorsTableComponent implements OnInit {
   rows: any[];
   operators: OperatorDTO[] = new Array<OperatorDTO>();
   dataSource: MatTableDataSource < OperatorDTO > = null;
-  pageSize = 10;
+  pageSize = 7;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
