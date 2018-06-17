@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
               });
 
               this.authGuardService.setAuthenticated(token, resp.body);
-              this.router.navigate(['/']);
+              this.router.navigate(['singles/singles-table']);
             },
           err => {
             this.clearCachedFields();
