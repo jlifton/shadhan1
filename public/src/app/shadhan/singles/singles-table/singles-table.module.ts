@@ -8,6 +8,7 @@ import {PageModule} from "../../../core/common/page/page.module";
 import {MaterialModule} from "../../../core/common/material-components.module";
 import {BreadcrumbsModule} from "../../../core/breadcrumbs/breadcrumbs.module";
 import {SinglesService} from "./singles.service";
+import {ListModule} from "../../../core/common/list/list.module";
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import {SinglesService} from "./singles.service";
     MatDialogModule,
     MatSortModule,
     ReactiveFormsModule,
+    ListModule,
     PageModule,
     BreadcrumbsModule
   ],
