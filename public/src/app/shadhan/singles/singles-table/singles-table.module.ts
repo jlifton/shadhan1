@@ -9,6 +9,7 @@ import {MaterialModule} from "../../../core/common/material-components.module";
 import {BreadcrumbsModule} from "../../../core/breadcrumbs/breadcrumbs.module";
 import {SinglesService} from "./singles.service";
 import {ListModule} from "../../../core/common/list/list.module";
+import { SingleDialogComponent } from './single-dialog/single-dialog.component';
 
 @NgModule({
   imports: [
@@ -23,10 +24,10 @@ import {ListModule} from "../../../core/common/list/list.module";
     PageModule,
     BreadcrumbsModule
   ],
-  declarations: [SinglesTableComponent],
+  declarations: [SinglesTableComponent, SingleDialogComponent],
   providers: [SinglesService],
-  exports: [SinglesTableComponent]//,
-  //entryComponents: [OperatorDialogComponent]
+  exports: [SinglesTableComponent],
+  entryComponents: [SingleDialogComponent]
 })
 export class SinglesTableModule { }
 

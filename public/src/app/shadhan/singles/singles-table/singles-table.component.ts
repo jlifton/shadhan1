@@ -1,9 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
 import {SinglesService} from "./singles.service";
 import {Observable} from "rxjs/index";
 import {SingleDTO} from "./single.data";
 import {OperatorDTO} from "../../operators/operators-table/operator.data";
+import {OperatorDialogComponent} from "../../operators/operators-table/operator-dialog/operator-dialog.component";
+import {SingleDialogComponent} from "./single-dialog/single-dialog.component";
 
 @Component({
   selector: 'fury-singles-table',
@@ -91,7 +93,46 @@ export class SinglesTableComponent implements OnInit {
   }
 
   createSingle() {
-    alert('Create Single');
+    const dialogConfig = new MatDialogConfig();
+    let newSingleDTO = new SingleDTO(null);
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = newSingleDTO;
+    //dialogConfig.minWidth = 500;
+   // dialogConfig.minHeight = 650;
+
+    const dialogRef = this.dialog.open(SingleDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      newSingle => {
+      //  delete newSingle.title;
+       // console.log("Dialog output:", newSingle);
+/**
+        this.operatorsService.createOperator(newOperator).subscribe(
+          data => {
+            console.log("Create operator succeeded", data);
+            this.snackbar.open('Operator ' + data.name + ' successfully added', null, {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            this.getOperators();
+          },
+          error => {
+            console.error("Error creating Operator");
+            this.snackbar.open('Problem creating Operator', 'Ok', {
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            return Observable.throw(error);
+          });
+ **/
+      });
+
+
+
+
+
+
   }
 
   deleteSingle(row) {
@@ -100,8 +141,45 @@ export class SinglesTableComponent implements OnInit {
   }
 
   editSingle(row: SingleDTO) {
-    alert('Edit Single');
+    const dialogConfig = new MatDialogConfig();
+    let clonedSingleDTO = new SingleDTO(row);
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = clonedSingleDTO;
+    //dialogConfig.minWidth = 850;
+    //dialogConfig.minHeight =600;
+    const dialogRef = this.dialog.open(SingleDialogComponent, dialogConfig);
+    /**
+    dialogRef.afterClosed().subscribe(
+      updateOperator => {
+        delete updateOperator.title;
+        delete updateOperator.password;
+        const _id = updateOperator._id;
+        delete updateOperator._id;
+        console.log("Dialog output:", updateOperator);
+
+        this.operatorsService.updateOperator(_id, updateOperator).subscribe(
+          data => {
+            console.log("Update operator succeeded", data);
+            this.snackbar.open('Operator ' + data.name + ' successfully updated', null, {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            this.getOperators();
+          },
+          error => {
+            console.error("Error updating Operator");
+            this.snackbar.open('Problem updating Operator', 'Ok', {
+              verticalPosition: 'top',
+              horizontalPosition: 'end'
+            });
+            return Observable.throw(error);
+          });
+      });
+**/
   }
+
 
 
   onFilterChange(value) {

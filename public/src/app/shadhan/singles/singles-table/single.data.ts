@@ -43,6 +43,7 @@ export class SingleDTO {
   specialNeeds:  string;
   personalityRequirements:  string;
   pastEducation:  string;
+  comments:  string;
   dateEntered:  string;
 
   constructor(content: any) {
@@ -65,7 +66,7 @@ export class SingleDTO {
 
     this.residence = {
       city: '',
-      country: ''
+      country: 'Israel'
     };
     this.physical = {
       smoker: false,
@@ -91,6 +92,7 @@ export class SingleDTO {
     this.specialNeeds = '';
     this.personalityRequirements = '';
     this.pastEducation = '';
+    this.comments = '';
     this.dateEntered = '';
 
     if ((content !== undefined) &&
@@ -141,6 +143,7 @@ export class SingleDTO {
       this.specialNeeds = content.specialNeeds;
       this.personalityRequirements = content.personalityRequirements;
       this.pastEducation = content.pastEducation;
+      this.comments = content.comments;
       this.dateEntered = content.dateEntered;
     }
   }
