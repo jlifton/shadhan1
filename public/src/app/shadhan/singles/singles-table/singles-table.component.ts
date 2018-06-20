@@ -104,35 +104,29 @@ export class SinglesTableComponent implements OnInit {
     const dialogRef = this.dialog.open(SingleDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       newSingle => {
-      //  delete newSingle.title;
-       // console.log("Dialog output:", newSingle);
-/**
-        this.operatorsService.createOperator(newOperator).subscribe(
+        delete newSingle.title;
+        console.log("Dialog output:", newSingle);
+
+        this.singlesService.createSingle(newSingle).subscribe(
           data => {
-            console.log("Create operator succeeded", data);
-            this.snackbar.open('Operator ' + data.name + ' successfully added', null, {
+            console.log("Create single succeeded", data);
+            this.snackbar.open('Single ' + data.identity.firstName  + ' ' + data.identity.lastName + ' successfully added', null, {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
-            this.getOperators();
+            this.getSingles();
           },
           error => {
-            console.error("Error creating Operator");
-            this.snackbar.open('Problem creating Operator', 'Ok', {
+            console.error("Error creating Single");
+            this.snackbar.open('Problem creating Single', 'Ok', {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
             return Observable.throw(error);
           });
- **/
+
       });
-
-
-
-
-
-
   }
 
   deleteSingle(row) {
