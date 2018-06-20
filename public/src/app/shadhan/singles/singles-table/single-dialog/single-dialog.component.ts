@@ -17,6 +17,7 @@ export class SingleDialogComponent implements OnInit {
   singleDTO: SingleDTO;
   title: string;
   isNew = true;
+  commitLabel: string;
 
   constructor(private fb: FormBuilder,
               private cd: ChangeDetectorRef,
@@ -28,6 +29,8 @@ export class SingleDialogComponent implements OnInit {
       this.isNew = false;
   }
   ngOnInit() {
+    this.title = this.isNew ? 'New Single' : 'Modify Single';
+    this.commitLabel =  this.isNew ? 'CREATE SINGLE' : 'MODIFY SINGLE';
     this.identityFormGroup = this.fb.group({
       lastName: [this.singleDTO.identity.lastName, [Validators.required, Validators.minLength(5),  Validators.maxLength(50)]],
       firstName: [this.singleDTO.identity.firstName, [Validators.required, Validators.minLength(5),  Validators.maxLength(50)]],
@@ -82,9 +85,11 @@ export class SingleDialogComponent implements OnInit {
 
   }
 
-  submit() {
-    this.snackbar.open('Hooray! You successfully created a Single.', null, {
-      duration: 5000
-    });
+ submit() {
+    const x = this.isNew;
+  // if (!this.isNew)
+  //   this.form.value._id = this.singleDTO._id;
+  // this.dialogRef.close(this.form.value);
+
   }
 }

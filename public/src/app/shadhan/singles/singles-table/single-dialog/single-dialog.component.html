@@ -1,5 +1,5 @@
+<h2 mat-dialog-title>{{title}}</h2>
 <div class="form-wizard" furyPage furyScrollbar fxFlex="grow" fxLayout="column" fxLayoutAlign="start center">
-
   <mat-horizontal-stepper #horizontalStepper="matHorizontalStepper" [linear]="true">
     <mat-step [stepControl]="identityFormGroup">
       <form [formGroup]="identityFormGroup">
@@ -51,6 +51,13 @@
           <button mat-raised-button matStepperNext color="primary" [disabled]="identityFormGroup.invalid">
             NEXT
           </button>
+
+          <div *ngIf="!isNew" style="padding-left:40px">
+            <button  mat-raised-button matStepperNext color="primary" (click)="submit()"
+                    [disabled]="identityFormGroup.invalid" >
+              {{commitLabel}}
+            </button>
+          </div>
         </div>
       </form>
     </mat-step>
@@ -103,6 +110,12 @@
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
           <button mat-raised-button matStepperNext color="primary" [disabled]="backgroundFormGroup.invalid">NEXT
           </button>
+          <div *ngIf="!isNew"  style="padding-left:40px">
+            <button mat-raised-button matStepperNext color="primary" (click)="submit()"
+                    [disabled]="backgroundFormGroup.invalid">
+              {{commitLabel}}
+            </button>
+          </div>
         </div>
       </form>
     </mat-step>
@@ -159,6 +172,12 @@
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
           <button mat-raised-button matStepperNext color="primary" [disabled]="residenceContactFormGroup.invalid">NEXT
           </button>
+          <div *ngIf="!isNew"  style="padding-left:40px">
+            <button mat-raised-button matStepperNext color="primary" (click)="submit()"
+                  [disabled]="residenceContactFormGroup.invalid">
+              {{commitLabel}}
+            </button>
+          </div>
         </div>
       </form>
     </mat-step>
@@ -199,7 +218,14 @@
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
           <button mat-raised-button matStepperNext color="primary" [disabled]="physicalFormGroup.invalid">NEXT
           </button>
+          <div *ngIf="!isNew"  style="padding-left:40px">
+            <button mat-raised-button matStepperNext color="primary" (click)="submit()"
+                    [disabled]="residenceContactFormGroup.invalid">
+              {{commitLabel}}
+            </button>
+          </div>
         </div>
+
       </form>
     </mat-step>
 
@@ -232,10 +258,12 @@
         </div>
         <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
-          <button mat-raised-button matStepperNext color="primary" (click)="submit()"
-                  [disabled]="sourceFormGroup.invalid">
-            CREATE SINGLE
-          </button>
+          <div style="padding-left:40px">
+            <button mat-raised-button matStepperNext color="primary" (click)="submit()"
+                    [disabled]="sourceFormGroup.invalid">
+              {{commitLabel}}
+            </button>
+          </div>
         </div>
       </form>
     </mat-step>
