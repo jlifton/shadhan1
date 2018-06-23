@@ -32,15 +32,12 @@ export class SingleDialogComponent implements OnInit {
     this.title = this.isNew ? 'New Single' : 'Modify Single';
     this.commitLabel =  this.isNew ? 'CREATE SINGLE' : 'MODIFY SINGLE';
     this.identityFormGroup = this.fb.group({
-      lastName: [this.singleDTO.identity.lastName, [Validators.required, Validators.minLength(5),  Validators.maxLength(50)]],
-      firstName: [this.singleDTO.identity.firstName, [Validators.required, Validators.minLength(5),  Validators.maxLength(50)]],
+      lastName: [this.singleDTO.identity.lastName, [Validators.required,  Validators.maxLength(64)]],
+      firstName: [this.singleDTO.identity.firstName, [Validators.required,  Validators.maxLength(50)]],
       sex: [this.singleDTO.identity.sex, [Validators.required]],
       age: [this.singleDTO.identity.age, [Validators.required, Validators.min(16), Validators.max(120)]],
       maritalStatus: [this.singleDTO.identity.maritalStatus, [Validators.required]]
-      //name: [null, Validators.required],
-      //email: [null, Validators.required],
-      //phonePrefix: [this.phonePrefixOptions[3]],
-      //phone: [],
+
     });
 
     this.backgroundFormGroup = this.fb.group({
@@ -48,34 +45,35 @@ export class SingleDialogComponent implements OnInit {
       ethnicity: [this.singleDTO.religioEthnic.ethnicity, [Validators.required]],
       primaryActivity: [this.singleDTO.religioEthnic.primaryActivity, [Validators.required]],
       occupation: [this.singleDTO.occupation, [Validators.required]],
-      ethnicityAdditional: [this.singleDTO.religioEthnic.ethnicityAdditional, []],
+      ethnicityAdditional: [this.singleDTO.religioEthnic.ethnicityAdditional, [Validators.maxLength(255)]],
       cohen: [this.singleDTO.religioEthnic.cohen, []],
       convert: [this.singleDTO.religioEthnic.convert, []]
     });
 
     this.residenceContactFormGroup = this.fb.group({
-      city: [this.singleDTO.residence.city, []],
-      country: [this.singleDTO.residence.country, []],
+      city: [this.singleDTO.residence.city, [Validators.maxLength(128)]],
+      country: [this.singleDTO.residence.country, [Validators.maxLength(128)]],
       name: [this.singleDTO.contact.name, [Validators.required]],
-      relationship: [this.singleDTO.contact.relationship, []],
+      relationship: [this.singleDTO.contact.relationship, [Validators.maxLength(128)]],
       primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required]],
       secondaryPhone: [this.singleDTO.contact.secondaryPhone, []],
-      email: [this.singleDTO.contact.email, []]
+      email: [this.singleDTO.contact.email, [Validators.maxLength(128)]]
     });
 
     this.physicalFormGroup = this.fb.group({
       height: [this.singleDTO.physical.height, []],
-      build: [this.singleDTO.physical.build, []],
-      description: [this.singleDTO.physical.description, []],
-      personalityRequirements: [this.singleDTO.personalityRequirements, []],
+      build: [this.singleDTO.physical.build, [Validators.maxLength(128)]],
+      description: [this.singleDTO.physical.description, [Validators.maxLength(255)]],
+      personalityRequirements: [this.singleDTO.personalityRequirements, [Validators.maxLength(255)]],
+      specialNeeds: [this.singleDTO.specialNeeds, [Validators.maxLength(255)]],
       smoker: [this.singleDTO.physical.smoker, []]
     });
 
     this.sourceFormGroup = this.fb.group({
-      name: [this.singleDTO.source.name, []],
-      email: [this.singleDTO.source.email, []],
-      phone: [this.singleDTO.source.phone, []],
-      comments: [this.singleDTO.comments, []]
+      name: [this.singleDTO.source.name, [Validators.maxLength(128)]],
+      email: [this.singleDTO.source.email, [Validators.maxLength(128)]],
+      phone: [this.singleDTO.source.phone, [Validators.maxLength(128)]],
+      comments: [this.singleDTO.comments, [Validators.maxLength(512)]]
     });
 
   }
@@ -107,22 +105,13 @@ export class SingleDialogComponent implements OnInit {
    this.singleDTO.physical.build = this.physicalFormGroup.value.build;
    this.singleDTO.physical.description = this.physicalFormGroup.value.description;
    this.singleDTO.personalityRequirements = this.physicalFormGroup.value.personalityRequirements;
+   this.singleDTO.specialNeeds = this.physicalFormGroup.value.specialNeeds;
    this.singleDTO.physical.smoker = this.physicalFormGroup.value.smoker;
 
    this.singleDTO.source.name = this.sourceFormGroup.value.name;
    this.singleDTO.source.email = this.sourceFormGroup.value.email;
    this.singleDTO.source.phone = this.sourceFormGroup.value.phone;
    this.singleDTO.comments = this.sourceFormGroup.value.comments;
-
-   //let formValues: Array<Object> = [this.identityFormGroup.value,
-   //   this.backgroundFormGroup.value,
-   //   this.residenceContactFormGroup.value,
-   //   this.physicalFormGroup.value,
-   //   this.sourceFormGroup.value];
-
-  // if (!this.isNew)
-  //   this.form.value._id = this.singleDTO._id;
-  // this.dialogRef.close(this.form.value);
 
    this.dialogRef.close(this.singleDTO);
   }
