@@ -33,7 +33,7 @@ export class SinglesService {
   }
 
   updateSingle(_id, updateSingle: SingleDTO): Observable<SingleDTO> {
-    const updateSingleUrl = 'http://localhost:3000/api/single/' + _id;
+    const updateSingleUrl = 'http://localhost:3000/api/singles/' + _id;
     const updateSingleStringified = JSON.stringify(updateSingle);
     return this.http.put<SingleDTO>(updateSingleUrl, updateSingleStringified, httpOptions);
   }
