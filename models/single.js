@@ -75,34 +75,29 @@ const Single = mongoose.model('Single', new mongoose.Schema({
     residence: {
         city: {
             type: String,
-            required: true,
-            minlength: 2,
+            required: false,
             maxlength: 128
         },
         country: {
             type: String,
-            required: true,
-            minlength: 2,
+            required: false,
             maxlength: 128
         }
     },
     physical: {
         height: {
             type: Number,
-            required: true,
-            min: 1.0,
-            max: 3.0
+            required: false,
+            max: 300
         },
         build: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 128
         },
         description: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 255
         },
         smoker: {
@@ -114,26 +109,23 @@ const Single = mongoose.model('Single', new mongoose.Schema({
     personalityRequirements: {
         type: String,
         required: false,
-        minlength: 3,
         maxlength: 255
     },
     pastEducation: {
         type: String,
         required: false,
-        minlength: 3,
         maxlength: 255
     },
     contact: {
         name: {
             type: String,
             required: true,
-            minlength: 3,
+            minlength: 1,
             maxlength: 128
         },
         relationship: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 128
         },
         primaryPhone: {
@@ -145,13 +137,11 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         secondaryPhone: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 64
         },
         email: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 128
         }
     },
@@ -165,19 +155,16 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         name: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 128
         },
         email: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 128
         },
         phone: {
             type: String,
             required: false,
-            minlength: 3,
             maxlength: 128
         }
     },
