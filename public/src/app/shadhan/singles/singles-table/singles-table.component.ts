@@ -104,7 +104,8 @@ export class SinglesTableComponent implements OnInit {
     const dialogRef = this.dialog.open(SingleDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       newSingle => {
-        delete newSingle.title;
+        if (newSingle === undefined)
+          return;
         console.log("Dialog output:", newSingle);
 
         this.singlesService.createSingle(newSingle).subscribe(
@@ -125,12 +126,30 @@ export class SinglesTableComponent implements OnInit {
             });
             return Observable.throw(error);
           });
-
       });
   }
 
-  deleteSingle(row) {
-    alert('Delete Single');
+  deleteSingle(row: SingleDTO) {
+    if(confirm("Delete Single "+ row.identity.firstName + ' ' + row.identity.lastName +' ?')) {
+      this.singlesService.deleteSingle(row._id).subscribe(
+        data => {
+          this.snackbar.open( row.identity.firstName + ' ' + row.identity.lastName + ' deleted', null, {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'end'
+          });
+          this.getSingles();
+        },
+        error => {
+          console.error("Error deleting Single");
+          this.snackbar.open('Problem deleting Single', 'Ok', {
+            verticalPosition: 'top',
+            horizontalPosition: 'end'
+          });
+          return Observable.throw(error);
+        }
+      );
+    }
 
   }
 
@@ -143,35 +162,33 @@ export class SinglesTableComponent implements OnInit {
     //dialogConfig.minWidth = 850;
     //dialogConfig.minHeight =600;
     const dialogRef = this.dialog.open(SingleDialogComponent, dialogConfig);
-    /**
-    dialogRef.afterClosed().subscribe(
-      updateOperator => {
-        delete updateOperator.title;
-        delete updateOperator.password;
-        const _id = updateOperator._id;
-        delete updateOperator._id;
-        console.log("Dialog output:", updateOperator);
 
-        this.operatorsService.updateOperator(_id, updateOperator).subscribe(
+    dialogRef.afterClosed().subscribe(
+      updateSingle => {
+        if (updateSingle === undefined)
+          return;
+
+        console.log("Dialog output:", updateSingle);
+
+        this.singlesService.updateSingle(updateSingle._id, updateSingle).subscribe(
           data => {
-            console.log("Update operator succeeded", data);
-            this.snackbar.open('Operator ' + data.name + ' successfully updated', null, {
+            console.log("Update single succeeded", data);
+            this.snackbar.open('Single ' + data.identity.firstName + ' ' + data.identity.lastName + ' successfully updated', null, {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
-            this.getOperators();
+            this.getSingles();
           },
           error => {
-            console.error("Error updating Operator");
-            this.snackbar.open('Problem updating Operator', 'Ok', {
+            console.error("Error updating Single");
+            this.snackbar.open('Problem updating Single', 'Ok', {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
             return Observable.throw(error);
           });
       });
-**/
   }
 
 
