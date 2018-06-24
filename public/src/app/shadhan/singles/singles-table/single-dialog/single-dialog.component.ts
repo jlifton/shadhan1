@@ -45,6 +45,7 @@ export class SingleDialogComponent implements OnInit {
       ethnicity: [this.singleDTO.religioEthnic.ethnicity, [Validators.required]],
       primaryActivity: [this.singleDTO.religioEthnic.primaryActivity, [Validators.required]],
       occupation: [this.singleDTO.occupation, [Validators.required]],
+      pastEducation: [this.singleDTO.pastEducation, [Validators.maxLength(255)]],
       ethnicityAdditional: [this.singleDTO.religioEthnic.ethnicityAdditional, [Validators.maxLength(255)]],
       cohen: [this.singleDTO.religioEthnic.cohen, []],
       convert: [this.singleDTO.religioEthnic.convert, []]
@@ -89,6 +90,7 @@ export class SingleDialogComponent implements OnInit {
    this.singleDTO.religioEthnic.ethnicity = this.backgroundFormGroup.value.ethnicity;
    this.singleDTO.religioEthnic.primaryActivity = this.backgroundFormGroup.value.primaryActivity;
    this.singleDTO.occupation = this.backgroundFormGroup.value.occupation;
+   this.singleDTO.pastEducation = this.backgroundFormGroup.value.pastEducation;
    this.singleDTO.religioEthnic.ethnicityAdditional = this.backgroundFormGroup.value.ethnicityAdditional;
    this.singleDTO.religioEthnic.cohen = this.backgroundFormGroup.value.cohen;
    this.singleDTO.religioEthnic.convert = this.backgroundFormGroup.value.convert;
