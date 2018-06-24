@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <div class="form-wizard" furyPage furyScrollbar fxFlex="grow" fxLayout="column" fxLayoutAlign="start center">
-  <mat-horizontal-stepper #horizontalStepper="matHorizontalStepper" [linear]="true">
+  <mat-horizontal-stepper #horizontalStepper="matHorizontalStepper" [linear]="isNew">
     <mat-step [stepControl]="identityFormGroup">
       <form [formGroup]="identityFormGroup">
         <ng-template matStepLabel>Identity</ng-template>
@@ -92,12 +92,21 @@
             <mat-radio-button value="Koveah Itim">Koveah Itim</mat-radio-button>
             <mat-radio-button value="Other">Other</mat-radio-button>
           </mat-radio-group>
-          <mat-form-field>
+          <mat-form-field fxFlex="grow">
             <input matInput required formControlName="occupation" placeholder="Occupation / Institute" type="text">
           </mat-form-field>
-          <mat-form-field fxFlex="grow">
-            <input matInput formControlName="ethnicityAdditional" placeholder="Additional Ethnicity">
-          </mat-form-field>
+          <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
+
+            <mat-form-field fxFlex="grow">
+              <input matInput formControlName="pastEducation" placeholder="High School Education">
+              <!-- <mat-hint>First name of Single</mat-hint>-->
+            </mat-form-field>
+            <mat-form-field fxFlex="grow" >
+              <input matInput formControlName="ethnicityAdditional" placeholder="Additional Ethnicity">
+            </mat-form-field>
+          </div>
+
+
           <mat-checkbox class="checkbox" formControlName="cohen">
             Cohen
           </mat-checkbox>
