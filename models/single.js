@@ -6,13 +6,13 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         firstName: {
             type: String,
             required: true,
-            minlength: 5,
+            //minlength: 5,
             maxlength: 50
         },
         lastName: {
             type: String,
             required: true,
-            minlength: 2,
+            //minlength: 2,
             maxlength: 64
         },
         sex: {
@@ -120,7 +120,7 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         name: {
             type: String,
             required: true,
-            minlength: 1,
+            //minlength: 1,
             maxlength: 128
         },
         relationship: {
@@ -131,7 +131,7 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         primaryPhone: {
             type: String,
             required: true,
-            minlength: 3,
+            //minlength: 3,
             maxlength: 64
         },
         secondaryPhone: {
