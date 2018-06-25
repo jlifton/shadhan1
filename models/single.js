@@ -45,7 +45,7 @@ const Single = mongoose.model('Single', new mongoose.Schema({
     religioEthnic: {
         hashkafa: {
             type: String,
-            enum : ['Haredi', 'Dati Leumi', 'Hardal', 'Hiloni'],
+            enum : ['Haredi', 'Dati Leumi', 'Hardal', 'Masorati'],
             required: true
         },
         ethnicity: {
@@ -177,7 +177,10 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         type: String,
         required: false,
         maxlength: 512
-    }
+    },
+    updated: { type: Date,
+        default: Date.now }
+
 }));
 
 function validateSingle(single) {
