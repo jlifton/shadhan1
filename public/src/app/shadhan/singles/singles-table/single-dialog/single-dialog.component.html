@@ -41,7 +41,13 @@
               <mat-radio-button value="Widowed">Widowed</mat-radio-button>
             </mat-radio-group>
           </div>
-        </div>
+
+         <!-- <mat-form-field fxFlex="grow">
+            <mat-placeholder>Last Updated</mat-placeholder>-->
+          <div *ngIf="!isNew">
+            <mat-label>Last Updated {{dateUpdate}}</mat-label>
+          </div>
+          <!-- </mat-form-field> -->
 
         <div class="mat-dialog-actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
           <button mat-button type="button" (click)="horizontalStepper.reset()"
@@ -59,6 +65,7 @@
             </button>
           </div>
         </div>
+        </div>
       </form>
     </mat-step>
 
@@ -74,7 +81,7 @@
             <mat-radio-button value="Haredi">Haredi</mat-radio-button>
             <mat-radio-button value="Dati Leumi">Dati Leumi</mat-radio-button>
             <mat-radio-button value="Hardal">Hardal</mat-radio-button>
-            <mat-radio-button value="Hiloni">Hiloni</mat-radio-button>
+            <mat-radio-button value="Masorati">Masorati</mat-radio-button>
           </mat-radio-group>
 
           <mat-radio-group formControlName="ethnicity" fxLayout="row" fxLayoutGap="16px">
