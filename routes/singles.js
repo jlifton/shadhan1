@@ -76,7 +76,8 @@ router.post('/', async(req, res) => {
             phone: req.body.source.phone
         },
         visible: req.body.visible,
-        comments: req.body.comments
+        comments: req.body.comments,
+        updated: Date.now()
     });
 
     await single.save();
@@ -148,7 +149,8 @@ router.put('/:id', async(req, res) => {
                 phone: req.body.source.phone
             },
             visible: req.body.visible,
-            comments: req.body.comments
+            comments: req.body.comments,
+            updated: Date.now()
         },
         function (err, result) {
             const x = '';
