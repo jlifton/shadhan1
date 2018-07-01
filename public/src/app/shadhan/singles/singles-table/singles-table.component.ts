@@ -33,14 +33,25 @@ export class SinglesTableComponent implements OnInit {
     this.singlesService.getSingles().subscribe(
       (data: SingleDTO[] )=> {
         this.singles = data;
+        let previousFilter = '';
+        let previousActiveSort = 'identity.lastName';
+        if (this.dataSource != null){
+          if (this.dataSource.filter != null){
+            previousFilter = this.dataSource.filter;
+          }
+          previousActiveSort = this.sort.active;
+        }
         this.dataSource = new MatTableDataSource(< SingleDTO[] > this.singles);
-        this.sort.active = 'identity.lastName';
+        this.sort.active = previousActiveSort;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         //this.dataSource.filter ='Jonny';
         this.dataSource.sortingDataAccessor = (item, property) => {
           return this.handleSortAccessor(item, property);
         };
+        if (previousFilter != '') {
+          this.onFilterChange(previousFilter);
+        }
       },
       error => {
         console.error("Error getting Singles");
