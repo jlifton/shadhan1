@@ -45,6 +45,7 @@ export class SingleDTO {
   pastEducation:  string;
   comments:  string;
   dateEntered:  string;
+  updated: Date;
 
   constructor(content: any) {
     this.identity = {
@@ -94,7 +95,7 @@ export class SingleDTO {
     this.pastEducation = '';
     this.comments = '';
     this.dateEntered = '';
-
+    this.updated = new Date();
     if ((content !== undefined) &&
       (content !== null)) {
       this.identity = {
@@ -145,6 +146,7 @@ export class SingleDTO {
       this.pastEducation = content.pastEducation;
       this.comments = content.comments;
       this.dateEntered = content.dateEntered;
+      this.updated = content.updated;
     }
   }
 
