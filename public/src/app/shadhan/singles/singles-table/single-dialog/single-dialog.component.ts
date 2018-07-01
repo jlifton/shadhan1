@@ -29,6 +29,7 @@ export class SingleDialogComponent implements OnInit {
     if (this.singleDTO.identity.lastName !== '')
       this.isNew = false;
   }
+
   ngOnInit() {
     this.dateUpdate = '';
     this.title = this.isNew ? 'New Single' : 'Modify Single';
@@ -128,5 +129,9 @@ export class SingleDialogComponent implements OnInit {
     var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
       d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
     return datestring;
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

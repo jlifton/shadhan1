@@ -202,8 +202,6 @@ export class SinglesTableComponent implements OnInit {
       });
   }
 
-
-
   onFilterChange(value) {
     if (!this.dataSource) {
       return;

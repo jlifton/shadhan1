@@ -50,7 +50,11 @@
           <!-- </mat-form-field> -->
 
         <div class="mat-dialog-actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-          <button mat-button type="button" (click)="horizontalStepper.reset()"
+          <div style="padding-right:40px">
+          <button mat-raised-button type="button"  color="primary" (click)="closeDialog()" >CANCEL
+          </button>
+          </div>
+          <button  mat-raised-button type="button" (click)="horizontalStepper.reset()"
                   [disabled]="identityFormGroup.pristine"
                   color="primary">RESET
           </button>
@@ -59,7 +63,7 @@
           </button>
 
           <div *ngIf="!isNew" style="padding-left:40px">
-            <button  mat-raised-button matStepperNext color="primary" (click)="submit()"
+            <button  mat-raised-button  color="primary" (click)="submit()"
                     [disabled]="identityFormGroup.invalid" >
               {{commitLabel}}
             </button>
@@ -123,6 +127,10 @@
         </div>
 
         <div class="mat-dialog-actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+          <div style="padding-right:40px">
+            <button mat-raised-button type="button"  color="primary"  (click)="closeDialog()" >CANCEL
+            </button>
+          </div>
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
           <button mat-raised-button matStepperNext color="primary" [disabled]="backgroundFormGroup.invalid">NEXT
           </button>
@@ -185,6 +193,10 @@
         </div>
 
         <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+          <div style="padding-right:40px">
+            <button mat-raised-button type="button"  color="primary"  (click)="closeDialog()" >CANCEL
+            </button>
+          </div>
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
           <button mat-raised-button matStepperNext color="primary" [disabled]="residenceContactFormGroup.invalid">NEXT
           </button>
@@ -236,6 +248,10 @@
 
 
           <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+            <div style="padding-right:40px">
+              <button mat-raised-button type="button"  color="primary"   (click)="closeDialog()">CANCEL
+              </button>
+            </div>
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
           <button mat-raised-button matStepperNext color="primary" [disabled]="physicalFormGroup.invalid">NEXT
           </button>
@@ -278,6 +294,10 @@
           </mat-form-field>
         </div>
         <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+          <div style="padding-right:40px">
+            <button mat-raised-button type="button"  color="primary"  (click)="closeDialog()" >CANCEL
+            </button>
+          </div>
           <button mat-button type="button" matStepperPrevious color="primary">PREVIOUS</button>
           <div style="padding-left:40px">
             <button mat-raised-button matStepperNext color="primary" (click)="submit()"
