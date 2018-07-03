@@ -1,7 +1,8 @@
 <div class="user-button" #userButton (furyClickOutside)="onClickOutside()" fxFlex="grow">
     <button class="button" mat-button (click)="toggleDropdown()" [class.open]="isOpen" fxFlex="grow">
     <span fxLayout="row" fxLayoutAlign="start center">
-      <img class="avatar" src="assets/img/avatars/1.jpg">
+     <!-- <img class="avatar" src="assets/img/avatars/1.jpg"> -->
+      <img class="avatar" src="assets/img/avatars/operator.png">
       <span class="name" fxHide fxShow.gt-sm>{{loggedInUser}}</span>
       <mat-icon class="icon" fxHide fxShow.gt-sm>keyboard_arrow_down</mat-icon>
     </span>
