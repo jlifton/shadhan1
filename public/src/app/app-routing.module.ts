@@ -87,6 +87,11 @@ const routes: Routes = [
         loadChildren: 'app/shadhan/singles/singles-table/singles-table.module#SinglesTableModule',
       },
       {
+        path: 'about',
+        //canActivate: [AuthGuardService],
+        loadChildren: 'app/shadhan/about/about.module#AboutModule',
+      },
+      {
         path: 'drag-and-drop',
         loadChildren: 'app/demo/drag-and-drop/drag-and-drop.module#DragAndDropModule'
       },

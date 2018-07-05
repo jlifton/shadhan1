@@ -93,7 +93,7 @@ export class AppComponent {
     });
     menu.push({
       name: 'About',
-      //routeOrFunction: 'operators/operators-table',
+      routeOrFunction: 'about',
       icon: 'favorite',
       position: 32
     });
