@@ -87,6 +87,16 @@ const routes: Routes = [
         loadChildren: 'app/shadhan/singles/singles-table/singles-table.module#SinglesTableModule',
       },
       {
+        path: 'archive',
+        //canActivate: [AuthGuardService],
+        loadChildren: 'app/shadhan/archive/archive.module#ArchiveModule',
+      },
+      {
+        path: 'maintenance',
+        //canActivate: [AuthGuardService],
+        loadChildren: 'app/shadhan/maintenance/maintenance.module#MaintenanceModule',
+      },
+      {
         path: 'about',
         //canActivate: [AuthGuardService],
         loadChildren: 'app/shadhan/about/about.module#AboutModule',

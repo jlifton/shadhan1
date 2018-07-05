@@ -75,13 +75,13 @@ export class AppComponent {
 
     menu.push({
       name: 'Archive',
-      //routeOrFunction: 'operators/operators-table',
+      routeOrFunction: 'archive',
       icon: 'library_books',
       position: 32
     });
     menu.push({
       name: 'Maintenance',
-      //routeOrFunction: 'operators/operators-table',
+      routeOrFunction: 'maintenance',
       icon: 'build',
       position: 32
     });
