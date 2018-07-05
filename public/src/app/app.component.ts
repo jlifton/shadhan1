@@ -86,8 +86,14 @@ export class AppComponent {
       position: 32
     });
     menu.push({
+      name: 'Change Password',
+      routeOrFunction: 'password',
+      icon: 'lock',
+      position: 32
+    });
+    menu.push({
       name: 'Contact',
-      //routeOrFunction: 'operators/operators-table',
+      routeOrFunction: 'contact',
       icon: 'contact_phone',
       position: 32
     });

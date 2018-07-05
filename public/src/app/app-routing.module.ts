@@ -97,6 +97,16 @@ const routes: Routes = [
         loadChildren: 'app/shadhan/maintenance/maintenance.module#MaintenanceModule',
       },
       {
+        path: 'password',
+        //canActivate: [AuthGuardService],
+        loadChildren: 'app/shadhan/password/password.module#PasswordModule',
+      },
+      {
+        path: 'contact',
+        //canActivate: [AuthGuardService],
+        loadChildren: 'app/shadhan/contact/contact.module#ContactModule',
+      },
+      {
         path: 'about',
         //canActivate: [AuthGuardService],
         loadChildren: 'app/shadhan/about/about.module#AboutModule',

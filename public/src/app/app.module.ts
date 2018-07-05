@@ -10,6 +10,8 @@ import { RoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import {FormsModule} from "@angular/forms";
+import { ContactComponent } from './shadhan/contact/contact.component';
+import { PasswordComponent } from './shadhan/password/password.component';
 
 @NgModule({
   declarations: [AppComponent],
