@@ -23,7 +23,7 @@
       <input matInput required formControlName="phone" placeholder="Phone" type="text">
     </mat-form-field>
     <mat-form-field>
-      <input matInput required formControlName="email" placeholder="Email" type="text">
+      <input matInput required formControlName="email" placeholder="Email" type="email">
     </mat-form-field>
     <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
       <mat-form-field fxFlex>
@@ -56,7 +56,7 @@
 <div fxLayout="row" fxLayoutAlign="end">
   <mat-dialog-actions>
     <button class="mat-raised-button"(click)="close()">Close</button>
-    <button class="mat-raised-button mat-primary"(click)="save()" [disabled]="form.invalid">Save</button>
+    <button class="mat-raised-button mat-primary"(click)="save()" [disabled]="form.invalid"> {{commitLabel}}</button>
 
   </mat-dialog-actions>
 </div>

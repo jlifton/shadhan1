@@ -15,6 +15,7 @@ export class OperatorDialogComponent implements OnInit {
   types: {};
   isNew = true;
   emailPattern: string = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
+  commitLabel: string;
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +28,7 @@ export class OperatorDialogComponent implements OnInit {
 
   ngOnInit() {
     this.title = this.isNew ? 'New Operator' : 'Modify Operator';
+    this.commitLabel =  this.isNew ? 'CREATE OPERATOR' : 'MODIFY OPERATOR';
     this.form = this.fb.group({
       title: [this.title, []],
       name: [this.operatorDTO.name, [Validators.required, Validators.minLength(5),  Validators.maxLength(50)]],

@@ -264,4 +264,6 @@ export class SinglesTableComponent implements OnInit {
    //value = value.toLowerCase();
     this.dataSource.filter = value;
   }
+
+
 }

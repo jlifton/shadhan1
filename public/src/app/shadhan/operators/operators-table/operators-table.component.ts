@@ -35,6 +35,17 @@ export class OperatorsTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       newOperator => {
         delete newOperator.title;
+
+        newOperator.name = newOperator.name.trim();
+        newOperator.phone = newOperator.phone.trim();
+        newOperator.email = newOperator.email.trim();
+        newOperator.street = newOperator.street.trim();
+        newOperator.city = newOperator.city.trim();
+        newOperator.country = newOperator.country.trim();
+        newOperator.username = newOperator.username.trim();
+        newOperator.password = newOperator.password.trim();
+        newOperator.notes = newOperator.notes.trim();
+
         console.log("Dialog output:", newOperator);
 
         this.operatorsService.createOperator(newOperator).subscribe(
@@ -117,6 +128,16 @@ export class OperatorsTableComponent implements OnInit {
         delete updateOperator.password;
         const _id = updateOperator._id;
         delete updateOperator._id;
+
+        updateOperator.name = updateOperator.name.trim();
+        updateOperator.phone = updateOperator.phone.trim();
+        updateOperator.email = updateOperator.email.trim();
+        updateOperator.street = updateOperator.street.trim();
+        updateOperator.city = updateOperator.city.trim();
+        updateOperator.country = updateOperator.country.trim();
+        updateOperator.username = updateOperator.username.trim();
+        updateOperator.notes = updateOperator.notes.trim();
+
         console.log("Dialog output:", updateOperator);
 
         this.operatorsService.updateOperator(_id, updateOperator).subscribe(
