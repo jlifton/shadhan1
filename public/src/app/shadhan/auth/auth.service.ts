@@ -58,6 +58,12 @@ export class AuthGuardService implements CanActivate{
     return this.loggedInUser.name;
   }
 
+  getLoggedInUserId(): string {
+    if (!(this.isAuthenticated()))
+      return '';
+    return this.loggedInUser._id;
+  }
+
   getType() {
     return this.loggedInUser.type;
   }
