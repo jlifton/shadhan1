@@ -36,5 +36,15 @@ export class OperatorsService {
     const updateOperatorStringified = JSON.stringify(updateOperator);
     return this.http.put<OperatorDTO>(updateOperatorUrl, updateOperatorStringified, httpOptions);
   }
+
+  updatePassword(_id, currentPassword, newPassword): Observable<OperatorDTO> {
+    const updatePwUrl = 'http://localhost:3000/api/operators/pw/' + _id;
+    const updatePassword = {
+      currentPassword:  currentPassword ,
+      newPassword: newPassword };
+    const strUpdatePassword = JSON.stringify(updatePassword);
+    return this.http.put<OperatorDTO>(updatePwUrl, strUpdatePassword, httpOptions);
+  }
+
 }
 
