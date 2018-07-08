@@ -86,6 +86,30 @@ router.get('/:id', [auth, validateObjectId], async (req, res) => {
     res.send(operator);
 });
 
+/**
+ * Change password
+ */
+router.put('/pw/:id', [auth, validateObjectId], async (req, res) => {
+    // Get the referenced operator object
+    const operator = await Operator.findById(req.params.id);
+    if (operator) {
+        // Make sure the user supplied the correct current password
+        const validPassword = await bcrypt.compare(req.body.currentPassword, operator.password);
+        if (validPassword) {
+            // OK now. Go ahead and encrypt and save the new password
+            const salt = await bcrypt.genSalt(10);
+            operator.password = await bcrypt.hash(req.body.newPassword, salt);
+            await operator.save();
+            res.send(operator);
+        }
+        else {
+            return res.status(404).send('The current password supplied is incorrect. Please adjust, then again.');
+        }
+    } else {
+        return res.status(404).send('The operator with the given password was not found.');
+    }
+});
+
 router.put('/:id', [auth, validateObjectId], async (req, res) => {
     const { error } = validateUpdateOperator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
