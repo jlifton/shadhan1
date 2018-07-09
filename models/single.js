@@ -178,9 +178,12 @@ const Single = mongoose.model('Single', new mongoose.Schema({
         required: false,
         maxlength: 512
     },
+    created: { type: Date
+        //default: Date.now
+    },
     updated: { type: Date,
-        default: Date.now }
-
+        default: Date.now
+    }
 }));
 
 function validateSingle(single) {

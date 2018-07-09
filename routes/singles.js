@@ -77,6 +77,7 @@ router.post('/', async(req, res) => {
         },
         visible: req.body.visible,
         comments: req.body.comments,
+        created: Date.now(),
         updated: Date.now()
     });
 
