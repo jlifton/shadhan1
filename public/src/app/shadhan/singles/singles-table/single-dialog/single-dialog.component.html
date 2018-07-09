@@ -42,10 +42,17 @@
             </mat-radio-group>
           </div>
 
-         <!-- <mat-form-field fxFlex="grow">
-            <mat-placeholder>Last Updated</mat-placeholder>-->
+
           <div *ngIf="!isNew">
-            <mat-label>Last Updated {{dateUpdate}}</mat-label>
+            <div fxLayout="row">
+              <div style="width:80px">Created:</div><div><mat-label>{{dateCreated}}</mat-label></div>
+            </div>
+            <div fxLayout="row">
+              <div style="width:80px">Modified:</div><div><mat-label>{{dateUpdate}}</mat-label></div>
+            </div>
+
+
+
           </div>
           <!-- </mat-form-field> -->
 

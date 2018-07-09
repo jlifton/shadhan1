@@ -18,6 +18,7 @@ export class SingleDialogComponent implements OnInit {
   title: string;
   isNew = true;
   commitLabel: string;
+  dateCreated: string;
   dateUpdate: string;
 
   constructor(private fb: FormBuilder,
@@ -31,11 +32,14 @@ export class SingleDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dateCreated = '';
     this.dateUpdate = '';
     this.title = this.isNew ? 'New Single' : 'Modify Single';
     this.commitLabel =  this.isNew ? 'CREATE SINGLE' : 'MODIFY SINGLE';
-    if (!this.isNew)
-      this.dateUpdate = this.toDateTimeString();
+    if (!this.isNew) {
+      this.dateCreated = this.toDateTimeString(this.singleDTO.created);
+      this.dateUpdate = this.toDateTimeString(this.singleDTO.updated);
+    }
     this.identityFormGroup = this.fb.group({
       lastName: [this.singleDTO.identity.lastName, [Validators.required,  Validators.maxLength(64)]],
       firstName: [this.singleDTO.identity.firstName, [Validators.required,  Validators.maxLength(50)]],
@@ -123,10 +127,12 @@ export class SingleDialogComponent implements OnInit {
    this.dialogRef.close(this.singleDTO);
   }
 
-  toDateTimeString() {
+  toDateTimeString(date) {
     let d: Date;
-    d = new Date(this.singleDTO.updated);
-    var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+    if  (date === undefined)
+      return 'n/a';
+    d = new Date(date);
+    var datestring = ("0" + d.getDate()).slice(-2) + "/" + ("0"+(d.getMonth()+1)).slice(-2) + "/" +
       d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
     return datestring;
   }
