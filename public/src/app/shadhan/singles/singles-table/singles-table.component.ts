@@ -106,7 +106,7 @@ export class SinglesTableComponent implements OnInit {
   createSingle() {
     const dialogConfig = new MatDialogConfig();
     let newSingleDTO = new SingleDTO(null);
-    dialogConfig.disableClose = false;
+    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = newSingleDTO;
     //dialogConfig.minWidth = 500;
