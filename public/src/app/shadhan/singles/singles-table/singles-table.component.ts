@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
 import {SinglesService} from "./singles.service";
 import {Observable} from "rxjs/index";
@@ -6,6 +6,7 @@ import {SingleDTO} from "./single.data";
 import {OperatorDTO} from "../../operators/operators-table/operator.data";
 import {OperatorDialogComponent} from "../../operators/operators-table/operator-dialog/operator-dialog.component";
 import {SingleDialogComponent} from "./single-dialog/single-dialog.component";
+import {ListColumn} from "../../../core/common/list/list-column.model";
 
 @Component({
   selector: 'fury-singles-table',
@@ -17,6 +18,43 @@ export class SinglesTableComponent implements OnInit {
   singles: SingleDTO[] = new Array<SingleDTO>();
   dataSource: MatTableDataSource < SingleDTO > = null;
   pageSize = 7;
+
+  @Input()
+  columns: ListColumn[] = [
+    { name: 'First Name', property: 'firstname', visible: true, isModelProperty: true },
+    { name: 'Last Name', property: 'lastName', visible: false, isModelProperty: true },
+    { name: 'Sex', property: 'sex', visible: true, isModelProperty: true },
+    { name: 'Age', property: 'age', visible: true, isModelProperty: true },
+    { name: 'Marital Status', property: 'maritalstatus', visible: true, isModelProperty: true },
+    { name: 'Hashkafa', property: 'hashkafa', visible: true, isModelProperty: true },
+    { name: 'Ethnicity', property: 'ethnicity', visible: true },
+    { name: 'Ethnicity Addl', property: 'ethnicityadditional', visible: true },
+    { name: 'Convert', property: 'convert', visible: true },
+    { name: 'Cohen', property: 'cohen', visible: true },
+    { name: 'Primary Activity', property: 'primaryactivity', visible: true },
+    { name: 'City Residence', property: 'cityresidence', visible: true },
+    { name: 'Country Residence', property: 'countryresidence', visible: true },
+    { name: 'Smoker', property: 'smoker', visible: true },
+    { name: 'Height', property: 'height', visible: true },
+    { name: 'Build', property: 'build', visible: true },
+    { name: 'Phys Description', property: 'description', visible: true },
+    { name: 'Contact Name', property: 'contact', visible: true },
+    { name: 'Contact Relationship', property: 'relationship', visible: true },
+    { name: 'Contact Primary Phone', property: 'contactprimaryphone', visible: true },
+    { name: 'Contact Secondary Phone', property: 'contactprimaryphone', visible: true },
+    { name: 'Contact Email', property: 'contactemail', visible: true },
+    { name: 'Source Name', property: 'sourcename', visible: true },
+    { name: 'Source Email', property: 'sourceemail', visible: true },
+    { name: 'Source Phone', property: 'sourcephone', visible: true },
+    { name: 'Occupation', property: 'occupation', visible: true },
+    { name: 'Special Needs', property: 'specialneeds', visible: true },
+    { name: 'Personailty Requirements', property: 'personalityrequirements', visible: true },
+    { name: 'Past Education', property: 'education', visible: true },
+    { name: 'Comments', property: 'comments', visible: true },
+    { name: 'Created', property: 'created', visible: true },
+    { name: 'Updated', property: 'updated', visible: true }
+  ] as ListColumn[];
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
