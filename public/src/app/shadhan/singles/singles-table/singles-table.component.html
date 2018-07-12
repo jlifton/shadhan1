@@ -200,13 +200,8 @@
 
           <!-- Header and Row Declarations -->
 
-          <tr mat-header-row
-              *matHeaderRowDef="['identity.lastName', 'identity.firstName', 'religioEthnic.hashkafa', 'religioEthnic.ethnicity', 'identity.age', 'identity.maritalStatus', 'contact.primaryPhone', 'religioEthnic.primaryActivity','occupation', 'physical.smoker', 'comments', 'actions' ]"></tr>
-          <tr mat-row
-              *matRowDef="let row; columns: ['identity.lastName', 'identity.firstName', 'religioEthnic.hashkafa', 'religioEthnic.ethnicity', 'identity.age', 'identity.maritalStatus', 'contact.primaryPhone', 'religioEthnic.primaryActivity','occupation', 'physical.smoker', 'comments', 'actions']"
-              (click)="editSingle(row)" class="clickable"></tr>
-
-
+          <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: visibleColumns;" (click)="editSingle(row)" class="clickable"></tr>
         </table>
       </div>
 

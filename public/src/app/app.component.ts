@@ -11,7 +11,7 @@ export class AppComponent {
 
   constructor(sidenavService: SidenavService) {
     const menu: SidenavItem[] = [];
-    const exposeAllMenu = false;
+    const exposeAllMenu = true;
     if (exposeAllMenu) {
       menu.push({
         name: 'APPS',

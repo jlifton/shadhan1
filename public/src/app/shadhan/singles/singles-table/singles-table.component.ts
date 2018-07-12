@@ -21,38 +21,38 @@ export class SinglesTableComponent implements OnInit {
 
   @Input()
   columns: ListColumn[] = [
-    { name: 'First Name', property: 'firstname', visible: true, isModelProperty: true },
-    { name: 'Last Name', property: 'lastName', visible: false, isModelProperty: true },
-    { name: 'Sex', property: 'sex', visible: true, isModelProperty: true },
-    { name: 'Age', property: 'age', visible: true, isModelProperty: true },
-    { name: 'Marital Status', property: 'maritalstatus', visible: true, isModelProperty: true },
-    { name: 'Hashkafa', property: 'hashkafa', visible: true, isModelProperty: true },
-    { name: 'Ethnicity', property: 'ethnicity', visible: true },
-    { name: 'Ethnicity Addl', property: 'ethnicityadditional', visible: true },
-    { name: 'Convert', property: 'convert', visible: true },
-    { name: 'Cohen', property: 'cohen', visible: true },
-    { name: 'Primary Activity', property: 'primaryactivity', visible: true },
-    { name: 'City Residence', property: 'cityresidence', visible: true },
-    { name: 'Country Residence', property: 'countryresidence', visible: true },
-    { name: 'Smoker', property: 'smoker', visible: true },
-    { name: 'Height', property: 'height', visible: true },
-    { name: 'Build', property: 'build', visible: true },
-    { name: 'Phys Description', property: 'description', visible: true },
-    { name: 'Contact Name', property: 'contact', visible: true },
-    { name: 'Contact Relationship', property: 'relationship', visible: true },
-    { name: 'Contact Primary Phone', property: 'contactprimaryphone', visible: true },
-    { name: 'Contact Secondary Phone', property: 'contactprimaryphone', visible: true },
-    { name: 'Contact Email', property: 'contactemail', visible: true },
-    { name: 'Source Name', property: 'sourcename', visible: true },
-    { name: 'Source Email', property: 'sourceemail', visible: true },
-    { name: 'Source Phone', property: 'sourcephone', visible: true },
+    { name: 'First Name', property: 'identity.firstName', visible: true},
+    { name: 'Last Name', property: 'identity.lastName', visible: true },
+    { name: 'Sex', property: 'identity.sex', visible: true },
+    { name: 'Age', property: 'identity.age', visible: true },
+    { name: 'Marital Status', property: 'identity.maritalStatus', visible: true },
+    { name: 'Hashkafa', property: 'religioEthnic.hashkafa', visible: true},
+    { name: 'Ethnicity', property: 'religioEthnic.ethnicity', visible: true },
+    { name: 'Ethnicity Addl', property: 'religioEthnic.ethnicityAdditional', visible: false },
+    { name: 'Convert', property: 'religioEthnic.convert', visible: false },
+    { name: 'Cohen', property: 'religioEthnic.cohen', visible: false },
+    { name: 'Primary Activity', property: 'religioEthnic.primaryActivity', visible: true },
+    { name: 'City Residence', property: 'residence.city', visible: false },
+    { name: 'Country Residence', property: 'residence.country', visible: false },
+    { name: 'Smoker', property: 'physical.smoker', visible: false },
+    { name: 'Height', property: 'physical.height', visible: false },
+    { name: 'Build', property: 'physical.build', visible: false },
+    { name: 'Phys Description', property: 'physical.description', visible: false },
+    { name: 'Contact Name', property: 'contact.name', visible: true },
+    { name: 'Contact Relationship', property: 'contact.relationship', visible: false },
+    { name: 'Contact Primary Phone', property: 'contact.primaryPhone', visible: false },
+    { name: 'Contact Secondary Phone', property: 'contact.secondaryPhone', visible: false },
+    { name: 'Contact Email', property: 'contact.email', visible: false },
+    { name: 'Source Name', property: 'source.name', visible: false },
+    { name: 'Source Email', property: 'source.email', visible: false },
+    { name: 'Source Phone', property: 'source.phone', visible: false },
     { name: 'Occupation', property: 'occupation', visible: true },
-    { name: 'Special Needs', property: 'specialneeds', visible: true },
-    { name: 'Personailty Requirements', property: 'personalityrequirements', visible: true },
-    { name: 'Past Education', property: 'education', visible: true },
+    { name: 'Special Needs', property: 'specialNeeds', visible: false },
+    { name: 'Personailty Requirements', property: 'personalityRequirements', visible: false },
+    { name: 'Past Education', property: 'pastEducation', visible: false },
     { name: 'Comments', property: 'comments', visible: true },
-    { name: 'Created', property: 'created', visible: true },
-    { name: 'Updated', property: 'updated', visible: true }
+    { name: 'Created', property: 'created', visible: false },
+    { name: 'Updated', property: 'updated', visible: false }
   ] as ListColumn[];
 
 
@@ -65,6 +65,10 @@ export class SinglesTableComponent implements OnInit {
 
   ngOnInit() {
     this.getSingles();
+  }
+
+  get visibleColumns() {
+    return this.columns.filter(column => column.visible).map(column => column.property);
   }
 
   getSingles() {
