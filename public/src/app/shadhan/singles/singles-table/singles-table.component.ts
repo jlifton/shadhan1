@@ -267,56 +267,64 @@ export class SinglesTableComponent implements OnInit {
     }
     this.dataSource.filterPredicate =
       (data: SingleDTO, filter: string) => {
-        if (data.identity.firstName.indexOf(filter) != -1)
+        filter = filter.toLowerCase();
+        if (data.identity.firstName.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.identity.lastName.indexOf(filter) != -1)
+        if (data.identity.lastName.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.identity.sex.indexOf(filter) != -1)
+        if (data.identity.age.toString().indexOf(filter) != -1)
           return true;
-        if (data.identity.maritalStatus.indexOf(filter) != -1)
+        if (data.identity.sex.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.religioEthnic.hashkafa.indexOf(filter) != -1)
+        if (data.identity.maritalStatus.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.religioEthnic.ethnicity.indexOf(filter) != -1)
+        if (data.religioEthnic.hashkafa.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.religioEthnic.ethnicityAdditional.indexOf(filter) != -1)
+        if (data.religioEthnic.ethnicity.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.religioEthnic.primaryActivity.indexOf(filter) != -1)
+        if (data.religioEthnic.ethnicityAdditional.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.residence.city.indexOf(filter) != -1)
+        if (data.religioEthnic.primaryActivity.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.residence.country.indexOf(filter) != -1)
+        if (data.residence.city.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.physical.build.indexOf(filter) != -1)
+        if (data.residence.country.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.physical.description.indexOf(filter) != -1)
+        if (data.physical.build.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.contact.name.indexOf(filter) != -1)
+        if (data.physical.description.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.contact.relationship.indexOf(filter) != -1)
+        if (data.contact.name.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.contact.primaryPhone.indexOf(filter) != -1)
+        if (data.contact.relationship.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.contact.secondaryPhone.indexOf(filter) != -1)
+        if (data.contact.primaryPhone.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.contact.email.indexOf(filter) != -1)
+        if (data.contact.secondaryPhone.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.source.name.indexOf(filter) != -1)
+        if (data.contact.email.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.source.email.indexOf(filter) != -1)
+        if (data.source.name.toLowerCase().indexOf(filter) != -1)
           return true;
-        if (data.source.phone.indexOf(filter) != -1)
+        if (data.source.email.toLowerCase().indexOf(filter) != -1)
           return true;
-
-        if (data.occupation.indexOf(filter) != -1)
-          return true;
-        if (data.specialNeeds.indexOf(filter) != -1)
-          return true;
-        if (data.personalityRequirements.indexOf(filter) != -1)
-          return true;
-        if (data.pastEducation.indexOf(filter) != -1)
+        if (data.source.phone.toLowerCase().indexOf(filter) != -1)
           return true;
 
+        if (data.occupation.toLowerCase().indexOf(filter) != -1)
+          return true;
+        if (data.specialNeeds.toLowerCase().indexOf(filter) != -1)
+          return true;
+        if (data.personalityRequirements.toLowerCase().indexOf(filter) != -1)
+          return true;
+        if (data.pastEducation.toLowerCase().indexOf(filter) != -1)
+          return true;
+        if (data.comments.toLowerCase().indexOf(filter) != -1)
+          return true;
+        if (this.toDateString(data.created).indexOf(filter) != -1)
+          return true;
+        if (this.toDateString(data.updated).indexOf(filter) != -1)
+          return true;
         return false; //data.name.indexOf(filter) != -1;
       }
     //value = value.trim();
