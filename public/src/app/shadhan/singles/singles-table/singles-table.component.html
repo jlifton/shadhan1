@@ -167,12 +167,12 @@
 
           <ng-container matColumnDef="created">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> CREATED</th>
-            <td mat-cell *matCellDef="let row"> {{row.created}}</td>
+            <td mat-cell *matCellDef="let row"> {{toDateString(row.created)}}</td>
           </ng-container>
 
           <ng-container matColumnDef="updated">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> UPDATED</th>
-            <td mat-cell *matCellDef="let row"> {{row.updated}}</td>
+            <td mat-cell *matCellDef="let row"> {{toDateString(row.updated)}}</td>
           </ng-container>
 
           <!-- actions Column -->

@@ -1,5 +1,8 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
+import {
+  MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatSortable,
+  MatTableDataSource
+} from "@angular/material";
 import {SinglesService} from "./singles.service";
 import {Observable} from "rxjs/index";
 import {SingleDTO} from "./single.data";
@@ -52,26 +55,33 @@ export class SinglesTableComponent implements OnInit {
     { name: 'Past Education', property: 'pastEducation', visible: false },
     { name: 'Comments', property: 'comments', visible: true },
     { name: 'Created', property: 'created', visible: false },
-    { name: 'Updated', property: 'updated', visible: false }
+    { name: 'Updated', property: 'updated', visible: false },
+    { name: 'Actions', property: 'actions', visible: true },
   ] as ListColumn[];
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  defaultSort: MatSortable = {
+    id: 'identity.lastName',
+    start: 'asc',
+    disableClear: true
+  };
+
   constructor(private singlesService: SinglesService,
               private snackbar: MatSnackBar,
               public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.getSingles();
+    this.getSingles(true);
   }
 
   get visibleColumns() {
     return this.columns.filter(column => column.visible).map(column => column.property);
   }
 
-  getSingles() {
+  getSingles(defaultSort) {
     this.singlesService.getSingles().subscribe(
       (data: SingleDTO[] )=> {
         this.singles = data;
@@ -84,8 +94,10 @@ export class SinglesTableComponent implements OnInit {
           previousActiveSort = this.sort.active;
         }
         this.dataSource = new MatTableDataSource(< SingleDTO[] > this.singles);
-        this.sort.active = previousActiveSort;
+
         this.dataSource.sort = this.sort;
+        this.sort.active = previousActiveSort;
+
         this.dataSource.paginator = this.paginator;
         //this.dataSource.filter ='Jonny';
         this.dataSource.sortingDataAccessor = (item, property) => {
@@ -93,6 +105,11 @@ export class SinglesTableComponent implements OnInit {
         };
         if (previousFilter != '') {
           this.onFilterChange(previousFilter);
+        }
+        if (defaultSort) {
+          this.sort.sort(this.defaultSort);
+          this.sort.direction = 'asc';
+          this.sort.sort(this.defaultSort);
         }
       },
       error => {
@@ -169,7 +186,7 @@ export class SinglesTableComponent implements OnInit {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
-            this.getSingles();
+            this.getSingles(false);
           },
           error => {
             console.error("Error creating Single");
@@ -191,7 +208,7 @@ export class SinglesTableComponent implements OnInit {
             verticalPosition: 'top',
             horizontalPosition: 'end'
           });
-          this.getSingles();
+          this.getSingles(false);
         },
         error => {
           console.error("Error deleting Single");
@@ -231,7 +248,7 @@ export class SinglesTableComponent implements OnInit {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
-            this.getSingles();
+            this.getSingles(false);
           },
           error => {
             console.error("Error updating Single");
@@ -305,6 +322,16 @@ export class SinglesTableComponent implements OnInit {
     //value = value.trim();
    //value = value.toLowerCase();
     this.dataSource.filter = value;
+  }
+
+  toDateString(date) {
+    let d: Date;
+    if  (date === undefined)
+      return 'n/a';
+    d = new Date(date);
+    var datestring = ("0" + d.getDate()).slice(-2) + "/" + ("0"+(d.getMonth()+1)).slice(-2) + "/" +
+      d.getFullYear();
+    return datestring;
   }
 
 
