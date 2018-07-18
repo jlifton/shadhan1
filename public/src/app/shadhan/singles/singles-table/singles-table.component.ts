@@ -10,6 +10,7 @@ import {OperatorDTO} from "../../operators/operators-table/operator.data";
 import {OperatorDialogComponent} from "../../operators/operators-table/operator-dialog/operator-dialog.component";
 import {SingleDialogComponent} from "./single-dialog/single-dialog.component";
 import {ListColumn} from "../../../core/common/list/list-column.model";
+import {AuthGuardService} from "../../auth/auth.service";
 
 @Component({
   selector: 'fury-singles-table',
@@ -70,6 +71,7 @@ export class SinglesTableComponent implements OnInit {
   };
 
   constructor(private singlesService: SinglesService,
+              private authGuardService: AuthGuardService,
               private snackbar: MatSnackBar,
               public dialog: MatDialog) { }
 
@@ -200,6 +202,14 @@ export class SinglesTableComponent implements OnInit {
   }
 
   deleteSingle(row: SingleDTO) {
+    const operatorType = this.authGuardService.getLoggedInType();
+    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
+      this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
+        verticalPosition: 'top',
+        horizontalPosition: 'end'
+      });
+      return;
+    }
     if(confirm("Delete Single "+ row.identity.firstName + ' ' + row.identity.lastName +' ?')) {
       this.singlesService.deleteSingle(row._id).subscribe(
         data => {
