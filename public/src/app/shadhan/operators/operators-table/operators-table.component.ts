@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {OperatorsService} from "./operators.service";
 import {OperatorDTO} from "./operator.data";
 import {OperatorDialogComponent} from "./operator-dialog/operator-dialog.component";
+import {AuthGuardService} from "../../auth/auth.service";
 
 @Component({
   selector: 'fury-operators-table',
@@ -20,6 +21,7 @@ export class OperatorsTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private operatorsService: OperatorsService,
+              private authGuardService: AuthGuardService,
               private snackbar: MatSnackBar,
               public dialog: MatDialog) {}
 
@@ -91,6 +93,15 @@ export class OperatorsTableComponent implements OnInit {
   };
 
   deleteOperator(row) {
+    const operatorType = this.authGuardService.getLoggedInType();
+    if (operatorType !== 'ADMIN'){
+      this.snackbar.open('This action is for Administrator operators only', 'Ok', {
+        verticalPosition: 'top',
+        horizontalPosition: 'end'
+      });
+      return;
+    }
+
     if(confirm("Delete Operator "+row.name + ' ?')) {
       this.operatorsService.deleteOperator(row._id).subscribe(
         data => {
