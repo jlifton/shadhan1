@@ -20,8 +20,9 @@ export class AuthGuardService implements CanActivate{
       return false;
     }
     if (state.url === '/operators/operators-table'){
-      if (this.loggedInUser.type !== 'ADMIN') {
-        this.snackbar.open("Selected page is accessible to Administrator operators only", null, {
+      if ((this.loggedInUser.type !== 'ADMIN') &&
+          (this.loggedInUser.type !== 'SHADHAN')){
+        this.snackbar.open("Selected page is accessible to Administrator and Shadhan operators only", null, {
           duration: 5000,
           verticalPosition: 'top',
           horizontalPosition: 'center'
@@ -56,6 +57,10 @@ export class AuthGuardService implements CanActivate{
     if (!(this.isAuthenticated()))
       return '';
     return this.loggedInUser.name;
+  }
+
+  getLoggedInType() {
+    return this.loggedInUser.type;
   }
 
   getLoggedInUserId(): string {
