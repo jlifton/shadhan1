@@ -49,8 +49,8 @@ export class OperatorDialogComponent implements OnInit {
 
   save() {
     const operatorType = this.authGuardService.getLoggedInType();
-    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
-      this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
+    if (operatorType !== 'ADMIN'){
+      this.snackbar.open('This action is for Administrator operators only', 'Ok', {
         verticalPosition: 'top',
         horizontalPosition: 'end'
       });
