@@ -8,6 +8,9 @@
           <mat-icon>add</mat-icon>
         </button>
       </div>
+      <mat-paginator class="paginator" [pageSize]="pageSize" [showFirstLastButtons]="true"
+                     [pageSizeOptions]="[5, 10, 15, 25, 40, 100]"
+                     (page)="pageEvent = pageEventHandler($event)"></mat-paginator>
       <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="24px">
 
         <table [class.table-hover]="true" [class.table-striped]="true"
@@ -204,8 +207,11 @@
           <tr mat-row *matRowDef="let row; columns: visibleColumns;" (click)="editSingle(row)" class="clickable"></tr>
         </table>
       </div>
-
-      <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+<!--
+      <mat-paginator class="paginator" [pageSize]="pageSize" [showFirstLastButtons]="true"
+                     [pageSizeOptions]="[5, 10, 15, 25, 40, 100]"
+                     (page)="pageEvent = pageEventHandler($event)"></mat-paginator>
+-->
     </fury-list>
   </div>
 </div>

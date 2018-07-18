@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {
   MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatSortable,
-  MatTableDataSource
+  MatTableDataSource, PageEvent
 } from "@angular/material";
 import {SinglesService} from "./singles.service";
 import {Observable} from "rxjs/index";
@@ -21,7 +21,7 @@ export class SinglesTableComponent implements OnInit {
   rows: SingleDTO[];
   singles: SingleDTO[] = new Array<SingleDTO>();
   dataSource: MatTableDataSource < SingleDTO > = null;
-  pageSize = 7;
+  pageSize = 5;
 
   @Input()
   columns: ListColumn[] = [
@@ -76,7 +76,15 @@ export class SinglesTableComponent implements OnInit {
               public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.initCachedPageSize();
     this.getSingles(true);
+  }
+
+  initCachedPageSize(){
+    //this.paginator.showFirstLastButtons(true);
+    const singlesPageSize = localStorage.getItem('singlesPageSize');
+    if (singlesPageSize !== null)
+      this.pageSize = Number(singlesPageSize);
   }
 
   get visibleColumns() {
@@ -337,8 +345,6 @@ export class SinglesTableComponent implements OnInit {
           return true;
         return false; //data.name.indexOf(filter) != -1;
       }
-    //value = value.trim();
-   //value = value.toLowerCase();
     this.dataSource.filter = value;
   }
 
@@ -352,5 +358,14 @@ export class SinglesTableComponent implements OnInit {
     return datestring;
   }
 
+  public pageEventHandler(event?:PageEvent){
+    if (event.pageSize !== null){
+      if (event.pageSize != this.pageSize) {
+        this.pageSize = event.pageSize;
+        localStorage.setItem('singlesPageSize', ''+ event.pageSize);
+        console.log('changed singlesPageSize:'+ event.pageSize);
+      }
+    }
+  }
 
 }
