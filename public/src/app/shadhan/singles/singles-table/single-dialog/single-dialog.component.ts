@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
 import {SingleDTO} from "../single.data";
+import {AuthGuardService} from "../../../auth/auth.service";
 
 @Component({
   selector: 'fury-single-dialog',
@@ -21,7 +22,9 @@ export class SingleDialogComponent implements OnInit {
   dateCreated: string;
   dateUpdate: string;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+              private authGuardService: AuthGuardService,
+              private fb: FormBuilder,
               private cd: ChangeDetectorRef,
               private snackbar: MatSnackBar,
               private dialogRef: MatDialogRef<SingleDialogComponent>,
@@ -89,6 +92,14 @@ export class SingleDialogComponent implements OnInit {
   }
 
  submit() {
+   const operatorType = this.authGuardService.getLoggedInType();
+   if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
+     this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
+       verticalPosition: 'top',
+       horizontalPosition: 'end'
+     });
+     return;
+   }
    this.singleDTO.identity.lastName = this.identityFormGroup.value.lastName.trim();
    this.singleDTO.identity.firstName = this.identityFormGroup.value.firstName.trim();
    this.singleDTO.identity.sex = this.identityFormGroup.value.sex;
