@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {OperatorDTO} from "../operator.data";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthGuardService} from "../../../auth/auth.service";
 
 @Component({
   selector: 'fury-operator-dialog',
@@ -20,6 +21,8 @@ export class OperatorDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<OperatorDialogComponent>,
+    private authGuardService: AuthGuardService,
+    private snackbar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) operatorDTO) {
     this.operatorDTO = operatorDTO;
     if (this.operatorDTO.name !== '')
@@ -45,6 +48,14 @@ export class OperatorDialogComponent implements OnInit {
   }
 
   save() {
+    const operatorType = this.authGuardService.getLoggedInType();
+    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
+      this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
+        verticalPosition: 'top',
+        horizontalPosition: 'end'
+      });
+      return;
+    }
     if (!this.isNew)
       this.form.value._id = this.operatorDTO._id;
     this.dialogRef.close(this.form.value);
