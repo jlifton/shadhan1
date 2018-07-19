@@ -6,17 +6,27 @@ import {
 import {SinglesService} from "./singles.service";
 import {Observable} from "rxjs/index";
 import {SingleDTO} from "./single.data";
-import {OperatorDTO} from "../../operators/operators-table/operator.data";
-import {OperatorDialogComponent} from "../../operators/operators-table/operator-dialog/operator-dialog.component";
+
 import {SingleDialogComponent} from "./single-dialog/single-dialog.component";
 import {ListColumn} from "../../../core/common/list/list-column.model";
 import {AuthGuardService} from "../../auth/auth.service";
+
+const COL_FIRST_NAME    = 0;
+const COL_LAST_NAME     = 1;
+const COL_AGE           = 3;
+const COL_MARITAL_STATUS= 4;
+const COL_HASHKAFA      = 5;
+const COL_ETHNICITY     = 6;
+const COL_ACTIVITY      = 10;
+const COL_OCCUPATION    = 25;
+const COL_COMMENTS      = 29;
 
 @Component({
   selector: 'fury-singles-table',
   templateUrl: './singles-table.component.html',
   styleUrls: ['./singles-table.component.scss']
 })
+
 export class SinglesTableComponent implements OnInit {
   rows: SingleDTO[];
   singles: SingleDTO[] = new Array<SingleDTO>();
@@ -25,17 +35,17 @@ export class SinglesTableComponent implements OnInit {
 
   @Input()
   columns: ListColumn[] = [
-    { name: 'First Name', property: 'identity.firstName', visible: true},
-    { name: 'Last Name', property: 'identity.lastName', visible: true },
-    { name: 'Sex', property: 'identity.sex', visible: true },
-    { name: 'Age', property: 'identity.age', visible: true },
-    { name: 'Marital Status', property: 'identity.maritalStatus', visible: true },
-    { name: 'Hashkafa', property: 'religioEthnic.hashkafa', visible: true},
-    { name: 'Ethnicity', property: 'religioEthnic.ethnicity', visible: true },
+    { name: 'First Name', property: 'identity.firstName', visible: false},
+    { name: 'Last Name', property: 'identity.lastName', visible: false },
+    { name: 'Sex', property: 'identity.sex', visible: false },
+    { name: 'Age', property: 'identity.age', visible: false },
+    { name: 'Marital Status', property: 'identity.maritalStatus', visible: false },
+    { name: 'Hashkafa', property: 'religioEthnic.hashkafa', visible: false},
+    { name: 'Ethnicity', property: 'religioEthnic.ethnicity', visible: false },
     { name: 'Ethnicity Addl', property: 'religioEthnic.ethnicityAdditional', visible: false },
     { name: 'Convert', property: 'religioEthnic.convert', visible: false },
     { name: 'Cohen', property: 'religioEthnic.cohen', visible: false },
-    { name: 'Primary Activity', property: 'religioEthnic.primaryActivity', visible: true },
+    { name: 'Primary Activity', property: 'religioEthnic.primaryActivity', visible: false },
     { name: 'City Residence', property: 'residence.city', visible: false },
     { name: 'Country Residence', property: 'residence.country', visible: false },
     { name: 'Smoker', property: 'physical.smoker', visible: false },
@@ -54,10 +64,10 @@ export class SinglesTableComponent implements OnInit {
     { name: 'Special Needs', property: 'specialNeeds', visible: false },
     { name: 'Personailty Requirements', property: 'personalityRequirements', visible: false },
     { name: 'Past Education', property: 'pastEducation', visible: false },
-    { name: 'Comments', property: 'comments', visible: true },
+    { name: 'Comments', property: 'comments', visible: false },
     { name: 'Created', property: 'created', visible: false },
     { name: 'Updated', property: 'updated', visible: false },
-    { name: 'Actions', property: 'actions', visible: true },
+    { name: 'Actions', property: 'actions', visible: false },
   ] as ListColumn[];
 
 
@@ -77,7 +87,9 @@ export class SinglesTableComponent implements OnInit {
 
   ngOnInit() {
     this.initCachedPageSize();
+    this.initColumnsVisibility();
     this.getSingles(true);
+    //this.columns[0].visible = false;
   }
 
   initCachedPageSize(){
@@ -107,7 +119,7 @@ export class SinglesTableComponent implements OnInit {
 
         this.dataSource.sort = this.sort;
         this.sort.active = previousActiveSort;
-
+        //this.dataSource.filter = 'aaa';
         this.dataSource.paginator = this.paginator;
         //this.dataSource.filter ='Jonny';
         this.dataSource.sortingDataAccessor = (item, property) => {
@@ -366,6 +378,55 @@ export class SinglesTableComponent implements OnInit {
         console.log('changed singlesPageSize:'+ event.pageSize);
       }
     }
+  }
+
+  onColVisibleChange(column) {
+    if (column.visible === false)
+      localStorage.removeItem(''+ column.property);
+    else
+      localStorage.setItem(''+ column.property, 'true');
+  }
+
+  initColumnsVisibility(){
+    let somethingVisible = false;
+    for (let i = 0; i < this.columns.length; i++) {
+      const visColumn = localStorage.getItem(this.columns[i].property);
+      this.columns[i].visible = visColumn !== null;
+      if (visColumn)
+        somethingVisible =  true;
+    }
+    if(somethingVisible == false)
+      this.selectDefaultColumns();
+  }
+
+  selectDefaultColumns() {
+    this.columns[COL_FIRST_NAME].visible = true;
+    localStorage.setItem(''+ this.columns[COL_FIRST_NAME].property, 'true');
+
+    this.columns[COL_LAST_NAME].visible = true;
+    localStorage.setItem(''+ this.columns[COL_LAST_NAME].property, 'true');
+
+    this.columns[COL_AGE].visible = true;
+    localStorage.setItem(''+ this.columns[COL_AGE].property, 'true');
+
+    this.columns[COL_MARITAL_STATUS].visible = true;
+    localStorage.setItem(''+ this.columns[COL_MARITAL_STATUS].property, 'true');
+
+    this.columns[COL_HASHKAFA].visible = true;
+    localStorage.setItem(''+ this.columns[COL_HASHKAFA].property, 'true');
+
+    this.columns[COL_ETHNICITY].visible = true;
+    localStorage.setItem(''+ this.columns[COL_ETHNICITY].property, 'true');
+
+    this.columns[COL_ACTIVITY].visible = true;
+    localStorage.setItem(''+ this.columns[COL_ACTIVITY].property, 'true');
+
+    this.columns[COL_OCCUPATION].visible = true;
+    localStorage.setItem(''+ this.columns[COL_OCCUPATION].property, 'true');
+
+    this.columns[COL_COMMENTS].visible = true;
+    localStorage.setItem(''+ this.columns[COL_COMMENTS].property, 'true');
+
   }
 
 }
