@@ -16,6 +16,7 @@ export class ListComponent implements AfterViewInit {
 
   @ViewChild('filter') filter: ElementRef;
   @Output() filterChange = new EventEmitter<string>();
+  @Output() columnVisibilityChange = new EventEmitter<string>();
 
   @Input() hideHeader: boolean;
 
@@ -31,6 +32,10 @@ export class ListComponent implements AfterViewInit {
         this.filterChange.emit(this.filter.nativeElement.value);
       });
     }
+  }
+
+  onColumnChange(column){
+    this.columnVisibilityChange.emit(column);
   }
 
   toggleColumnVisibility(column, event) {
