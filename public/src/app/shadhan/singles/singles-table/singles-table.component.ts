@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {
   MatDialog, MatDialogConfig, MatPaginator, MatSnackBar, MatSort, MatSortable,
-  MatTableDataSource, PageEvent
+  MatTableDataSource, PageEvent, SortDirection
 } from "@angular/material";
 import {SinglesService} from "./singles.service";
 import {Observable} from "rxjs/index";
@@ -20,6 +20,7 @@ const COL_ETHNICITY     = 6;
 const COL_ACTIVITY      = 10;
 const COL_OCCUPATION    = 25;
 const COL_COMMENTS      = 29;
+const COL_ACTIONS       = 32;
 
 @Component({
   selector: 'fury-singles-table',
@@ -31,6 +32,7 @@ export class SinglesTableComponent implements OnInit {
   rows: SingleDTO[];
   singles: SingleDTO[] = new Array<SingleDTO>();
   dataSource: MatTableDataSource < SingleDTO > = null;
+  highlightedRows = [];
   pageSize = 5;
 
   @Input()
@@ -107,18 +109,22 @@ export class SinglesTableComponent implements OnInit {
     this.singlesService.getSingles().subscribe(
       (data: SingleDTO[] )=> {
         this.singles = data;
+        //this.highlightedRows.length = 0;
         let previousFilter = '';
         let previousActiveSort = 'identity.lastName';
+        let previousSortDirection: SortDirection = 'asc';
         if (this.dataSource != null){
           if (this.dataSource.filter != null){
             previousFilter = this.dataSource.filter;
           }
           previousActiveSort = this.sort.active;
+          previousSortDirection = this.sort.direction;
         }
         this.dataSource = new MatTableDataSource(< SingleDTO[] > this.singles);
 
         this.dataSource.sort = this.sort;
         this.sort.active = previousActiveSort;
+        this.sort.direction =  previousSortDirection;
         //this.dataSource.filter = 'aaa';
         this.dataSource.paginator = this.paginator;
         //this.dataSource.filter ='Jonny';
@@ -143,42 +149,43 @@ export class SinglesTableComponent implements OnInit {
 
   handleSortAccessor(item, property) {
     switch(property) {
-      case 'identity.firstName': return item.identity.firstName;
-      case 'identity.lastName': return item.identity.lastName;
-      case 'identity.sex': return item.identity.sex;
+      case 'identity.firstName': return item.identity.firstName.toLowerCase();
+      case 'identity.lastName': return item.identity.lastName.toLowerCase();
+      case 'identity.sex': return item.identity.sex.toLowerCase();
       case 'identity.age': return item.identity.age;
-      case 'identity.maritalStatus': return item.identity.maritalStatus;
+      case 'identity.maritalStatus': return item.identity.maritalStatus.toLowerCase();
 
-      case 'religioEthnic.hashkafa': return item.religioEthnic.hashkafa;
-      case 'religioEthnic.ethnicityAdditional': return item.religioEthnic.ethnicityAdditional;
-      case 'religioEthnic.ethnicity': return item.religioEthnic.ethnicity;
+      case 'religioEthnic.hashkafa': return item.religioEthnic.hashkafa.toLowerCase();
+      case 'religioEthnic.ethnicityAdditional': return item.religioEthnic.ethnicityAdditional.toLowerCase();
+      case 'religioEthnic.ethnicity': return item.religioEthnic.ethnicity.toLowerCase();
       case 'religioEthnic.convert': return item.religioEthnic.convert;
       case 'religioEthnic.cohen': return item.religioEthnic.cohen;
-      case 'religioEthnic.primaryActivity': return item.religioEthnic.primaryActivity;
+      case 'religioEthnic.primaryActivity': return item.religioEthnic.primaryActivity.toLowerCase();
 
-      case 'residence.city': return item.residence.city;
-      case 'residence.country': return item.residence.country;
+      case 'residence.city': return item.residence.city.toLowerCase();
+      case 'residence.country': return item.residence.country.toLowerCase();
 
       case 'physical.smoker': return item.physical.smoker;
       case 'physical.height': return item.physical.height;
-      case 'physical.build': return item.physical.build;
-      case 'physical.description': return item.physical.description;
+      case 'physical.build': return item.physical.build.toLowerCase();
+      case 'physical.description': return item.physical.description.toLowerCase();
 
-      case 'contact.name': return item.contact.name;
-      case 'contact.relationship': return item.contact.relationship;
-      case 'contact.primaryPhone': return item.contact.primaryPhone;
-      case 'contact.secondaryPhone': return item.contact.secondaryPhone;
-      case 'contact.email': return item.contact.email;
+      case 'contact.name': return item.contact.name.toLowerCase();
+      case 'contact.relationship': return item.contact.relationship.toLowerCase();
+      case 'contact.primaryPhone': return item.contact.primaryPhone.toLowerCase();
+      case 'contact.secondaryPhone': return item.contact.secondaryPhone.toLowerCase();
+      case 'contact.email': return item.contact.email.toLowerCase();
 
-      case 'source.name': return item.source.name;
-      case 'source.email': return item.source.email;
-      case 'source.phone': return item.source.phone;
+      case 'source.name': return item.source.name.toLowerCase();
+      case 'source.email': return item.source.email.toLowerCase();
+      case 'source.phone': return item.source.phone.toLowerCase();
 
-      case 'occupation': return item.occupation;
-      case 'specialNeeds': return item.specialNeeds;
-      case 'personalityRequirements': return item.personalityRequirements;
-      case 'pastEducation': return item.pastEducation;
+      case 'occupation': return item.occupation.toLowerCase();
+      case 'specialNeeds': return item.specialNeeds.toLowerCase();
+      case 'personalityRequirements': return item.personalityRequirements.toLowerCase();
+      case 'pastEducation': return item.pastEducation.toLowerCase();
       case 'dateEntered': return item.dateEntered;
+      case 'comments': return item.comments.toLowerCase();
 
       default: return item[property];
     }
@@ -222,6 +229,7 @@ export class SinglesTableComponent implements OnInit {
   }
 
   deleteSingle(row: SingleDTO) {
+    this.manageHighlightRow(row);
     const operatorType = this.authGuardService.getLoggedInType();
     if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
       this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
@@ -253,6 +261,11 @@ export class SinglesTableComponent implements OnInit {
 
   }
 
+  manageHighlightRow(row) {
+    this.highlightedRows.length = 0;
+    this.highlightedRows.push(row);
+  }
+
   editSingle(row: SingleDTO) {
     const dialogConfig = new MatDialogConfig();
     let clonedSingleDTO = new SingleDTO(row);
@@ -261,6 +274,7 @@ export class SinglesTableComponent implements OnInit {
     dialogConfig.data = clonedSingleDTO;
     //dialogConfig.minWidth = 850;
     //dialogConfig.minHeight =600;
+    this.manageHighlightRow(row);
     const dialogRef = this.dialog.open(SingleDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
@@ -427,6 +441,8 @@ export class SinglesTableComponent implements OnInit {
     this.columns[COL_COMMENTS].visible = true;
     localStorage.setItem(''+ this.columns[COL_COMMENTS].property, 'true');
 
+    this.columns[COL_ACTIONS].visible = true;
+    localStorage.setItem(''+ this.columns[COL_ACTIONS].property, 'true');
   }
 
 }

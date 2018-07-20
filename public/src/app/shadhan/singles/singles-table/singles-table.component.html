@@ -13,7 +13,7 @@
                      (page)="pageEvent = pageEventHandler($event)"></mat-paginator>
       <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="24px">
 
-        <table [class.table-hover]="true" [class.table-striped]="true"
+        <table [class.table-hover]="true" [class.table-striped]="false"
                [class.table-condensed]="true" [class.table-bordered]="true" width="100%"
                mat-table [dataSource]="dataSource" matSort matSortActive="identity.lastName" matSortDirection="asc"
                matSortDisableClear>
@@ -204,7 +204,8 @@
           <!-- Header and Row Declarations -->
 
           <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: visibleColumns;" (click)="editSingle(row)" class="clickable"></tr>
+          <tr mat-row *matRowDef="let row; columns: visibleColumns;" (click)="editSingle(row)" class="clickable"
+              [style.background]="highlightedRows.indexOf(row) != -1 ? 'lightgrey' : ''"></tr>
         </table>
       </div>
     </fury-list>
