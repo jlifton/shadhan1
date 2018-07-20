@@ -14,8 +14,9 @@ import {AuthGuardService} from "../../auth/auth.service";
 export class OperatorsTableComponent implements OnInit {
   rows: any[];
   operators: OperatorDTO[] = new Array<OperatorDTO>();
-  dataSource: MatTableDataSource < OperatorDTO > = null;
+  dataSource: MatTableDataSource<OperatorDTO> = null;
   pageSize = 7;
+  highlightedRows = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -23,7 +24,8 @@ export class OperatorsTableComponent implements OnInit {
   constructor(private operatorsService: OperatorsService,
               private authGuardService: AuthGuardService,
               private snackbar: MatSnackBar,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog) {
+  }
 
   createOperator() {
     const dialogConfig = new MatDialogConfig();
@@ -67,7 +69,7 @@ export class OperatorsTableComponent implements OnInit {
               horizontalPosition: 'end'
             });
             return Observable.throw(error);
-         });
+          });
       });
   }
 
@@ -77,13 +79,15 @@ export class OperatorsTableComponent implements OnInit {
 
   getOperators() {
     this.operatorsService.getOperators().subscribe(
-      (data: OperatorDTO[] )=> {
-       this.operators = data;
-       this.dataSource = new MatTableDataSource(< OperatorDTO[] > this.operators);
-       this.sort.active = 'name';
-       this.dataSource.sort = this.sort;
-       this.dataSource.paginator = this.paginator;
-       //this.dataSource.filter ='Jonny';
+      (data: OperatorDTO[]) => {
+        this.operators = data;
+        this.dataSource = new MatTableDataSource(< OperatorDTO[] > this.operators);
+        this.sort.active = 'name';
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          return this.handleSortAccessor(item, property);
+        };
       },
       error => {
         console.error("Error getting Operators");
@@ -93,8 +97,9 @@ export class OperatorsTableComponent implements OnInit {
   };
 
   deleteOperator(row) {
+    this.manageHighlightRow(row);
     const operatorType = this.authGuardService.getLoggedInType();
-    if (operatorType !== 'ADMIN'){
+    if (operatorType !== 'ADMIN') {
       this.snackbar.open('This action is for Administrator operators only', 'Ok', {
         verticalPosition: 'top',
         horizontalPosition: 'end'
@@ -102,7 +107,7 @@ export class OperatorsTableComponent implements OnInit {
       return;
     }
 
-    if(confirm("Delete Operator "+row.name + ' ?')) {
+    if (confirm("Delete Operator " + row.name + ' ?')) {
       this.operatorsService.deleteOperator(row._id).subscribe(
         data => {
           this.snackbar.open('Operator ' + row.name + ' deleted', null, {
@@ -125,13 +130,14 @@ export class OperatorsTableComponent implements OnInit {
   }
 
   editOperator(row: OperatorDTO) {
+    this.manageHighlightRow(row);
     const dialogConfig = new MatDialogConfig();
     let clonedOperatorDTO = new OperatorDTO(row);
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = clonedOperatorDTO;
     dialogConfig.minWidth = 500;
-    dialogConfig.minHeight =650;
+    dialogConfig.minHeight = 650;
     const dialogRef = this.dialog.open(OperatorDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       updateOperator => {
@@ -170,6 +176,44 @@ export class OperatorsTableComponent implements OnInit {
             return Observable.throw(error);
           });
       });
+  }
 
+  manageHighlightRow(row) {
+    this.highlightedRows.length = 0;
+    this.highlightedRows.push(row);
+  }
+
+  handleSortAccessor(item, property) {
+    try {
+    switch (property) {
+      case 'name':
+        return item.name.toLowerCase();
+      case 'type':
+        return item.type.toLowerCase();
+      case 'phone':
+        return item.phone.toLowerCase();
+      case 'email':
+        return item.email.toLowerCase();
+      case 'street':
+        return item.street.toLowerCase();
+      case 'city':
+        return item.city.toLowerCase();
+      case 'country':
+        return item.country.toLowerCase();
+      case 'username':
+        return item.username.toLowerCase();
+      case 'password':
+        return item.password.toLowerCase();
+      case 'notes':
+        return item.notes.toLowerCase();
+      default:
+        return item[property];
+    }
+    }
+    catch (e){
+        console.log(e);
+        return '';
+
+    }
   }
 }

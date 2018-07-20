@@ -9,7 +9,7 @@
     </div>
     <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="24px">
 
-      <table  [class.table-hover]="true" [class.table-striped]="true"
+      <table  [class.table-hover]="true" [class.table-striped]="false"
               [class.table-condensed]="true" [class.table-bordered]="true" width="100%"
               mat-table [dataSource]="dataSource"  matSort matSortActive="name"  matSortDirection="asc" matSortDisableClear>
         <!-- User name Definition -->
@@ -64,9 +64,10 @@
 
         <!-- Header and Row Declarations -->
         <tr mat-header-row *matHeaderRowDef="['name', 'type', 'phone', 'email', 'notes', 'actions']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'phone', 'email', 'notes', 'actions']" (click)="editOperator(row)" class="clickable"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'phone', 'email', 'notes', 'actions']"
+            (click)="editOperator(row)"  [style.background]="highlightedRows.indexOf(row) != -1 ? 'lightgrey' : ''" class="clickable"></tr>
       </table>
     </div>
-    <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+    <mat-paginator class="paginator" [pageSize]="pageSize" [showFirstLastButtons]="true"></mat-paginator>
   </div>
 </div>
