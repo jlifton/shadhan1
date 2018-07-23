@@ -68,9 +68,9 @@ export class SingleDialogComponent implements OnInit {
       country: [this.singleDTO.residence.country, [Validators.maxLength(128)]],
       name: [this.singleDTO.contact.name, [Validators.required]],
       relationship: [this.singleDTO.contact.relationship, [Validators.maxLength(128)]],
-      primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required]],
-      secondaryPhone: [this.singleDTO.contact.secondaryPhone, []],
-      email: [this.singleDTO.contact.email, [Validators.maxLength(128)]]
+      primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required, Validators.pattern('[0-9]+')]],
+      secondaryPhone: [this.singleDTO.contact.secondaryPhone, [Validators.pattern('[0-9]+')]],
+      email: [this.singleDTO.contact.email, [Validators.email, Validators.maxLength(128)]]
     });
 
     this.physicalFormGroup = this.fb.group({
@@ -84,8 +84,8 @@ export class SingleDialogComponent implements OnInit {
 
     this.sourceFormGroup = this.fb.group({
       name: [this.singleDTO.source.name, [Validators.maxLength(128)]],
-      email: [this.singleDTO.source.email, [Validators.maxLength(128)]],
-      phone: [this.singleDTO.source.phone, [Validators.maxLength(128)]],
+      email: [this.singleDTO.source.email, [Validators.email, Validators.maxLength(128)]],
+      phone: [this.singleDTO.source.phone, [Validators.maxLength(128), Validators.pattern('[0-9]+')]],
       comments: [this.singleDTO.comments, [Validators.maxLength(512)]]
     });
 
