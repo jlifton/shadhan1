@@ -48,7 +48,7 @@ export class OperatorsTableComponent implements OnInit {
         newOperator.country = newOperator.country.trim();
         newOperator.username = newOperator.username.trim();
         newOperator.password = newOperator.password.trim();
-        newOperator.notes = newOperator.notes.trim();
+        //newOperator.notes = newOperator.notes.trim();
 
         console.log("Dialog output:", newOperator);
 
@@ -153,7 +153,7 @@ export class OperatorsTableComponent implements OnInit {
         updateOperator.city = updateOperator.city.trim();
         updateOperator.country = updateOperator.country.trim();
         updateOperator.username = updateOperator.username.trim();
-        updateOperator.notes = updateOperator.notes.trim();
+        //updateOperator.notes = updateOperator.notes.trim();
 
         console.log("Dialog output:", updateOperator);
 
