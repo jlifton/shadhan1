@@ -24,8 +24,7 @@ const operatorSchema = new mongoose.Schema({
         type: String,
         required: false,
         minlength: 5,
-        maxlength: 255,
-        unique: true
+        maxlength: 255
     },
     street: {
         type: String,
