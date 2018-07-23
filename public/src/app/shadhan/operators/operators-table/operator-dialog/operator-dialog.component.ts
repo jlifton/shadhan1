@@ -36,7 +36,7 @@ export class OperatorDialogComponent implements OnInit {
       title: [this.title, []],
       name: [this.operatorDTO.name, [Validators.required, Validators.minLength(5),  Validators.maxLength(50)]],
       type: [this.operatorDTO.type, [Validators.required]],
-      phone: [this.operatorDTO.phone, [Validators.required,  Validators.maxLength(64)]],
+      phone: [this.operatorDTO.phone, [Validators.required,  Validators.pattern('[0-9]+'), Validators.maxLength(64)]],
       email: [this.operatorDTO.email, [Validators.required, Validators.email,  Validators.maxLength(255)]],
       street: [this.operatorDTO.street, [ Validators.maxLength(255)]],
       city: [this.operatorDTO.city, [ Validators.maxLength(255)]],
