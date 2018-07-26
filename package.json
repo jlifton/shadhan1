@@ -10,7 +10,7 @@
     "ng": "ng",
     "build": "ng build",
     "test": "jest --watchAll --verbose",
-    "postinstall": "ng build --aot -prod",
+    "postinstall": "ng build --aot",
     "start": "node index.js"
   },
   "keywords": [],
