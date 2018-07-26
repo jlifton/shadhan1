@@ -135,9 +135,15 @@ export class SinglesTableComponent implements OnInit {
           this.onFilterChange(previousFilter);
         }
         if (defaultSort) {
-          this.sort.sort(this.defaultSort);
+          //this.sort.sort(this.defaultSort);
           this.sort.direction = 'asc';
           this.sort.sort(this.defaultSort);
+          this.dataSource.sort = this.sort;
+          this.sort.direction = 'asc';
+          this.dataSource.sort = this.sort;
+        }
+        else {
+          this.dataSource.sort = this.sort;
         }
       },
       error => {
