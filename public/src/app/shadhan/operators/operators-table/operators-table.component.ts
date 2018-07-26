@@ -81,13 +81,24 @@ export class OperatorsTableComponent implements OnInit {
     this.operatorsService.getOperators().subscribe(
       (data: OperatorDTO[]) => {
         this.operators = data;
+        let previousActiveSort = 'name';
+        if (this.dataSource != null){
+          previousActiveSort = this.sort.active;
+          //previousSortDirection = this.sort.direction;
+        }
         this.dataSource = new MatTableDataSource(< OperatorDTO[] > this.operators);
         this.sort.active = 'name';
         this.dataSource.sort = this.sort;
+
+
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sortingDataAccessor = (item, property) => {
           return this.handleSortAccessor(item, property);
         };
+        this.sort.active = previousActiveSort;
+        this.dataSource.sort = this.sort;
+        //this.sort.direction =  previousSortDirection;
       },
       error => {
         console.error("Error getting Operators");
