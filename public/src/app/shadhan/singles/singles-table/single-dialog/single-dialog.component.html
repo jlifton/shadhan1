@@ -295,12 +295,15 @@
             <input matInput formControlName="phone">
           </mat-form-field>
 
-          <mat-form-field fxFlex="grow">
-            <mat-placeholder>Comments</mat-placeholder>
-            <input matInput formControlName="comments">
-          </mat-form-field>
+          <!-- <mat-form-field fxFlex="grow"> -->
+            <!--<mat-placeholder>Comments</mat-placeholder> -->
+            <!--<input matInput formControlName="comments"> -->
+          <div style="maxWidth:600px">
+            <textarea mdInput mdTextareaAutosize  rows="6" cols="80" placeholder="Comments" id="comments" formControlName="comments"></textarea>
+          </div>
+          <!-- </mat-form-field> -->
         </div>
-        <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+        <div class="actions"  style="padding-top:16px" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
           <div style="padding-right:40px">
             <button mat-raised-button type="button"  color="primary"  (click)="closeDialog()" >CANCEL
             </button>
