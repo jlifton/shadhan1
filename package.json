@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll --verbose",
+    "postinstall": "ng build --aot -prod",
     "start": "node index.js"
   },
   "keywords": [],
