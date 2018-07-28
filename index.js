@@ -14,5 +14,7 @@ const port = process.env.PORT || 3000;
 
 const server = app.listen(port, () => winston.info(`Listening on port ${port}...`));
 
-app.use(express.static('public/dist'));
+app.use(express.static('dist'));
+
+//app.use(express.static('public/dist'));
 module.exports = server;
