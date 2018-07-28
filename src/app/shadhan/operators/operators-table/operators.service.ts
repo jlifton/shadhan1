@@ -26,25 +26,46 @@ export class OperatorsService {
   };
 
   deleteOperator(_id): Observable<OperatorDTO> {
-    //const deleteOperatorUrl = 'http://localhost:3000/api/operators/' + _id;
-    const deleteOperatorUrl = '/api/operators/' + _id;
+    let deleteOperatorUrl = '';
+    if (deployed) {
+      deleteOperatorUrl = '/api/operators/' + _id;
+    }
+    else {
+      deleteOperatorUrl = 'http://localhost:3000/api/operators/' + _id;
+    }
     return this.http.delete<OperatorDTO>(deleteOperatorUrl, httpOptions);
   }
 
   createOperator(newOperator: OperatorDTO): Observable<OperatorDTO> {
-      //return this.http.post<OperatorDTO>('http://127.0.0.1:3000/api/operators', newOperator, httpOptions);
+    if (deployed) {
       return this.http.post<OperatorDTO>('/api/operators', newOperator, httpOptions);
+    }
+    else {
+      return this.http.post<OperatorDTO>('http://127.0.0.1:3000/api/operators', newOperator, httpOptions);
+    }
   }
 
   updateOperator(_id, updateOperator: OperatorDTO): Observable<OperatorDTO> {
-    const updateOperatorUrl = 'http://localhost:3000/api/operators/' + _id;
+    let updateOperatorUrl = '';
+    if (deployed){
+      updateOperatorUrl = '/api/operators/' + _id;
+    }
+    else {
+      updateOperatorUrl = 'http://localhost:3000/api/operators/' + _id;
+    }
     const updateOperatorStringified = JSON.stringify(updateOperator);
     return this.http.put<OperatorDTO>(updateOperatorUrl, updateOperatorStringified, httpOptions);
   }
 
   updatePassword(_id, currentPassword, newPassword): Observable<OperatorDTO> {
-    //const updatePwUrl = 'http://localhost:3000/api/operators/pw/' + _id;
-    const updatePwUrl = '/api/operators/pw/' + _id;
+    let updatePwUrl = '';
+    if (deployed){
+      updatePwUrl = '/api/operators/pw/' + _id;
+    }
+    else {
+      updatePwUrl = 'http://localhost:3000/api/operators/pw/' + _id;
+    }
+
     const updatePassword = {
       currentPassword:  currentPassword ,
       newPassword: newPassword };
