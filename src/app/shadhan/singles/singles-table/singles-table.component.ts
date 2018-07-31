@@ -234,6 +234,38 @@ export class SinglesTableComponent implements OnInit {
       });
   }
 
+  archiveSingle(row: SingleDTO) {
+    this.manageHighlightRow(row);
+    const operatorType = this.authGuardService.getLoggedInType();
+    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
+      this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
+        verticalPosition: 'top',
+        horizontalPosition: 'end'
+      });
+      return;
+    }
+    if(confirm("Archive Single "+ row.identity.firstName + ' ' + row.identity.lastName +' ?')) {
+      this.singlesService.archiveSingle(row._id).subscribe(
+        data => {
+          this.snackbar.open( row.identity.firstName + ' ' + row.identity.lastName + ' archived', null, {
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'end'
+          });
+          this.getSingles(false);
+        },
+        error => {
+          console.error("Error archiving Single");
+          this.snackbar.open('Problem archiving Single', 'Ok', {
+            verticalPosition: 'top',
+            horizontalPosition: 'end'
+          });
+          return Observable.throw(error);
+        }
+      );
+    }
+  }
+
   deleteSingle(row: SingleDTO) {
     this.manageHighlightRow(row);
     const operatorType = this.authGuardService.getLoggedInType();

@@ -89,7 +89,8 @@ const routes: Routes = [
       {
         path: 'archive',
         //canActivate: [AuthGuardService],
-        loadChildren: 'app/shadhan/archive/archive.module#ArchiveModule',
+        //loadChildren: 'app/shadhan/archive/archive.module#ArchiveModule',
+        loadChildren: 'app/shadhan/archives/archives-table/archives-table.module#ArchivesTableModule'
       },
       {
         path: 'maintenance',

@@ -74,7 +74,7 @@ export class AppComponent {
     });
 
     menu.push({
-      name: 'Archive',
+      name: 'Archives',
       routeOrFunction: 'archive',
       icon: 'library_books',
       position: 32
