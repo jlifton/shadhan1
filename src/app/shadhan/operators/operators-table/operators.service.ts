@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Rx";
 import {OperatorDTO} from "./operator.data";
+import {AppConstants} from '../../../constants';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -9,7 +10,6 @@ const httpOptions = {
     'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWVmNGFlYzdlNDliODJiNzRhNDIxMGYiLCJpYXQiOjE1MjU2MzE3MjR9.tZR5o0VIf0fQ20pFPWwnzLnw_T516xh4B6ukKp1uRgw'
   })
 };
-const deployed = true;
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class OperatorsService {
   }
 
   getOperators(): Observable<OperatorDTO[]> {
-    if (deployed)
+    if (AppConstants.isDeployed)
       return this.http.get<OperatorDTO[]>('/api/operators', httpOptions);
     else
       return this.http.get<OperatorDTO[]>('http://localhost:3000/api/operators', httpOptions);
@@ -27,7 +27,7 @@ export class OperatorsService {
 
   deleteOperator(_id): Observable<OperatorDTO> {
     let deleteOperatorUrl = '';
-    if (deployed) {
+    if (AppConstants.isDeployed) {
       deleteOperatorUrl = '/api/operators/' + _id;
     }
     else {
@@ -37,7 +37,7 @@ export class OperatorsService {
   }
 
   createOperator(newOperator: OperatorDTO): Observable<OperatorDTO> {
-    if (deployed) {
+    if (AppConstants.isDeployed) {
       return this.http.post<OperatorDTO>('/api/operators', newOperator, httpOptions);
     }
     else {
@@ -47,7 +47,7 @@ export class OperatorsService {
 
   updateOperator(_id, updateOperator: OperatorDTO): Observable<OperatorDTO> {
     let updateOperatorUrl = '';
-    if (deployed){
+    if (AppConstants.isDeployed){
       updateOperatorUrl = '/api/operators/' + _id;
     }
     else {
@@ -59,7 +59,7 @@ export class OperatorsService {
 
   updatePassword(_id, currentPassword, newPassword): Observable<OperatorDTO> {
     let updatePwUrl = '';
-    if (deployed){
+    if (AppConstants.isDeployed){
       updatePwUrl = '/api/operators/pw/' + _id;
     }
     else {
