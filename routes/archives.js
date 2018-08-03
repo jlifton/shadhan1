@@ -26,7 +26,10 @@ router.get('/', auth, async (req, res) => {
  */
 router.post('/', async (req, res) => {
   const {error} = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) {
+    winston.error('Adding Archive. Details: ' + error.details[0].message);
+    return res.status(400).send(error.details[0].message);
+  }
   const archive = new Archive({
     identity: {
       firstName: req.body.identity.firstName,
@@ -76,9 +79,9 @@ router.post('/', async (req, res) => {
     created: Date.now(),
     updated: Date.now()
   });
-
+  winston.info('Request to add Archive (name: '+ identity.lastName + ')');
   await archive.save();
-
+  winston.info('Archive added');
   res.send(archive);
 });
 
@@ -86,10 +89,14 @@ router.post('/', async (req, res) => {
  * Delete an Archive
  */
 router.delete('/:id', async (req, res) => {
+  winston.info('Request to delete Archive (id: '+req.params.id+ ')');
   const archive = await Archive.findByIdAndRemove(req.params.id);
 
-  if (!archive) return res.status(404).send('The archived Single with the given ID was not found.');
-
+  if (!archive) {
+    winston.error('The archived Single with the given ID was not found. Delete failed');
+    return res.status(404).send('The archived Single with the given ID was not found. Delete failed');
+  }
+  winston.info('Archive deleted');
   res.send(archive);
 });
 
@@ -99,10 +106,13 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   // Delete from Single, and create in Archive. Do it atomically with Fawn. Fawn not working. Not doing the remove for some weird reason
   // Try again later ?
-
+  winston.info('Request to archive Single (id: '+req.params.id+ ')');
   // First, get the relevant Single
   let single  = await Single.findById(req.params.id);
-  if (!single) return res.status(404).send('The Single with the given ID was not found. Archive unsuccessful');
+  if (!single) {
+    winston.error('The Single with the given ID was not found. Archive unsuccessful');
+    return res.status(404).send('The Single with the given ID was not found. Archive unsuccessful');
+  }
 
   const archive = new Archive({
     identity: {
@@ -155,11 +165,14 @@ router.put('/:id', async (req, res) => {
   });
   //Add the Single to archives collection
   await archive.save();
-
+  winston.info('Archive succeeded. Will now attempt to delete from Single collection');
   // Now, remove the Single from the singles collection
   single = await Single.findByIdAndRemove(req.params.id);
 
-  if (!single) return res.status(404).send('Could not delete the Single, but it was successfully migrated to Archives.');
+  if (!single) {
+    winston.error('Could not delete the Single, but it was successfully migrated to Archives.');
+    return res.status(404).send('Could not delete the Single, but it was successfully migrated to Archives.');
+  }
   res.send(archive);
 
 /**
