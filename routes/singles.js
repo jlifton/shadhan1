@@ -5,160 +5,183 @@ const {Single, validate} = require('../models/single');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const winston = require('winston');
 
 /**
  * Get all Singles
  */
-router.get('/', auth, async(req, res) => {
-    const singles = await Single.find().sort('lastName');
-    res.send(singles);
+router.get('/', auth, async (req, res) => {
+  winston.info('Request to get all Singles.');
+  const singles = await Single.find().sort('lastName');
+  winston.info('Responding to get all Singles request.');
+  res.send(singles);
 });
 
 /**
  * Get specific Single
  */
-router.get('/:id', [auth, validateObjectId], async(req, res) => {
-    const single = await Single.findById(req.params.id);
+router.get('/:id', [auth, validateObjectId], async (req, res) => {
+  winston.info('Request to get Single. (id: ' + req.params.id + ')');
+  const single = await Single.findById(req.params.id);
 
-    if (!single) return res.status(404).send('The single with the given ID was not found.');
-
-    res.send(single);
+  if (!single) {
+    winston.info('Request to get Single failed. Not found (id: ' + req.params.id + ')');
+    return res.status(404).send('The single with the given ID was not found.');
+  }
+  winston.info('Responding to get Single request.');
+  res.send(single);
 });
 
 /**
  * Add a Single
  */
-router.post('/', async(req, res) => {
-    const {error} = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    const single = new Single({
-        identity: {
-            firstName: req.body.identity.firstName,
-            lastName: req.body.identity.lastName,
-            sex: req.body.identity.sex,
-            age: req.body.identity.age,
-            maritalStatus: req.body.identity.maritalStatus
-        },
-        occupation: req.body.occupation,
-        specialNeeds: req.body.specialNeeds,
-        religioEthnic: {
-            hashkafa: req.body.religioEthnic.hashkafa,
-            ethnicity: req.body.religioEthnic.ethnicity,
-            ethnicityAdditional: req.body.religioEthnic.ethnicityAdditional,
-            convert: req.body.religioEthnic.convert,
-            cohen: req.body.religioEthnic.cohen,
-            primaryActivity: req.body.religioEthnic.primaryActivity
-        },
-        residence: {
-            city: req.body.residence.city,
-            country: req.body.residence.country
-        },
-        physical: {
-            height: req.body.physical.height,
-            build: req.body.physical.build,
-            description: req.body.physical.description,
-            smoker: req.body.physical.smoker
-        },
-        personalityRequirements: req.body.personalityRequirements,
-        pastEducation: req.body.pastEducation,
+router.post('/', async (req, res) => {
+  winston.info('Request to add new Single');
+  const {error} = validate(req.body);
+  if (error) {
+    winston.error ('Request to add Single failed. Error message: ' + error.details[0].message);
+    return res.status(400).send(error.details[0].message);
+  }
+  const single = new Single({
+    identity: {
+      firstName: req.body.identity.firstName,
+      lastName: req.body.identity.lastName,
+      sex: req.body.identity.sex,
+      age: req.body.identity.age,
+      maritalStatus: req.body.identity.maritalStatus
+    },
+    occupation: req.body.occupation,
+    specialNeeds: req.body.specialNeeds,
+    religioEthnic: {
+      hashkafa: req.body.religioEthnic.hashkafa,
+      ethnicity: req.body.religioEthnic.ethnicity,
+      ethnicityAdditional: req.body.religioEthnic.ethnicityAdditional,
+      convert: req.body.religioEthnic.convert,
+      cohen: req.body.religioEthnic.cohen,
+      primaryActivity: req.body.religioEthnic.primaryActivity
+    },
+    residence: {
+      city: req.body.residence.city,
+      country: req.body.residence.country
+    },
+    physical: {
+      height: req.body.physical.height,
+      build: req.body.physical.build,
+      description: req.body.physical.description,
+      smoker: req.body.physical.smoker
+    },
+    personalityRequirements: req.body.personalityRequirements,
+    pastEducation: req.body.pastEducation,
 
-        contact: {
-            name: req.body.contact.name,
-            relationship: req.body.contact.relationship,
-            primaryPhone: req.body.contact.primaryPhone,
-            secondaryPhone: req.body.contact.secondaryPhone,
-            email: req.body.contact.email
-        },
-        dateEntered: req.body.dateEntered,
-        source: {
-            name: req.body.source.name,
-            email: req.body.source.email,
-            phone: req.body.source.phone
-        },
-        visible: req.body.visible,
-        comments: req.body.comments,
-        created: Date.now(),
-        updated: Date.now()
-    });
-
-    await single.save();
-
-    res.send(single);
+    contact: {
+      name: req.body.contact.name,
+      relationship: req.body.contact.relationship,
+      primaryPhone: req.body.contact.primaryPhone,
+      secondaryPhone: req.body.contact.secondaryPhone,
+      email: req.body.contact.email
+    },
+    dateEntered: req.body.dateEntered,
+    source: {
+      name: req.body.source.name,
+      email: req.body.source.email,
+      phone: req.body.source.phone
+    },
+    visible: req.body.visible,
+    comments: req.body.comments,
+    created: Date.now(),
+    updated: Date.now()
+  });
+  winston.info('Will save new  Single');
+  await single.save();
+  winston.info('Responding to request add Single');
+  res.send(single);
 });
 
 /**
  * Delete a Single
  */
-router.delete('/:id', async(req, res) => {
-    const single = await Single.findByIdAndRemove(req.params.id);
+router.delete('/:id', async (req, res) => {
+  winston.info('Request to delete Single. (id: '+ req.params.id + ')');
+  const single = await Single.findByIdAndRemove(req.params.id);
 
-    if (!single) return res.status(404).send('The single with the given ID was not found.');
-
-    res.send(single);
+  if (!single) {
+    winston.error('Single for given id not found. Delete failed');
+    return res.status(404).send('The single with the given ID was not found.');
+  }
+  winston.info('Responding to delete request');
+  res.send(single);
 });
 
 /**
  * Update a Single
  */
-router.put('/:id', async(req, res) => {
-    const {error} = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+router.put('/:id', async (req, res) => {
+  winston.info('Request to update Single. (id: '+ req.params.id + ')');
+  const {error} = validate(req.body);
+  if (error) {
+    winston.error('Request to update Single failed in validation. Error message: '+ error.details[0].message);
+    return res.status(400).send(error.details[0].message);
+  }
 
-    const single = await Single.findByIdAndUpdate(req.params.id,
-        {
-            identity: {
-                firstName: req.body.identity.firstName,
-                lastName: req.body.identity.lastName,
-                sex: req.body.identity.sex,
-                age: req.body.identity.age,
-                maritalStatus: req.body.identity.maritalStatus
-            },
-            occupation: req.body.occupation,
-            specialNeeds: req.body.specialNeeds,
-            religioEthnic: {
-                hashkafa: req.body.religioEthnic.hashkafa,
-                ethnicity: req.body.religioEthnic.ethnicity,
-                ethnicityAdditional: req.body.religioEthnic.ethnicityAdditional,
-                convert: req.body.religioEthnic.convert,
-                cohen: req.body.religioEthnic.cohen,
-                primaryActivity: req.body.religioEthnic.primaryActivity
-            },
-            residence: {
-                city: req.body.residence.city,
-                country: req.body.residence.country
-            },
-            physical: {
-                height: req.body.physical.height,
-                build: req.body.physical.build,
-                description: req.body.physical.description,
-                smoker: req.body.physical.smoker
-            },
-            personalityRequirements: req.body.personalityRequirements,
-            pastEducation: req.body.pastEducation,
+  const single = await Single.findByIdAndUpdate(req.params.id,
+    {
+      identity: {
+        firstName: req.body.identity.firstName,
+        lastName: req.body.identity.lastName,
+        sex: req.body.identity.sex,
+        age: req.body.identity.age,
+        maritalStatus: req.body.identity.maritalStatus
+      },
+      occupation: req.body.occupation,
+      specialNeeds: req.body.specialNeeds,
+      religioEthnic: {
+        hashkafa: req.body.religioEthnic.hashkafa,
+        ethnicity: req.body.religioEthnic.ethnicity,
+        ethnicityAdditional: req.body.religioEthnic.ethnicityAdditional,
+        convert: req.body.religioEthnic.convert,
+        cohen: req.body.religioEthnic.cohen,
+        primaryActivity: req.body.religioEthnic.primaryActivity
+      },
+      residence: {
+        city: req.body.residence.city,
+        country: req.body.residence.country
+      },
+      physical: {
+        height: req.body.physical.height,
+        build: req.body.physical.build,
+        description: req.body.physical.description,
+        smoker: req.body.physical.smoker
+      },
+      personalityRequirements: req.body.personalityRequirements,
+      pastEducation: req.body.pastEducation,
 
-            contact: {
-                name: req.body.contact.name,
-                relationship: req.body.contact.relationship,
-                primaryPhone: req.body.contact.primaryPhone,
-                secondaryPhone: req.body.contact.secondaryPhone,
-                email: req.body.contact.email
-            },
-            dateEntered: req.body.dateEntered,
-            source: {
-                name: req.body.source.name,
-                email: req.body.source.email,
-                phone: req.body.source.phone
-            },
-            visible: req.body.visible,
-            comments: req.body.comments,
-            updated: Date.now()
-        },
-        function (err, result) {
-            const x = '';
-        });
+      contact: {
+        name: req.body.contact.name,
+        relationship: req.body.contact.relationship,
+        primaryPhone: req.body.contact.primaryPhone,
+        secondaryPhone: req.body.contact.secondaryPhone,
+        email: req.body.contact.email
+      },
+      dateEntered: req.body.dateEntered,
+      source: {
+        name: req.body.source.name,
+        email: req.body.source.email,
+        phone: req.body.source.phone
+      },
+      visible: req.body.visible,
+      comments: req.body.comments,
+      updated: Date.now()
+    },
+    function (err, result) {
+      const x = '';
+    });
 
-    if (!single) return res.status(404).send('The Single with the given ID was not found.');
-    res.send(single);
+  if (!single) {
+    winston.error('Request to update Single failed. The Single with the given ID was not found.');
+    return res.status(404).send('The Single with the given ID was not found.');
+  }
+  winston.info('Responding to request to update Single');
+  res.send(single);
 });
 
 module.exports = router;

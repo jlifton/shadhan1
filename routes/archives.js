@@ -173,6 +173,7 @@ router.put('/:id', async (req, res) => {
     winston.error('Could not delete the Single, but it was successfully migrated to Archives.');
     return res.status(404).send('Could not delete the Single, but it was successfully migrated to Archives.');
   }
+  winston.info('Returning from Request to archive Single');
   res.send(archive);
 
 /**
