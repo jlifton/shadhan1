@@ -90,7 +90,7 @@ router.post('/', async (req, res) => {
   const token = operator.generateAuthToken();
   res.header('x-auth-token', token).send(_.pick(operator, ['_id',
     'name', 'type', 'username', 'email', 'phone', 'street', 'city', 'country', 'notes']));
-  winston.info('Responding to request add Operator');
+  winston.info('Responding to request add Operator. Operator name: ' + operator.name);
 });
 
 /**
@@ -104,7 +104,7 @@ router.delete('/:id', [auth, validateObjectId], async (req, res) => {
     winston.error('Operator for given id not found. Delete failed');
     return res.status(404).send('The operator with the given ID was not found.');
   }
-  winston.info('Responding to delete request');
+  winston.info('Responding to delete request. Operator name: ' + operator.name);
   res.send(operator);
 });
 
@@ -180,7 +180,7 @@ router.put('/:id', [auth, validateObjectId], async (req, res) => {
     winston.error('Request to update Operator failed. The Operator with the given ID was not found.');
     return res.status(404).send('The Operator with the given ID was not found.');
   }
-  winston.info('Responding to request to update Operator');
+  winston.info('Responding to request to update Operator. Operator name: ' + operator.name);
   res.send(operator);
 });
 

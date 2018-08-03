@@ -13,7 +13,7 @@ const winston = require('winston');
 router.get('/', auth, async (req, res) => {
   winston.info('Request to get all Singles.');
   const singles = await Single.find().sort('lastName');
-  winston.info('Responding to get all Singles request.');
+  winston.info('Responding to get all Singles request.  Count: ' + singles.length);
   res.send(singles);
 });
 
@@ -28,7 +28,7 @@ router.get('/:id', [auth, validateObjectId], async (req, res) => {
     winston.info('Request to get Single failed. Not found (id: ' + req.params.id + ')');
     return res.status(404).send('The single with the given ID was not found.');
   }
-  winston.info('Responding to get Single request.');
+  winston.info('Responding to get Single request. Single last name: '+ single.identity.lastName);
   res.send(single);
 });
 
@@ -93,7 +93,7 @@ router.post('/', async (req, res) => {
   });
   winston.info('Will save new  Single');
   await single.save();
-  winston.info('Responding to request add Single');
+  winston.info('Responding to request add Single. Single last name: ' + single.identity.lastName);
   res.send(single);
 });
 
@@ -108,7 +108,7 @@ router.delete('/:id', async (req, res) => {
     winston.error('Single for given id not found. Delete failed');
     return res.status(404).send('The single with the given ID was not found.');
   }
-  winston.info('Responding to delete request');
+  winston.info('Responding to delete request. Single last name: ' + single.identity.lastName);
   res.send(single);
 });
 
@@ -180,7 +180,7 @@ router.put('/:id', async (req, res) => {
     winston.error('Request to update Single failed. The Single with the given ID was not found.');
     return res.status(404).send('The Single with the given ID was not found.');
   }
-  winston.info('Responding to request to update Single');
+  winston.info('Responding to request to update Single. Single last name: '+ single.identity.lastName);
   res.send(single);
 });
 

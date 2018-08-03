@@ -16,7 +16,7 @@ Fawn.init(mongoose);
 router.get('/', auth, async (req, res) => {
   winston.info('Request to get all Archives');
   const archives = await Archive.find().sort('lastName');
-  winston.info('Responding to get all Archives request.');
+  winston.info('Responding to get all Archives request.  Count:' + archives.length);
   res.send(archives);
 });
 
@@ -96,7 +96,7 @@ router.delete('/:id', async (req, res) => {
     winston.error('The archived Single with the given ID was not found. Delete failed');
     return res.status(404).send('The archived Single with the given ID was not found. Delete failed');
   }
-  winston.info('Archive deleted');
+  winston.info('Archive deleted. Archive last name: '+ archive.identity.lastName);
   res.send(archive);
 });
 
@@ -173,7 +173,7 @@ router.put('/:id', async (req, res) => {
     winston.error('Could not delete the Single, but it was successfully migrated to Archives.');
     return res.status(404).send('Could not delete the Single, but it was successfully migrated to Archives.');
   }
-  winston.info('Returning from Request to archive Single');
+  winston.info('Returning from Request to archive Single. Archive last name: ' + archive.identity.lastName);
   res.send(archive);
 
 /**
