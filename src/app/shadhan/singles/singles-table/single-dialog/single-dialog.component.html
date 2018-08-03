@@ -22,7 +22,7 @@
           </div>
 
           <mat-form-field>
-            <input matInput required formControlName="age" placeholder="Age" type="text">
+            <input matInput required formControlName="age" placeholder="Age" type="number">
           </mat-form-field>
 
           <div class="content" fxLayout="column" fxLayoutGap="8px">
@@ -225,7 +225,7 @@
         <div class="content" fxLayout="column" fxLayoutGap="18px">
             <mat-form-field>
               <mat-placeholder>Height (cm)</mat-placeholder>
-              <input matInput formControlName="height">
+              <input matInput formControlName="height" type="number">
             </mat-form-field>
 
             <mat-form-field fxFlex="grow">
@@ -264,7 +264,7 @@
           </button>
           <div *ngIf="!isNew"  style="padding-left:40px">
             <button mat-raised-button matStepperNext color="primary" (click)="submit()"
-                    [disabled]="residenceContactFormGroup.invalid">
+                    [disabled]="physicalFormGroup.invalid">
               {{commitLabel}}
             </button>
           </div>
