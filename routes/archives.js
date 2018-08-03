@@ -7,13 +7,16 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Fawn = require('fawn');
+const winston = require('winston');
 
 Fawn.init(mongoose);
 /**
  * Get all Archives
  */
 router.get('/', auth, async (req, res) => {
+  winston.info('Request to get all Archives');
   const archives = await Archive.find().sort('lastName');
+  winston.info('Responding to get all Archives request.');
   res.send(archives);
 });
 

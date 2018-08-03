@@ -8,6 +8,7 @@ const {Operator, validateNewOperator, validateUpdateOperator, validateLogin} = r
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const winston = require('winston');
 
 router.get('/me', auth, async(req, res) => {
     const operator = await Operator.findById(req.operator._id).select('-password');
@@ -30,12 +31,16 @@ router.post('/login', async (req, res) => {
         if (validPassword) {
             const token = operator.generateAuthToken();
             operator.password = '';
+            winston.info('Operator: ' + req.body.username + ' authenticated and logged in');
             return res.header('x-auth-token', token).send(operator);
         }
-        return  res.status(400).send('No Operator for this user name and password.');
+      winston.info('Password doesnt match for ' + req.body.username);
+      return  res.status(400).send('No Operator for this user name and password.');
     }
-    else
-        return  res.status(400).send('No Operator for this user name and password.');
+    else {
+      winston.info('No Operator for (user, pw): ' + req.body.username + ', ' + req.body.password);
+      return res.status(400).send('No Operator for this user name and password.');
+    }
 
 /**
     operator = new Operator(_.pick(req.body, ['name', 'type', 'username', 'password', 'email',
