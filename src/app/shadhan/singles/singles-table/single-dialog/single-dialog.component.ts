@@ -62,19 +62,36 @@ export class SingleDialogComponent implements OnInit {
       cohen: [this.singleDTO.religioEthnic.cohen, []],
       convert: [this.singleDTO.religioEthnic.convert, []]
     });
-
+    /**
+     * Phone validator:
+     ^ - start of a string
+     \s* - 0+ whitespaces
+     (?:\+?\d{1,3})? - an optional sequence of:
+     \+? - an optional (1 or 0) + symbol
+     \d{1,3} - any 1 to 3 digits
+     [- (]* - a -, space or (
+     \d{3} - any 3 digits
+     (?:[- )]*\d{3})? - an optional sequence of:
+     [- )]* - 0+ -, spaces or )
+     \d{3} - any 2 or 3 digits
+     [- ]* - 0+ spaces or -
+     \d{4} - any 4,5,6,7 digits
+     (?: *[x/#]\d+)?
+     \s* - 0+ whitespaces
+     $ - end of string.
+     */
     this.residenceContactFormGroup = this.fb.group({
       city: [this.singleDTO.residence.city, [Validators.maxLength(128)]],
       country: [this.singleDTO.residence.country, [Validators.maxLength(128)]],
       name: [this.singleDTO.contact.name, [Validators.required]],
       relationship: [this.singleDTO.contact.relationship, [Validators.maxLength(128)]],
-      primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required, Validators.pattern('[0-9]+')]],
-      secondaryPhone: [this.singleDTO.contact.secondaryPhone, [Validators.pattern('[0-9]+')]],
+      primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required, Validators.pattern('^\\s*(?:\\+?\\d{1,3})?[- (]*\\d{2,3}(?:[- )]*\\d{3})?[- ]*\\d{4,7}(?: *[x/#]\\d+)?\\s*$')]],
+      secondaryPhone: [this.singleDTO.contact.secondaryPhone, [Validators.pattern('^\\s*(?:\\+?\\d{1,3})?[- (]*\\d{2,3}(?:[- )]*\\d{3})?[- ]*\\d{4,7}(?: *[x/#]\\d+)?\\s*$')]],
       email: [this.singleDTO.contact.email, [Validators.email, Validators.maxLength(128)]]
     });
 
     this.physicalFormGroup = this.fb.group({
-      height: [this.singleDTO.physical.height, []],
+      height: [this.singleDTO.physical.height, [  Validators.max(210)]],
       build: [this.singleDTO.physical.build, [Validators.maxLength(128)]],
       description: [this.singleDTO.physical.description, [Validators.maxLength(255)]],
       personalityRequirements: [this.singleDTO.personalityRequirements, [Validators.maxLength(255)]],
@@ -85,7 +102,7 @@ export class SingleDialogComponent implements OnInit {
     this.sourceFormGroup = this.fb.group({
       name: [this.singleDTO.source.name, [Validators.maxLength(128)]],
       email: [this.singleDTO.source.email, [Validators.email, Validators.maxLength(128)]],
-      phone: [this.singleDTO.source.phone, [Validators.maxLength(128), Validators.pattern('[0-9]+')]],
+      phone: [this.singleDTO.source.phone, [Validators.maxLength(128), Validators.pattern('^\\s*(?:\\+?\\d{1,3})?[- (]*\\d{2,3}(?:[- )]*\\d{3})?[- ]*\\d{4,7}(?: *[x/#]\\d+)?\\s*$')]],
       comments: [this.singleDTO.comments, [Validators.maxLength(512)]]
     });
 
