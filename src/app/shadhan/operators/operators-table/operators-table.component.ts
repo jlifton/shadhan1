@@ -117,6 +117,13 @@ export class OperatorsTableComponent implements OnInit {
       });
       return;
     }
+    if (this.authGuardService.getLoggedInUserId() === row._id) {
+      this.snackbar.open('You are logged in and are not allowed to delete your definition', 'Ok', {
+        verticalPosition: 'top',
+        horizontalPosition: 'end'
+      });
+      return;
+    }
 
     if (confirm("Delete Operator " + row.name + ' ?')) {
       this.operatorsService.deleteOperator(row._id).subscribe(
