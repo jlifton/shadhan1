@@ -24,7 +24,9 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/static/shabbat_hag.html",
+              "src/static/maintenance.html"
             ],
             "styles": [
               "src/styles.scss"
