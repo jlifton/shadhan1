@@ -1,5 +1,5 @@
 
 export class AppConstants {
-  public static readonly isDeployed = true;
+  public static readonly isDeployed = false;
 
 }
