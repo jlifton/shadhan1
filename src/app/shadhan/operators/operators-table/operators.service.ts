@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Rx";
 import {OperatorDTO} from "./operator.data";
 import {AppConstants} from '../../../constants';
+import {AuthGuardService} from '../../auth/auth.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,12 +16,13 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private authGuardService: AuthGuardService) {
   }
 
   getOperators(): Observable<OperatorDTO[]> {
     if (AppConstants.isDeployed)
-      return this.http.get<OperatorDTO[]>('/api/operators', httpOptions);
+      return this.http.get<OperatorDTO[]>('/api/operators', this.authGuardService.genHttpHeaders());
     else
       return this.http.get<OperatorDTO[]>('http://localhost:3000/api/operators', httpOptions);
   };
@@ -33,12 +35,15 @@ export class OperatorsService {
     else {
       deleteOperatorUrl = 'http://localhost:3000/api/operators/' + _id;
     }
-    return this.http.delete<OperatorDTO>(deleteOperatorUrl, httpOptions);
+    if (AppConstants.isDeployed)
+      return this.http.delete<OperatorDTO>(deleteOperatorUrl, this.authGuardService.genHttpHeaders());
+    else
+      return this.http.delete<OperatorDTO>(deleteOperatorUrl, httpOptions);
   }
 
   createOperator(newOperator: OperatorDTO): Observable<OperatorDTO> {
     if (AppConstants.isDeployed) {
-      return this.http.post<OperatorDTO>('/api/operators', newOperator, httpOptions);
+      return this.http.post<OperatorDTO>('/api/operators', newOperator, this.authGuardService.genHttpHeaders());
     }
     else {
       return this.http.post<OperatorDTO>('http://127.0.0.1:3000/api/operators', newOperator, httpOptions);
@@ -54,7 +59,10 @@ export class OperatorsService {
       updateOperatorUrl = 'http://localhost:3000/api/operators/' + _id;
     }
     const updateOperatorStringified = JSON.stringify(updateOperator);
-    return this.http.put<OperatorDTO>(updateOperatorUrl, updateOperatorStringified, httpOptions);
+    if (AppConstants.isDeployed)
+      return this.http.put<OperatorDTO>(updateOperatorUrl, updateOperatorStringified, this.authGuardService.genHttpHeaders());
+    else
+      return this.http.put<OperatorDTO>(updateOperatorUrl, updateOperatorStringified, httpOptions);
   }
 
   updatePassword(_id, currentPassword, newPassword): Observable<OperatorDTO> {
@@ -70,7 +78,10 @@ export class OperatorsService {
       currentPassword:  currentPassword ,
       newPassword: newPassword };
     const strUpdatePassword = JSON.stringify(updatePassword);
-    return this.http.put<OperatorDTO>(updatePwUrl, strUpdatePassword, httpOptions);
+    if (AppConstants.isDeployed)
+      return this.http.put<OperatorDTO>(updatePwUrl, strUpdatePassword, this.authGuardService.genHttpHeaders());
+    else
+      return this.http.put<OperatorDTO>(updatePwUrl, strUpdatePassword, httpOptions);
   }
 
 }
