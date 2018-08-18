@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
     if (validPassword) {
       const token = operator.generateAuthToken();
       operator.password = '';
-      winston.info('Operator: ' + req.body.username + ' authenticated and logged in');
+      winston.info('Operator: ' + req.body.username + ' authenticated and logged in. _id: ' + operator._id + ' jwt:'+token);
       return res.header('x-auth-token', token).send(operator);
     }
     winston.info('Password doesnt match for ' + req.body.username);
