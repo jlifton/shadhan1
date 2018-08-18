@@ -3,11 +3,12 @@
 
   <div class="list-table">
     <fury-list name="Archived Singles" [columns]="columns" (filterChange)="onFilterChange($event)" (columnVisibilityChange)="onColVisibleChange($event)">
-      <div class="actions">
+      <!--<div class="actions">
         <button class="create" (click)="createSingle()" type="button" style="float:right" mat-mini-fab color="primary">
           <mat-icon>add</mat-icon>
         </button>
       </div>
+      -->
       <mat-paginator class="paginator" [pageSize]="pageSize" [showFirstLastButtons]="true"
                      [pageSizeOptions]="[5, 10, 15, 25, 40, 100]"
                      (page)="pageEvent = pageEventHandler($event)"></mat-paginator>
