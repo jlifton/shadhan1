@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {LoginResponse} from "../login/login-response.interface";
 import {MatSnackBar} from "@angular/material";
+import {HttpHeaders} from '@angular/common/http';
+import {AppConstants} from '../../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +73,20 @@ export class AuthGuardService implements CanActivate{
 
   getType() {
     return this.loggedInUser.type;
+  }
+
+  genHttpHeaders(): Object {
+    let locToken =  this.token;
+    let headers: HttpHeaders = new HttpHeaders();
+    // need to do this
+    if (locToken === null)
+      locToken = AppConstants.devToken;
+    console.log('token: ' + locToken);
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('x-auth-token', locToken);
+    const httpOptions = {
+      headers : headers
+    }
+    return httpOptions;
   }
 }
