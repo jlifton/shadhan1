@@ -237,7 +237,7 @@ export class SinglesTableComponent implements OnInit {
   archiveSingle(row: SingleDTO) {
     this.manageHighlightRow(row);
     const operatorType = this.authGuardService.getLoggedInType();
-    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
+    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY' && operatorType !== 'GUEST'){
       this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
         verticalPosition: 'top',
         horizontalPosition: 'end'
@@ -269,7 +269,7 @@ export class SinglesTableComponent implements OnInit {
   deleteSingle(row: SingleDTO) {
     this.manageHighlightRow(row);
     const operatorType = this.authGuardService.getLoggedInType();
-    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
+    if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY' && operatorType !== 'GUEST'){
       this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
         verticalPosition: 'top',
         horizontalPosition: 'end'

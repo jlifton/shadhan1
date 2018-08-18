@@ -110,7 +110,7 @@ export class SingleDialogComponent implements OnInit {
 
  submit() {
    const operatorType = this.authGuardService.getLoggedInType();
-   if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY'){
+   if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY' && operatorType !== 'GUEST'){
      this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
        verticalPosition: 'top',
        horizontalPosition: 'end'

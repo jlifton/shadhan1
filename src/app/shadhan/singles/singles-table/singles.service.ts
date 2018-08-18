@@ -49,10 +49,11 @@ export class SinglesService {
   }
 
   archiveSingle(_id): Observable<SingleDTO> {
+    // actually _id should be sent as body param and not as :id. Change later
     if (AppConstants.isDeployed)
-      return this.http.put<SingleDTO>('/api/archives/' + _id,  this.authGuardService.genHttpHeaders());
+      return this.http.put<SingleDTO>('/api/archives/' + _id, null, this.authGuardService.genHttpHeaders());
     else
-      return this.http.put<SingleDTO>('http://localhost:3000/api/archives/' + _id, httpOptions);
+      return this.http.put<SingleDTO>('http://localhost:3000/api/archives/' + _id, null, httpOptions);
   }
 
   createSingle(newSingle: SingleDTO): Observable<SingleDTO> {
