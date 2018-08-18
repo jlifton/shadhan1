@@ -14,6 +14,7 @@ router.get('/', auth, async (req, res) => {
   winston.info('Request to get all Singles.');
   const singles = await Single.find().sort('lastName');
   winston.info('Responding to get all Singles request.  Count: ' + singles.length);
+  winston.info(`Requested by _id:`+ req.user._id + ', type:' + req.user.type);
   res.send(singles);
 });
 
