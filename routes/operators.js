@@ -77,7 +77,11 @@ router.post('/', async (req, res) => {
 
   let operator = await Operator.findOne({email: req.body.email});
   if (operator) {
-    return res.status(400).send('Operator already registered.');
+    return res.status(400).send('Operator email already in use.');
+  }
+  operator = await Operator.findOne({username: req.body.username});
+  if (operator) {
+    return res.status(400).send('Operator user name already in use.');
   }
 
   operator = new Operator(_.pick(req.body, ['name', 'type', 'username', 'password', 'email',
@@ -173,7 +177,11 @@ router.put('/:id', [auth, validateObjectId], async (req, res) => {
       notes: req.body.notes
     },
     function (err, result) {
-      const x = '';
+      if (err !== null) {
+        if (err.message !== undefined) {
+          return res.status(500).send(err.message);
+        }
+      }
     });
 
   if (!operator) {

@@ -238,7 +238,11 @@ router.put('/:id', auth, async (req, res) => {
         updated: Date.now()
       },
       function (err, result) {
-
+        if (err !== null) {
+          if (err.message !== undefined) {
+            return res.status(500).send(err.message);
+          }
+        }
       });
   }
   else {
@@ -292,7 +296,11 @@ router.put('/:id', auth, async (req, res) => {
         updated: Date.now()
       },
       function (err, result) {
-
+        if (err !== null) {
+          if (err.message !== undefined) {
+            return res.status(500).send(err.message);
+          }
+        }
       });
   }
 
