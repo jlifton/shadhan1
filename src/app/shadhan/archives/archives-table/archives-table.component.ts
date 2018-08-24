@@ -145,6 +145,14 @@ export class ArchivesTableComponent implements OnInit {
       },
       error => {
         console.error('Error getting Archives');
+        let errMsg = 'Problem getting Archives list';
+        if (error.error !== undefined)
+          errMsg = errMsg + '. Details: '+error.error;
+        this.snackbar.open(errMsg, 'Ok', {
+          verticalPosition: 'top',
+          horizontalPosition: 'end'
+        });
+
         return Observable.throw(error);
       }
     );
@@ -248,7 +256,11 @@ export class ArchivesTableComponent implements OnInit {
         },
         error => {
           console.error('Error deleting Archived Single');
-          this.snackbar.open('Problem deleting Archived Single', 'Ok', {
+          let errMsg = 'Problem deleting Archived Single';
+          if (error.error !== undefined)
+            errMsg = errMsg + '. Details: '+error.error;
+
+          this.snackbar.open(errMsg, 'Ok', {
             verticalPosition: 'top',
             horizontalPosition: 'end'
           });
@@ -273,34 +285,7 @@ export class ArchivesTableComponent implements OnInit {
     //dialogConfig.minHeight =600;
     this.manageHighlightRow(row);
     const dialogRef = this.dialog.open(ArchiveDialogComponent, dialogConfig);
-    /**
-    dialogRef.afterClosed().subscribe(
-      updateSingle => {
-        if (updateSingle === undefined)
-          return;
 
-        console.log("Dialog output:", updateSingle);
-
-        this.singlesService.updateSingle(updateSingle._id, updateSingle).subscribe(
-          data => {
-            console.log("Update single succeeded", data);
-            this.snackbar.open('Single ' + data.identity.firstName + ' ' + data.identity.lastName + ' successfully updated', null, {
-              duration: 5000,
-              verticalPosition: 'top',
-              horizontalPosition: 'end'
-            });
-            this.getArchives(false);
-          },
-          error => {
-            console.error("Error updating Single");
-            this.snackbar.open('Problem updating Single', 'Ok', {
-              verticalPosition: 'top',
-              horizontalPosition: 'end'
-            });
-            return Observable.throw(error);
-          });
-      });
-    **/
   }
   onFilterChange(value) {
     if (!this.dataSource) {

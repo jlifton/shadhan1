@@ -99,7 +99,11 @@ export class LoginComponent implements OnInit {
               console.error(err);
               if (err.error !== null){
                 //alert("Unable to login: "+ err.error);
-                 this.snackbar.open("Unable to login: "+ err.error, 'OK', {
+                 let errMsg = err.error;
+                 if (errMsg instanceof ProgressEvent){
+                   errMsg = 'There may be a communications error with the site';
+                 }
+                 this.snackbar.open("Unable to login: "+ errMsg, 'OK', {
                   duration: 10000,
                   verticalPosition: 'top',
                   horizontalPosition: 'center'

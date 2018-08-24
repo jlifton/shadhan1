@@ -148,6 +148,15 @@ export class SinglesTableComponent implements OnInit {
       },
       error => {
         console.error("Error getting Singles");
+        let errMsg = 'Problem getting Singles list';
+        if (error.error !== undefined)
+          errMsg = errMsg + '. Details: '+error.error;
+
+        this.snackbar.open(errMsg, 'Ok', {
+          verticalPosition: 'top',
+          horizontalPosition: 'end'
+        });
+
         return Observable.throw(error);
       }
     );
@@ -225,7 +234,11 @@ export class SinglesTableComponent implements OnInit {
           },
           error => {
             console.error("Error creating Single");
-            this.snackbar.open('Problem creating Single', 'Ok', {
+            let errMsg = 'Problem creating Single';
+            if (error.error !== undefined)
+              errMsg = errMsg + '. Details: '+error.error;
+
+            this.snackbar.open(errMsg, 'Ok', {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
@@ -256,7 +269,10 @@ export class SinglesTableComponent implements OnInit {
         },
         error => {
           console.error("Error archiving Single");
-          this.snackbar.open('Problem archiving Single', 'Ok', {
+          let errMsg = 'Problem archiving Single';
+          if (error.error !== undefined)
+            errMsg = errMsg + '. Details: '+error.error;
+          this.snackbar.open(errMsg, 'Ok', {
             verticalPosition: 'top',
             horizontalPosition: 'end'
           });
@@ -287,8 +303,12 @@ export class SinglesTableComponent implements OnInit {
           this.getSingles(false);
         },
         error => {
-          console.error("Error deleting Single");
-          this.snackbar.open('Problem deleting Single', 'Ok', {
+          console.error("Error deleting Single. ");
+          let errMsg = 'Problem deleting Single';
+          if (error.error !== undefined)
+            errMsg = errMsg + '. Details: '+error.error;
+
+          this.snackbar.open(errMsg, 'Ok', {
             verticalPosition: 'top',
             horizontalPosition: 'end'
           });
@@ -333,8 +353,11 @@ export class SinglesTableComponent implements OnInit {
             this.getSingles(false);
           },
           error => {
-            console.error("Error updating Single");
-            this.snackbar.open('Problem updating Single', 'Ok', {
+            console.error("Error updating Single.");
+            let errMsg = 'Problem updating Single';
+            if (error.error !== undefined)
+                errMsg = errMsg + '. Details: '+error.error;
+            this.snackbar.open(errMsg, 'Ok', {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });

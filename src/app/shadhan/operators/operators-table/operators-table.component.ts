@@ -63,8 +63,11 @@ export class OperatorsTableComponent implements OnInit {
             this.getOperators();
           },
           error => {
-            console.error("Error creating Operator");
-            this.snackbar.open('Problem creating Operator', 'Ok', {
+            console.error("Error creating Operator");;
+            let errMsg = 'Problem creating Operator';
+            if (error.error !== undefined)
+              errMsg = errMsg + '. Details: '+error.error;
+            this.snackbar.open(errMsg, 'Ok', {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
@@ -102,6 +105,13 @@ export class OperatorsTableComponent implements OnInit {
       },
       error => {
         console.error("Error getting Operators");
+        let errMsg = 'Problem getting Operators list';
+        if (error.error !== undefined)
+          errMsg = errMsg + '. Details: '+error.error;
+        this.snackbar.open(errMsg, 'Ok', {
+          verticalPosition: 'top',
+          horizontalPosition: 'end'
+        });
         return Observable.throw(error);
       }
     );
@@ -137,7 +147,10 @@ export class OperatorsTableComponent implements OnInit {
         },
         error => {
           console.error("Error deleting Operator");
-          this.snackbar.open('Problem deleting Operator', 'Ok', {
+          let errMsg = 'Problem deleting Operator';
+          if (error.error !== undefined)
+            errMsg = errMsg + '. Details: '+error.error;
+          this.snackbar.open(errMsg, 'Ok', {
             verticalPosition: 'top',
             horizontalPosition: 'end'
           });
@@ -187,7 +200,10 @@ export class OperatorsTableComponent implements OnInit {
           },
           error => {
             console.error("Error updating Operator");
-            this.snackbar.open('Problem updating Operator', 'Ok', {
+            let errMsg = 'Problem updating Operator';
+            if (error.error !== undefined)
+              errMsg = errMsg + '. Details: '+error.error;
+            this.snackbar.open(errMsg, 'Ok', {
               verticalPosition: 'top',
               horizontalPosition: 'end'
             });
