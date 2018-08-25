@@ -13,6 +13,14 @@
   <meta name="theme-color" content="#1976d2">
 </head>
 <script>
+  (function browserCheck() {
+    if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) //IF IE > 10
+    {
+      alert('Microsoft Internet Explorer browser is not supported. Please use: Google Chrome, Microsoft Edge, or Firefox browsers');
+    }
+  })(this);
+</script>
+<script>
   (function(window) {
     if (window.location !== window.top.location) {
       window.top.location = window.location;
