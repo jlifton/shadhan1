@@ -88,8 +88,10 @@ export class ArchiveDialogComponent implements OnInit {
     this.sourceFormGroup = this.fb.group({
       name: [this.singleDTO.source.name, [Validators.maxLength(128)]],
       email: [this.singleDTO.source.email, [Validators.email, Validators.maxLength(128)]],
-      phone: [this.singleDTO.source.phone, [Validators.maxLength(128), Validators.pattern('[0-9]+')]],
-      comments: [this.singleDTO.comments, [Validators.maxLength(512)]]
+ //   phone: [this.singleDTO.source.phone, [Validators.maxLength(128), Validators.pattern('[0-9]+')]],
+      phone: [this.singleDTO.source.phone, [Validators.maxLength(128), Validators.pattern('^\\s*(?:\\+?\\d{1,3})?[- (]*\\d{2,3}(?:[- )]*\\d{3})?[- ]*\\d{4,7}(?: *[x/#]\\d+)?\\s*$')]],
+
+        comments: [this.singleDTO.comments, [Validators.maxLength(512)]]
     });
 
   }
