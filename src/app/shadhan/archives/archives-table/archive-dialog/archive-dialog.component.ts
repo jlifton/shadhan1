@@ -68,9 +68,12 @@ export class ArchiveDialogComponent implements OnInit {
       country: [this.singleDTO.residence.country, [Validators.maxLength(128)]],
       name: [this.singleDTO.contact.name, [Validators.required]],
       relationship: [this.singleDTO.contact.relationship, [Validators.maxLength(128)]],
-      primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required, Validators.pattern('[0-9]+')]],
-      secondaryPhone: [this.singleDTO.contact.secondaryPhone, [Validators.pattern('[0-9]+')]],
-      email: [this.singleDTO.contact.email, [Validators.email, Validators.maxLength(128)]]
+ //     primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required, Validators.pattern('[0-9]+')]],
+ //     secondaryPhone: [this.singleDTO.contact.secondaryPhone, [Validators.pattern('[0-9]+')]],
+      primaryPhone: [this.singleDTO.contact.primaryPhone, [Validators.required, Validators.pattern('^\\s*(?:\\+?\\d{1,3})?[- (]*\\d{2,3}(?:[- )]*\\d{3})?[- ]*\\d{4,7}(?: *[x/#]\\d+)?\\s*$')]],
+      secondaryPhone: [this.singleDTO.contact.secondaryPhone, [Validators.pattern('^\\s*(?:\\+?\\d{1,3})?[- (]*\\d{2,3}(?:[- )]*\\d{3})?[- ]*\\d{4,7}(?: *[x/#]\\d+)?\\s*$')]],
+
+        email: [this.singleDTO.contact.email, [Validators.email, Validators.maxLength(128)]]
     });
 
     this.physicalFormGroup = this.fb.group({
