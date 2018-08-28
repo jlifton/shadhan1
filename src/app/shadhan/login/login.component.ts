@@ -84,9 +84,16 @@ export class LoginComponent implements OnInit {
               console.log('Retrieved session JWT token: '+ data);
               const operator = resp.body.name;
 
+        var operatorType = '';
+        if (resp.body && resp.body.type)
+          operatorType = resp.body.type;
 
-        this.snackbar.open( 'Shalom '+ operator + '. Kindly observe halachot of \'lashon hara\' while using this site', null,  {
-                duration: 5000,
+        var text = operatorType === 'GUEST' ?
+          'Shalom '+ operator + '. As a \'Guest\' all data displayed is ARTIFICIAL.':
+          'Shalom '+ operator + '. Kindly observe halachot of \'lashon hara\' while using this site';
+        var waitTime = operatorType === 'GUEST' ? 8000: 3000;
+        this.snackbar.open( text, null,  {
+                duration: waitTime,
                 verticalPosition: 'top',
                 horizontalPosition: 'end'
               });
