@@ -20,17 +20,17 @@
 
           <ng-container matColumnDef="identity.firstName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> FIRST NAME</th>
-            <td mat-cell *matCellDef="let row"> {{row.identity.firstName}}</td>
+            <td mat-cell *matCellDef="let row" [ngClass]="{'red': row.identity.sex==='Female', 'blue': row.identity.sex!=='Female'  }"> {{row.identity.firstName}}</td>
           </ng-container>
 
           <ng-container matColumnDef="identity.lastName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> LAST NAME</th>
-            <td mat-cell *matCellDef="let row"> {{row.identity.lastName}}</td>
+            <td mat-cell *matCellDef="let row"  [ngClass]="{'red': row.identity.sex==='Female', 'blue': row.identity.sex!=='Female'  }"> {{row.identity.lastName}}</td>
           </ng-container>
 
           <ng-container matColumnDef="identity.sex">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> SEX</th>
-            <td mat-cell *matCellDef="let row"> {{row.identity.sex}}</td>
+            <td  mat-cell *matCellDef="let row" [ngClass]="{'red': row.identity.sex==='Female', 'blue': row.identity.sex!=='Female'  }" > {{row.identity.sex}}</td>
           </ng-container>
 
           <ng-container matColumnDef="identity.age">
