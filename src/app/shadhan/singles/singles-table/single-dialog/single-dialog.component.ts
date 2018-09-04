@@ -21,6 +21,7 @@ export class SingleDialogComponent implements OnInit {
   commitLabel: string;
   dateCreated: string;
   dateUpdate: string;
+  operatorType:string;
 
   constructor(
               private authGuardService: AuthGuardService,
@@ -32,6 +33,18 @@ export class SingleDialogComponent implements OnInit {
     this.singleDTO = singleDTO;
     if (this.singleDTO.identity.lastName !== '')
       this.isNew = false;
+    this.operatorType = this.authGuardService.getLoggedInType();
+  }
+
+  disableForShadhanOperator() {
+    this.identityFormGroup.disable();
+    this.backgroundFormGroup.disable();
+    this.residenceContactFormGroup.disable();
+    this.physicalFormGroup.disable();
+    //this.sourceFormGroup.disable();
+    this.sourceFormGroup.get('name').disable();
+    this.sourceFormGroup.get('email').disable();
+    this.sourceFormGroup.get('phone').disable();
   }
 
   ngOnInit() {
@@ -105,18 +118,19 @@ export class SingleDialogComponent implements OnInit {
       phone: [this.singleDTO.source.phone, [Validators.maxLength(128), Validators.pattern('^\\s*(?:\\+?\\d{1,3})?[- (]*\\d{2,3}(?:[- )]*\\d{3})?[- ]*\\d{4,7}(?: *[x/#]\\d+)?\\s*$')]],
       comments: [this.singleDTO.comments, [Validators.maxLength(512)]]
     });
-
+    if (this.operatorType ===  'SHADHAN')
+      this.disableForShadhanOperator();
   }
 
  submit() {
-   const operatorType = this.authGuardService.getLoggedInType();
-   if (operatorType !== 'ADMIN' && operatorType !== 'DATAENTRY' && operatorType !== 'GUEST'){
-     this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
-       verticalPosition: 'top',
-       horizontalPosition: 'end'
-     });
-     return;
-   }
+   //const operatorType = this.authGuardService.getLoggedInType();
+   //if (this.operatorType !== 'ADMIN' && this.operatorType !== 'DATAENTRY' && this.operatorType !== 'GUEST'){
+   //  this.snackbar.open('This action is for Administrator and Data Entry operators only', 'Ok', {
+   //    verticalPosition: 'top',
+   //    horizontalPosition: 'end'
+   //  });
+   //  return;
+   //}
    this.singleDTO.identity.lastName = this.identityFormGroup.value.lastName.trim();
    this.singleDTO.identity.firstName = this.identityFormGroup.value.firstName.trim();
    this.singleDTO.identity.sex = this.identityFormGroup.value.sex;
@@ -147,9 +161,13 @@ export class SingleDialogComponent implements OnInit {
    this.singleDTO.specialNeeds = this.physicalFormGroup.value.specialNeeds.trim();
    this.singleDTO.physical.smoker = this.physicalFormGroup.value.smoker;
 
-   this.singleDTO.source.name = this.sourceFormGroup.value.name.trim();
-   this.singleDTO.source.email = this.sourceFormGroup.value.email.trim();
-   this.singleDTO.source.phone = this.sourceFormGroup.value.phone.trim();
+   //this.singleDTO.source.name = this.sourceFormGroup.value.name.trim();
+   //this.singleDTO.source.email = this.sourceFormGroup.value.email.trim();
+   //this.singleDTO.source.phone = this.sourceFormGroup.value.phone.trim();
+
+   this.singleDTO.source.name = this.sourceFormGroup.controls.name.value.trim();
+   this.singleDTO.source.email = this.sourceFormGroup.controls.email.value.trim();
+   this.singleDTO.source.phone = this.sourceFormGroup.controls.phone.value.trim();
    this.singleDTO.comments = this.sourceFormGroup.value.comments.trim();
 
    this.dialogRef.close(this.singleDTO);

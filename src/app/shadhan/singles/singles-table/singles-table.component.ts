@@ -207,6 +207,14 @@ export class SinglesTableComponent implements OnInit {
   }
 
   createSingle() {
+    const operatorType = this.authGuardService.getLoggedInType();
+    if (operatorType === 'SHADHAN'){
+      this.snackbar.open('This action is not available for Shadhan operators', 'Ok', {
+        verticalPosition: 'top',
+        horizontalPosition: 'end'
+      });
+      return;
+    }
     const dialogConfig = new MatDialogConfig();
     let newSingleDTO = new SingleDTO(null);
     dialogConfig.disableClose = true;
