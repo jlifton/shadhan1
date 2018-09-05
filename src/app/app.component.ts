@@ -80,12 +80,6 @@ export class AppComponent {
       position: 32
     });
     menu.push({
-      name: 'Maintenance',
-      routeOrFunction: 'maintenance',
-      icon: 'build',
-      position: 32
-    });
-    menu.push({
       name: 'Change Password',
       routeOrFunction: 'password',
       icon: 'lock',
@@ -98,12 +92,17 @@ export class AppComponent {
       position: 32
     });
     menu.push({
+      name: 'Help',
+      routeOrFunction: 'maintenance',
+      icon: 'help',
+      position: 32
+    });
+    menu.push({
       name: 'About',
       routeOrFunction: 'about',
       icon: 'favorite',
       position: 32
     });
-
 
     if (exposeAllMenu) {
       menu.push({
