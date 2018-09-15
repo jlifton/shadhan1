@@ -42,6 +42,11 @@ const routes: Routes = [
         loadChildren: 'app/shadhan/maintenance/maintenance.module#MaintenanceModule',
       },
       {
+        path: 'hebrewhelp',
+        //canActivate: [AuthGuardService],
+        loadChildren: 'app/shadhan/hebrewhelp/hebrewhelp.module#HebrewhelpModule',
+      },
+      {
         path: 'password',
         //canActivate: [AuthGuardService],
         loadChildren: 'app/shadhan/password/password.module#PasswordModule',

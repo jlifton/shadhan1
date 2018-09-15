@@ -12,6 +12,7 @@ import { CoreModule } from './core/core.module';
 import {FormsModule} from "@angular/forms";
 import { ContactComponent } from './shadhan/contact/contact.component';
 import { PasswordComponent } from './shadhan/password/password.component';
+import { HebrewhelpComponent } from './shadhan/hebrewhelp/hebrewhelp.component';
 
 @NgModule({
   declarations: [AppComponent],

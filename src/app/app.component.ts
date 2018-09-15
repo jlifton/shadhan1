@@ -98,6 +98,12 @@ export class AppComponent {
       position: 32
     });
     menu.push({
+      name: 'עזרה בעברית',
+      routeOrFunction: 'hebrewhelp',
+      icon: 'help',
+      position: 32
+    });
+    menu.push({
       name: 'About',
       routeOrFunction: 'about',
       icon: 'favorite',
