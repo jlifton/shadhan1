@@ -3,7 +3,14 @@ const {System, validate} = require('../models/system');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'rayimahuvim18@gmail.com',
+    pass: '(shidduch)'
+  }
+});
 /**
  * Get System object
  */
@@ -18,22 +25,29 @@ router.get('/import', auth, async(req, res) => {
 });
 
 
-/**
-router.post('/', async(req, res) => {
-    const {error} = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    const logItem = new LogItem({
-        details: req.body.details,
-        date:  req.body.date
-    });
-    await logItem.save();
-    res.send(logItem);
+
+router.post('/contact', auth, async(req, res) => {
+  let message = 'Name: ' +  req.body.name + '\n';
+  message = message + 'Phone: ' +  req.body.phone + '\n';
+  message = message + 'Email: ' +  req.body.email + '\n\n';
+  message = message + 'Message: ' + req.body.message;
+
+  var mailOptions = {
+    from: req.body.email,
+    to: 'rayimahuvim18@gmail.com',
+    subject: 'Contact request',
+    text: message
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      winston.error('Send contact email failed');
+      return res.status(404).send('Send contact email failed.');
+    } else {
+      res.send('OK');
+    }
+  });
+
 });
 
-
-router.delete('/', async(req, res) => {
-    const result = await LogItem.remove({}, () => {'In remove callback'});
-    res.send('OK');
-});
-**/
 module.exports = router;
