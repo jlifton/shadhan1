@@ -1,20 +1,47 @@
 <div class="form-elements" furyPage furyPagePadding furyScrollbar fxLayout="column" [fxLayoutGap]="gap">
   <fury-breadcrumbs current="Contact" ></fury-breadcrumbs>
-  <br>
-  <br>
-  <br>
     <br>
   <div class=container6>
-
     <table>
       <tr><td>Rayim Ahuvim contact</td></tr>
       <tr><td>
         צור קשר עם רעים אהובים</td></tr>
-      <tr><td width=100; height=30></td><td></td></tr>
+      <tr><td width=400; height=10></td><td></td></tr>
       <tr>
         <td>Email: <b>Rayimahuvim18@gmail.com</b></td><td></td>
     </tr>
   </table>
+  </div>
+  <br>
+  <br>
+  <div class="message-container">
+    Send us a Message:
+  <!--  <form [formGroup]="contactFormGroup">-->
+    <div [formGroup]="contactFormGroup">
+      <mat-form-field fxFlex="400px">
+        <input formControlName="name"  matInput placeholder="Name" required>
+      </mat-form-field>
+      <div fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px">
+        <mat-form-field fxFlex="400px">
+          <mat-placeholder>Email</mat-placeholder>
+          <input formControlName="email" matInput  required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="grow">
+          <mat-placeholder>Phone</mat-placeholder>
+          <input formControlName="phone" matInput  required>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field fxFlex="850px">
+        <textarea formControlName="message" matInput placeholder="Message"  rows="3" cols="80" required></textarea>
+      </mat-form-field>
+   <!-- </form> -->
+      <br>
+      <button  mat-raised-button color="primary" (click)="submitMessage()" [disabled]="contactFormGroup.invalid">Send</button>
+
+
+    </div>
   </div>
 
 

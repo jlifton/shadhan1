@@ -6,6 +6,8 @@ import {PageModule} from "../../core/common/page/page.module";
 import {BreadcrumbsModule} from "../../core/breadcrumbs/breadcrumbs.module";
 import {ContactComponent} from "./contact.component";
 import {ContactRoutingModule} from "./contact-routing.module";
+import {MatDialogModule, MatSortModule} from '@angular/material';
+import {SystemService} from '../system/system.service';
 
 @NgModule({
   imports: [
@@ -15,10 +17,12 @@ import {ContactRoutingModule} from "./contact-routing.module";
     MaterialModule,
     ReactiveFormsModule,
     PageModule,
+    MatDialogModule,
+    MatSortModule,
     BreadcrumbsModule
   ],
   declarations: [ContactComponent],
-  providers: [ ],
+  providers: [SystemService ],
   exports: [ContactComponent]
 
 })
