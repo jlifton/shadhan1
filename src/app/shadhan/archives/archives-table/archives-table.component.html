@@ -11,7 +11,7 @@
       -->
       <mat-paginator class="paginator" [pageSize]="pageSize" [showFirstLastButtons]="true"
                      [pageSizeOptions]="[5, 10, 15, 25, 40, 100]"
-                     (page)="pageEvent = pageEventHandler($event)"></mat-paginator>
+                     (page)="pageEventHandler($event)"></mat-paginator>
       <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="24px">
 
         <table [class.table-hover]="true" [class.table-striped]="false"

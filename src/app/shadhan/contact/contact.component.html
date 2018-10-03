@@ -1,4 +1,4 @@
-<div class="form-elements" furyPage furyPagePadding furyScrollbar fxLayout="column" [fxLayoutGap]="gap">
+<div class="form-elements" furyPage furyPagePadding furyScrollbar fxLayout="column" >
   <fury-breadcrumbs current="Contact" ></fury-breadcrumbs>
     <br>
   <div class=container6>
@@ -15,8 +15,7 @@
   <br>
   <br>
   <div class="message-container">
-    Send us a Message:
-  <!--  <form [formGroup]="contactFormGroup">-->
+    <b>Send us a Message</b>
     <div [formGroup]="contactFormGroup">
       <mat-form-field fxFlex="400px">
         <input formControlName="name"  matInput placeholder="Name" required>
