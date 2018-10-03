@@ -13,7 +13,7 @@
     "build": "ng build",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build"
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "keywords": [],
